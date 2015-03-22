@@ -1,0 +1,61 @@
+body {
+  width: 98%;
+  height: 99%;
+  background-color:black;
+  margin-left:auto;
+  margin-right:auto; 
+  overflow:hidden;
+}
+
+div.map {
+	position:absolute;
+	top: 60%;
+	right: 5%;
+}
+
+div.main, img.main {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+div.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 98%;
+  height: 100%;
+/*  background-repeat: no-repeat;*/
+}
+
+div.static {
+  width: 99%;
+  height: 99%;
+  opacity: 0.25;
+}
+
+#staticimg {
+  width: 104%;
+  height: 104%;
+}
+
+img.room {
+  position: absolute;
+  left:0;
+  width: 98%;
+  height: 100%;
+} 
+
+div.camera {
+  position: absolute;
+  bottom: 7px;
+  left: 10px;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 7pt;
+  color: #c0f0c0;
+  text-shadow: #80c080 0 0 1px;
+  width: 98%;
+  height: 100%;
+}
