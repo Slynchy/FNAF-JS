@@ -7,38 +7,80 @@ body {
   overflow:hidden;
 }
 
+#record {
+	display:block;
+}
+
 div.map {
 	position:absolute;
-	top: 60%;
-	right: 5%;
+	bottom: 0px;
+	right: 150px;
 }
 
 div.main, img.main {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
 }
 
 div.overlay {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 98%;
   height: 100%;
+  top: 0;
+  left: 0;
 /*  background-repeat: no-repeat;*/
 }
 
-div.static {
-  width: 99%;
-  height: 99%;
-  opacity: 0.25;
+#static {
+	background-image: url("graphics/camera/static_test3.jpg");
+	display:block;
+	opacity:0.25;
+    width: 100%;
+    height: 100%;
+	position:absolute;
+/*	z-index:77;
+	height:141px;
+	margin-left:659px;
+	top:73px;
+	right: 265px;*/
+    
+    -webkit-animation: play .8s steps(1280) infinite;
+}
+@-webkit-keyframes play {
+   from { background-position:    0px; }
+     to { background-position: -10240px; }
 }
 
 #staticimg {
   width: 104%;
   height: 104%;
+}
+
+#map {
+  z-index:105;
+}
+
+#button-1a {
+position: absolute;
+width:45px;
+top:20px;
+left:110px;
+background-color:#107010;
+    padding:6px;
+    border: 3px solid white;
+}
+
+#button-1b{
+position: absolute;
+width:45px;
+top:77px;
+left:85px;
+background-color:#101010;
+    padding:6px;
+    border: 3px solid white;
 }
 
 img.room {

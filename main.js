@@ -1,14 +1,8 @@
 var currentRoom = "1a";
-var currentRoomID = 0;
 var animatestatic = 0;
-var showrecord = false
 // roomstates: 0 = default, 1 = different, etc.
 var currRoomStates=[{name:"1a",roomstate:0},
 {name:"1b",roomstate:0}
-];
-
-var rooms=[{name:"1a",movingcamera:true},
-{name:"1b",movingcamera:false}
 ];
 
 var animatronicStates = [{name:"Chica",currentRoom:"1a"},
@@ -19,14 +13,6 @@ function searchForState(room){
     for (var i=0; i < currRoomStates.length; i++) {
         if (currRoomStates[i].name === room) {
             return currRoomStates[i].roomstate;
-        }
-    }
-}
-
-function searchForRoomID(roomname){
-    for (var i=0; i < currRoomStates.length; i++) {
-        if (rooms[i].name === roomname) {
-            return i;
         }
     }
 }
@@ -105,23 +91,14 @@ var randomcheck=1
 function updatecurrentRoom(roomparameter) {
 	if(roomparameter=="") return console.log("updatecurrentRoom() error - No parameter given");
 	currentroomstatetoset = searchForState(roomparameter);
-	//alert(currentroomstatetoset);
+	alert(currentroomstatetoset);
 	if(currentroomstatetoset== -1) return console.log("updatecurrentRoom() error - Invalid parameter given");
 	currentRoom=roomparameter;
-	currentRoomID=searchForRoomID(roomparameter)
 	updateRoomStateStatic();
 	document.getElementById('room').src="graphics/rooms/"+currentRoom+"/"+currRoomStates[currentroomstatetoset].roomstate+".png";
 	if(currentRoom=="1b"){
-		$("#room").stop();
-		if(leftornot==1) {
-			$("#room").css( "left", "300" );
-			leftornot=1;
-		}
-		else {
-			//$("#room").css( "left", "0" );
-			$("#room").css( "left", "0" );
-			leftornot=0;
-		}
+		$("#room").stop;
+		$("#room").css( "left", "0" )
 	}
 }
 
@@ -130,22 +107,13 @@ for(x=1;x<9;x++){
 	staticanim[0+x].src = "graphics/camera/static_"+x+".png";
 }
 
-function mainThread() {
-//	tick();
-//	camerapositionTick();
-//	staticTick();
-}
-
-function recordTick() {
-//	if($("#record").css("display")=="block") {
-	if(showrecord==true) {
-		$("#record").css("left", '-=9999px');
-		showrecord=false;
+function tick() {
+	var randomchance = Math.floor(Math.random()*10)
+	if(randomchance > 7) {
+		if(currRoomStates[0].roomstate==0){
+//			updateRoomState("1a",2);
+		}
 	}
-	else {
-		$("#record").css("left", '+=9999px');
-		showrecord=true;
-	};
 }
 
 function playanimation(path_to_file,speed,frames){
@@ -157,9 +125,88 @@ function playanimation(path_to_file,speed,frames){
 	}
 }
 
-//mainThread();
+function staticTick() {
+  randomcheck++
+  if(randomcheck>8) randomcheck=1;
+  var elem = document.getElementById('staticimg');
+  elem.src=staticanim[randomcheck].src;
 
+  staticId = setTimeout('staticTick()', 20);
+}
+
+function updateRoomStateStatic(){
+	//if((typeof opacitylevel)!=="string") opacitylevel=toString(opacitylevel);
+	if(animatestatic==0) {
+		animatestatic=1;
+		$("#static").animate({
+			opacity: 1
+		},30,function(){
+			animatestatic=2;
+			setTimeout(function(){
+				animatestatic=0;
+				$("#static").animate({
+					opacity: 0.25
+				},1000,function(){
+				});
+			}, 3000)
+		});
+	}
+}
+
+function camerapositionTick() {
+	if(currentRoom=="1b") return;
+	$("#room").animate({
+		left: leftpos,
+	},6000,function(){
+		if(leftornot==1) leftornot=0
+		else leftornot=1;
+		if(leftornot==0){leftpos = "-=300px"}
+		else{leftpos = "+=300px"};
+	});
+}
+
+var interruptId = 0;
+var overlay = 0;
+
+tick();
 camerapositionTick();
-var mainThreadID = setInterval('mainThread()', 1000);
-var cameraanimId = setInterval('camerapositionTick()', 8500);
-var recordanimId = setInterval('recordTick()', 1000);
+staticTick();
+
+$('#button-1a').mouseenter(function(){
+	if(this.id!==("button-"+currentRoom)){
+		this.style.backgroundColor='#505050';
+	}
+	else this.style.backgroundColor='#107010';
+});
+$('#button-1a').mouseleave(function(){
+	if(this.id!==("button-"+currentRoom)){
+		this.style.backgroundColor='#303030';
+	}
+});
+$('#button-1a').click(function(){
+	if(currentRoom!=="1a"){
+		updatecurrentRoom("1a");
+	}
+});
+
+$('#button-1b').mouseenter(function(){
+	if(this.id!==("button-"+currentRoom)){
+		this.style.backgroundColor='#505050';
+	}
+	else this.style.backgroundColor='#107010';
+});
+$('#button-1b').mouseleave(function(){
+	if(this.id!==("button-"+currentRoom)){
+		this.style.backgroundColor='#303030';
+	}
+});
+$('#button-1b').click(function(){
+	if(currentRoom!=="1b"){
+		this.style.backgroundColor='#107010';
+		$('#button-1a').css("backgroundColor",'#101010');
+		updatecurrentRoom("1b");
+	}
+});
+
+var tickId = setInterval('tick()', 1000);
+var animId = setInterval('camerapositionTick()', 7000);

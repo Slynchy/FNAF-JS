@@ -1,22 +1,44 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
-<head>
+<head> 
   <title>Live Feed</title>
   <script src="jquery.min.js" type="text/javascript"></script>
   <link rel="stylesheet" type="text/css" href="feed.css" />
 </head>
 
 <body>
-  <div id="containment" class="main">
-    <img id="room" style="width:129%;height:129%;position: absolute;top:-200px;" src="graphics/rooms/1a/default.png"></img>
-	<center><div id="static" class="overlay static"><img id="staticimg" src="graphics/camera/static_1.png"></img></div>
-    <div id="camera" class="camera">CAMERA 017</div>
-    <img class="main" src="images/feed.png" alt="Live Feed" />
-  </div>
-  <div id="map" class="map">
-	<img id="mapimg" src="graphics/camera/map.png"></img>
-  </div>
-  </center>
+	<div id="containment" class="main">
+		<img id="room" style="width:129%;height:129%;position: absolute;top:-200px;" src="graphics/rooms/1a/0.png"></img>
+		<img id="record" src="graphics/camera/record.png" style="position:absolute;left:70px;top:45px" />
+<!--		<div id="static" class="overlay static"><img id="staticimg" src="graphics/camera/static_1.png"></img></div>-->
+		<div id="static" class="overlay static"></div>
+		<div id="camera" class="camera"></div>
+		<img class="main" src="images/feed.png" alt="Live Feed" />
+		<img id="outline" src="graphics/camera/outline.png" style="position:absolute;width:99.5%;height:99.5%;z-index:101" />
+	</div>
+	<div id="timekeeper" style="position:absolute;right:70px;top:45px">
+		<img id="timehour" src="graphics/camera/ui/time1.png" style="position:absolute;top:1px;right:100px" />
+		<img id="timehourextra" src="graphics/camera/ui/time2.png" style="position:absolute;right:70px;" />
+		<img id="timeAM" src="graphics/camera/ui/timeAM.png" style="" />
+		<img id="timenight" src="graphics/camera/ui/night.png" style="position:absolute;right:50px;top:54px;">
+			<img id="timenightnumber" src="graphics/camera/ui/1.png" style="position:absolute;left:20px;top:44px"/>
+		</img>
+	</div>
+	<div id="map" class="map">
+		<img id="mapimg" src="graphics/camera/map.png">
+		<a name="button-1a" id="button-1a"><img name="button-1a" id="1a" src="graphics/camera/mapbuttons/1a.png"></img></a>
+		<a name="button-1b" id="button-1b"><img name="button-1b" id="1b" src="graphics/camera/mapbuttons/1b.png"></img></a>
+		</img>
+	</div>
+ 
+<!--  <script src="script/variables.js" type="text/javascript"></script>-->
+  <script src="script/ui.js" type="text/javascript"></script>
   <script src="script/feed.js" type="text/javascript"></script>
 </body>
 </html>
+
+<!-- onmouseenter="mapbuttonMouseover();" onmouseleave="mapbuttonMouseout();" 
+
+1022x721
+
+-->
