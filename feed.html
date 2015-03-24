@@ -6,28 +6,36 @@
   <link rel="stylesheet" type="text/css" href="feed.css" />
 </head>
 
-<body>
-	<div id="containment" class="main">
-		<img id="room" style="width:129%;height:129%;position: absolute;top:-200px;" src="graphics/rooms/1a/0.png"></img>
+<body id="body" style="display:none;">
+	<div id="camerafeed" class="main" style="display:none;">
+		<img id="room" style="width:129%;height:129%;position: fixed;top:-200px;" class="roomtest" src="graphics/rooms/1a/0.png"></img>
 		<img id="record" src="graphics/camera/record.png" style="position:absolute;left:70px;top:45px" />
-<!--		<div id="static" class="overlay static"><img id="staticimg" src="graphics/camera/static_1.png"></img></div>-->
-		<div id="static" class="overlay static"></div>
+		<div id="static" class="static"><video id="staticimg" src="graphics/camera/static_test5.webm" autoplay loop hidecontrols /></div>
 		<div id="camera" class="camera"></div>
 		<img class="main" src="images/feed.png" alt="Live Feed" />
 		<img id="outline" src="graphics/camera/outline.png" style="position:absolute;width:99.5%;height:99.5%;z-index:101" />
+		<div id="map" class="map">
+			<img id="mapimg" src="graphics/camera/map.png">
+			<a name="button-1a" id="button-1a"><img name="button-1a" id="1a" src="graphics/camera/mapbuttons/1a.png"></img></a>
+			<a name="button-1b" id="button-1b"><img name="button-1b" id="1b" src="graphics/camera/mapbuttons/1b.png"></img></a>
+			<a name="button-1b" id="button-1c"><img name="button-1c" id="1c" src="graphics/camera/mapbuttons/1c.png"></img></a>
+			</img>
+		</div>
 	</div>
+	<div id="office" style="position:fixed;width:122%;height:100%;">
+		<div id="officemain" src="" style="position:absolute;width:100%;height:100%;background-image:url('graphics/rooms/office/0.png');background-size: 100% 100%;">
+			<img id="fan" src="graphics/rooms/office/fan_1.png" style="position: absolute; width: 8.7%; height: 27%; left: 48.7%; top: 42.3%;"/>
+		</div>
+	</div>
+		<img id="officecameraright" src="graphics/rooms/office/cameraposition.png" style="position:absolute;width:10%;height:100%;right:0px" />
+		<img id="officecameraleft" src="graphics/rooms/office/cameraposition.png" style="position:absolute;width:10%;height:100%;left:0px" />
+	<img id="openclosecamera" src="graphics/camera/openclosecamera.png" style="position:absolute;bottom:35px;left:600px;z-index:106" />
 	<div id="timekeeper" style="position:absolute;right:70px;top:45px">
 		<img id="timehour" src="graphics/camera/ui/time1.png" style="position:absolute;top:1px;right:100px" />
 		<img id="timehourextra" src="graphics/camera/ui/time2.png" style="position:absolute;right:70px;" />
 		<img id="timeAM" src="graphics/camera/ui/timeAM.png" style="" />
 		<img id="timenight" src="graphics/camera/ui/night.png" style="position:absolute;right:50px;top:54px;">
 			<img id="timenightnumber" src="graphics/camera/ui/1.png" style="position:absolute;left:20px;top:44px"/>
-		</img>
-	</div>
-	<div id="map" class="map">
-		<img id="mapimg" src="graphics/camera/map.png">
-		<a name="button-1a" id="button-1a"><img name="button-1a" id="1a" src="graphics/camera/mapbuttons/1a.png"></img></a>
-		<a name="button-1b" id="button-1b"><img name="button-1b" id="1b" src="graphics/camera/mapbuttons/1b.png"></img></a>
 		</img>
 	</div>
  

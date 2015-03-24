@@ -1,6 +1,7 @@
 body {
-  width: 98%;
-  height: 99%;
+/*  zoom:0.8;*/
+  width: 100%;
+  height: 100%;
   background-color:black;
   margin-left:auto;
   margin-right:auto; 
@@ -35,28 +36,26 @@ div.overlay {
 }
 
 #static {
-	background-image: url("graphics/camera/static_test3.jpg");
+/*	background-image: url("graphics/camera/static_test3.jpg");
+	background: url('graphics/camera/static_test3.jpg') left center;*/
 	display:block;
 	opacity:0.25;
-    width: 100%;
-    height: 100%;
-	position:absolute;
-/*	z-index:77;
+	position:fixed;
+/*	width: 125%;
+    height: 125%;
+	z-index:77;
 	height:141px;
 	margin-left:659px;
 	top:73px;
-	right: 265px;*/
+	right: 265px;
     
-    -webkit-animation: play .8s steps(1280) infinite;
-}
-@-webkit-keyframes play {
-   from { background-position:    0px; }
-     to { background-position: -10240px; }
+   animation: play .8s steps(1280) infinite;*/
 }
 
 #staticimg {
-  width: 104%;
-  height: 104%;
+  display:block;
+  width: 225%;
+  height: 225%;
 }
 
 #map {
@@ -83,12 +82,31 @@ background-color:#101010;
     border: 3px solid white;
 }
 
-img.room {
-  position: absolute;
+#button-1c{
+position: absolute;
+width:45px;
+top:155px;
+left:55px;
+background-color:#101010;
+    padding:6px;
+    border: 3px solid white;
+}
+
+#room {
+  position: fixed;
   left:0;
   width: 98%;
   height: 100%;
 } 
+
+.roomtest {
+  -webkit-animation: play 6s linear infinite alternate;
+}
+
+@-webkit-keyframes play {
+    from { -webkit-transform:translateX(0px) }
+    to { -webkit-transform:translateX(-300px) }
+}
 
 div.camera {
   position: absolute;
