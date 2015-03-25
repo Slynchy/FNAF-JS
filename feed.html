@@ -10,21 +10,31 @@
 	<div id="camerafeed" class="main" style="display:none;">
 		<img id="room" style="width:129%;height:129%;position: fixed;top:-200px;" class="roomtest" src="graphics/rooms/1a/0.png"></img>
 		<img id="record" src="graphics/camera/record.png" style="position:absolute;left:70px;top:45px" />
-		<div id="static" class="static"><video id="staticimg" src="graphics/camera/static_test5.webm" autoplay loop hidecontrols /></div>
+		<div id="static" class="static"><video id="staticimg" src="graphics/camera/static_test5.webm" autoplay loop hidecontrols preload /></div>
 		<div id="camera" class="camera"></div>
 		<img class="main" src="images/feed.png" alt="Live Feed" />
 		<img id="outline" src="graphics/camera/outline.png" style="position:absolute;width:99.5%;height:99.5%;z-index:101" />
 		<div id="map" class="map">
-			<img id="mapimg" src="graphics/camera/map.png">
+            <img id="mapimg" src="graphics/camera/map.png" />
 			<a name="button-1a" id="button-1a"><img name="button-1a" id="1a" src="graphics/camera/mapbuttons/1a.png"></img></a>
 			<a name="button-1b" id="button-1b"><img name="button-1b" id="1b" src="graphics/camera/mapbuttons/1b.png"></img></a>
 			<a name="button-1b" id="button-1c"><img name="button-1c" id="1c" src="graphics/camera/mapbuttons/1c.png"></img></a>
-			</img>
 		</div>
 	</div>
 	<div id="office" style="position:fixed;width:122%;height:100%;">
 		<div id="officemain" src="" style="position:absolute;width:100%;height:100%;background-image:url('graphics/rooms/office/0.png');background-size: 100% 100%;">
-			<img id="fan" src="graphics/rooms/office/fan_1.png" style="position: absolute; width: 8.7%; height: 27%; left: 48.7%; top: 42.3%;"/>
+			<div id="doorbuttonsleft" style="position: absolute;left: 10px; top: 40%;background-image:url('graphics/rooms/office/buttons/buttonleft_1.png');background-size: 100% 100%;z-index:200;width:92px;height:247px;">
+				<img id="doorbuttonsleft_door" src="graphics/rooms/office/cameraposition.png" style="position:absolute;left:30px;top:21%;width:40px;height:58px;z-index:201;" />
+				<img id="doorbuttonsleft_light" src="graphics/rooms/office/cameraposition.png" style="position:absolute;left:30px;top:53%;width:40px;height:58px;z-index:201;" />
+			</div>
+			<div id="doorbuttonsright" style="position: absolute;right: 58px; top: 40%;background-image:url('graphics/rooms/office/buttons/buttonright_1.png');background-size: 100% 100%;z-index:200;width:92px;height:247px;">
+				<img id="doorbuttonsright_door" src="graphics/rooms/office/cameraposition.png" style="position:absolute;right:30px;top:21%;width:40px;height:58px;z-index:201;" />
+				<img id="doorbuttonsright_light" src="graphics/rooms/office/cameraposition.png" style="position:absolute;right:30px;top:53%;width:40px;height:58px;z-index:201;" />
+			</div>
+			<img id="fan" src="graphics/rooms/office/fan_1.png" style="position: absolute; width: 8.7%; height: 27%; left: 48.7%; top: 42.35%;"/>
+			<img id="doorleft" src="graphics/rooms/office/doors/left/0.png" style="position: absolute; left: 4.5%; top: 0%;z-index:180;width:15%;height:100%;"/>
+			<img id="doorright" src="graphics/rooms/office/doors/right/0.png" style="position: absolute; right: 4.5%; top: 0%;z-index:180;width:15%;height:100%;"/>
+			<!--<img id="doorright" src="graphics/rooms/office/door/left/fan_1.png" style="position: absolute; width: 8.7%; height: 27%; left: 48.7%; top: 42.35%;z-index:180;"/> -->
 		</div>
 	</div>
 		<img id="officecameraright" src="graphics/rooms/office/cameraposition.png" style="position:absolute;width:10%;height:100%;right:0px" />
@@ -38,8 +48,14 @@
 			<img id="timenightnumber" src="graphics/camera/ui/1.png" style="position:absolute;left:20px;top:44px"/>
 		</img>
 	</div>
+	<div id="power" style="position:absolute;left:10%;bottom:10%;zoom:1.5;">
+		<img id="powerleft" src="graphics/camera/powerleft.png" style="vertical-align: middle;" />	<img id="numberone" src="graphics/camera/ui/powernumbers/1.png" style="vertical-align: middle;zoom:0.7;" /><img id="numbertwo" src="graphics/camera/ui/powernumbers/0.png" style="vertical-align: middle;zoom:0.7;" /><img id="numberthree" src="graphics/camera/ui/powernumbers/0.png" style="vertical-align: middle;zoom:0.7;" /> <img id="numberpercent" src="graphics/camera/ui/powernumbers/%.png" style="vertical-align: text-bottom;zoom:0.7;" /><br><br>
+		<img id="powerword" src="graphics/camera/powerusage.png" style="vertical-align: middle;" />
+		<img id="powerusage" src="graphics/camera/power1.png" style="vertical-align: middle;" />
+	</div>
  
 <!--  <script src="script/variables.js" type="text/javascript"></script>-->
+  <script src="script/jquery.timer.js" type="text/javascript"></script>
   <script src="script/ui.js" type="text/javascript"></script>
   <script src="script/feed.js" type="text/javascript"></script>
 </body>

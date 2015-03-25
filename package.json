@@ -1,0 +1,9 @@
+{
+  "name": "FNAF-JS",
+  "main": "feed.html",
+  "window": {
+    "toolbar": false,
+    "width": 1920,
+    "height": 1080
+  }
+}

@@ -1,11 +1,15 @@
 body {
-/*  zoom:0.8;*/
+  /*zoom:0.7;*/
   width: 100%;
   height: 100%;
   background-color:black;
   margin-left:auto;
   margin-right:auto; 
   overflow:hidden;
+}
+
+#fan {
+	top: 42.3%;
 }
 
 #record {

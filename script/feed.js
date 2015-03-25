@@ -3,6 +3,9 @@ var currentRoomID = 0;
 var animatestatic = 0;
 var showrecord = false;
 var feedopen = true;
+var fananim =[];
+var currentPower = 100;
+var currentPowerUsage = 0;
 
 // roomstates: 0 = default, 1 = different, etc.
 var currRoomStates=[{name:"1a",roomstate:0},
@@ -172,10 +175,14 @@ function updatecurrentRoom(roomparameter) {
 		roomdiv.addClass("roomtest");
 	};
 }
-
+/*
 for(x=1;x<9;x++){
 	staticanim[0+x] = new Image();
 	staticanim[0+x].src = "graphics/camera/static_"+x+".png";
+}*/
+for(x=1;x<4;x++){
+	fananim[0+x] = new Image();
+	fananim[0+x].src = "graphics/rooms/office/fan_"+x+".png";
 }
 
 function mainThread() {
@@ -196,29 +203,16 @@ function recordTick() {
 	};
 }
 
-function playanimation(path_to_file,speed,frames,elementID){
-	if(path_to_file=="") return console.log("No file specified!");
-//	if(speed=="") speed = 50;
-	if(frames=="") return console.log("No frame length specified!");
-	console.log(path_to_file);
-	console.log(speed);
-	console.log(frames);
-	for(x=1;x<(frames+1);x++){
-		frame=x;
-		setTimeout(setDivImg, (speed*x),path_to_file,x,elementID);
-	}
-}
-
-function setDivImg(){
+function setDivImgFan(){
 //	document.getElementById(elementID).src=pathtofile+"_"+frame2+".png"
 	setTimeout(function(){
-		fandiv.attr("src","graphics/rooms/office/fan_1.png");
+		fandiv.attr("src",fananim[1].src);
 	},60);
 	setTimeout(function(){
-		fandiv.attr("src","graphics/rooms/office/fan_2.png");
+		fandiv.attr("src",fananim[2].src);
 	},120);
 	setTimeout(function(){
-		fandiv.attr("src","graphics/rooms/office/fan_3.png");
+		fandiv.attr("src",fananim[3].src);
 	},180);
 };
 
@@ -228,7 +222,9 @@ document.getElementById("body").style.display="block";
 var mainThreadID = setInterval('mainThread()', 1000);
 //var fananimThreadID = setInterval('playanimation("graphics/rooms/office/fan",900,3,"fan")', 905);
 //var cameraanimId = setInterval('camerapositionTick()', 8500);
-var recordanimId = setInterval('recordTick()', 1000);
+var recordanimId; //= setInterval('recordTick()', 1000);
 //playanimation("graphics/rooms/office/fan",900,3,"fan");
-setInterval("setDivImg()",180);
-
+//var fananimation = setInterval("setDivImgFan()",180);
+var timer = $.timer(function() {
+    setDivImgFan()
+}, 180, true);
