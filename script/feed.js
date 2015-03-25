@@ -2,20 +2,35 @@ var currentRoom = "1a";
 var currentRoomID = 0;
 var animatestatic = 0;
 var showrecord = false;
-var feedopen = true;
+var feedopen = false;
 var fananim =[];
 var currentPower = 100;
 var currentPowerUsage = 0;
+var currenthour = 0;
+var hours = [];
+var timeCounter=0;
+hours[0] = 12;
+for(x=1;x<7;x++){
+	hours[x] = x;
+};
 
 // roomstates: 0 = default, 1 = different, etc.
 var currRoomStates=[{name:"1a",roomstate:0},
 {name:"1b",roomstate:0},
-{name:"1c",roomstate:0}
+{name:"1c",roomstate:0},
+{name:"2a",roomstate:0},
+{name:"2b",roomstate:0},
+{name:"5",roomstate:0},
+{name:"7",roomstate:0}
 ];
 
 var rooms=[{name:"1a",movingcamera:true,leftadjustment:0},
 {name:"1b",movingcamera:false,leftadjustment:0},
-{name:"1c",movingcamera:false,leftadjustment:350}
+{name:"1c",movingcamera:false,leftadjustment:350},
+{name:"2a",movingcamera:false,leftadjustment:300},
+{name:"2b",movingcamera:false,leftadjustment:150},
+{name:"5",movingcamera:false,leftadjustment:150},
+{name:"7",movingcamera:false,leftadjustment:250}
 ];
 
 function updateAIPosition(AIID,AIstate,newroom,roomstate,oldroomstate){
@@ -185,10 +200,72 @@ for(x=1;x<4;x++){
 	fananim[0+x].src = "graphics/rooms/office/fan_"+x+".png";
 }
 
+function updatePowerPercent() {
+/*	if(currentPowerUsage==0) {
+		currentPower-=(1/7);
+	}
+	else {
+		currentPower-=(currentPowerUsage/4.6);
+	};*/
+	switch(currentPowerUsage) {
+				case 0: 
+					currentPower-=(0.141);
+					break;
+				case 1: 
+					currentPower-=(0.235);
+					break;
+				case 2: 
+					currentPower-=(0.341);
+					break;
+				case 3: 
+					currentPower-=(0.447);
+					break;
+				case 4: 
+					currentPower-=(0.553);
+					break;
+				default:
+	}
+    var digit1 = currentPower.toString()[0];
+    var digit2 = currentPower.toString()[1];
+    var digit3 = currentPower.toString()[2];
+    digit1 = parseInt(digit1);
+    digit2 = parseInt(digit2);
+    digit3 = parseInt(digit3);
+	numberonediv.attr("src",powerusagenumbersimage[digit1].src);
+	numbertwodiv.attr("src",powerusagenumbersimage[digit2].src);
+    if(typeof currentPower.toString()[2] == "undefined" || currentPower.toString()[2] == "0" || currentPower.toString()[2] == ".") {
+    	numberthreediv.attr("src","graphics/rooms/office/cameraposition.png");
+    }
+    else {
+        numberthreediv.attr("src",powerusagenumbersimage[digit3].src);
+    };
+}
+
+function updatePowerUsage() {
+	powerusagediv.attr("src","graphics/camera/power"+(currentPowerUsage+1)+".png");
+}
+
 function mainThread() {
-//	tick();
-//	camerapositionTick();
-//	staticTick();
+    updatePowerPercent();
+    updatePowerUsage();
+    updateTime();
+    if(currentRoom=="2a") {
+		playroomanimation("2a",Math.random());
+	};
+}
+
+function updateTime() {
+    timeCounter++;
+    if(timeCounter==85) {
+    	timeCounter=0;
+        currenthour++;
+    }
+    if(currenthour>0){
+		timehourextradiv.attr("src",timehourimage[currenthour].src);
+        document.getElementById("timehour").style.display="none"
+    }
+    else {
+    };
 }
 
 function recordTick() {
@@ -226,5 +303,5 @@ var recordanimId; //= setInterval('recordTick()', 1000);
 //playanimation("graphics/rooms/office/fan",900,3,"fan");
 //var fananimation = setInterval("setDivImgFan()",180);
 var timer = $.timer(function() {
-    setDivImgFan()
+   setDivImgFan()
 }, 180, true);

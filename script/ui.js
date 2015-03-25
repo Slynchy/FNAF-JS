@@ -13,10 +13,23 @@ var doorbuttonsright_lightdiv = $("#doorbuttonsright_light");
 var camerafeeddiv = $("#camerafeed");
 //var officediv = $("#office");
 var officemaindiv = $("#officemain");
+
+var windowwidth = $( document ).width();
+window.onresize = function(event) {
+    windowwidth = $( document ).width();
+};
+
 //var officeroomdiv = $("#officeroom");
 var fandiv = $("#fan");
 var officecamerarightdiv = $("#officecameraright");
 var officecameraleftdiv = $("#officecameraleft");
+var numberonediv = $("#numberone");
+var numbertwodiv = $("#numbertwo");
+var numberthreediv = $("#numberthree");
+var timehourdiv = $("#timehour");
+var timehourextradiv = $("#timehourextra");
+var powerusagediv = $("#powerusage");
+var camerafeedanimationdiv = $("#camerafeedanimation");
 var officeX=0
 var officeXInterval;
 var officeXOtherInterval;
@@ -26,9 +39,13 @@ var leftlighton=false;
 var rightlighton=false;
 var yArray = ["left","right"];
 
+var camerafeedanimationimage = [];
 var doorleftanim = [];
 var doorrightanim = [];
 var powerusageimage = [];
+var powerusagenumbersimage = [];
+var timehourimage = [];
+var room2aimage = [];
 
 var officelightstates = [];
 var officestates = [];
@@ -45,11 +62,11 @@ for(x=0;x<(officestates.length);x++){
 		officelightstates[x][y].src = "graphics/rooms/office/"+x+"_light"+yArray[y]+".png";
 	};
 };
-for(x=1;x<3;x++){
+for(x=1;x<5;x++){
 	buttonleftstates[x] = new Image();
 	buttonleftstates[x].src = "graphics/rooms/office/buttons/buttonleft_"+x+".png";
 };
-for(x=1;x<3;x++){
+for(x=1;x<5;x++){
 	buttonrightstates[x] = new Image();
 	buttonrightstates[x].src = "graphics/rooms/office/buttons/buttonright_"+x+".png";
 };
@@ -63,6 +80,22 @@ for(x=1;x<6;x++){
 	powerusageimage[x] = new Image();
 	powerusageimage[x].src = "graphics/camera/power"+x+".png";
 };
+for(x=0;x<10;x++){
+	powerusagenumbersimage[x] = new Image();
+	powerusagenumbersimage[x].src = "graphics/camera/ui/powernumbers/"+x+".png";
+};
+for(x=0;x<7;x++){
+	timehourimage[x] = new Image();
+	timehourimage[x].src = "graphics/camera/ui/time"+x+".png";
+};
+for(x=0;x<10;x++){
+	camerafeedanimationimage[x] = new Image();
+	camerafeedanimationimage[x].src = "graphics/camera/camerafeedanimation/"+x+".png";
+};
+for(x=0;x<2;x++){
+	room2aimage[x] = new Image();
+	room2aimage[x].src = "graphics/rooms/2a/"+x+".png";
+};
 
 
 
@@ -70,6 +103,10 @@ for(x=1;x<6;x++){
 var button1adiv = $("#button-1a");
 var button1bdiv = $("#button-1b");
 var button1cdiv = $("#button-1c");
+var button2adiv = $("#button-2a");
+var button2bdiv = $("#button-2b");
+var button5div = $("#button-5");
+var button7div = $("#button-7");
 var buttonopenclosecameradiv = $("#openclosecamera");
 
 function staticTick() {
@@ -82,16 +119,29 @@ function staticTick() {
 }
 
 function OpenCloseFeed() {
-	camerafeeddiv.toggle();
+	if(feedopen==false){
+		setTimeout(function(){camerafeeddiv.toggle();officemaindiv.toggle();},360);
+	}
+	else {
+		camerafeeddiv.toggle();
+		officemaindiv.toggle();
+	};
 //	officediv.toggle();
-	officemaindiv.toggle();
+//	officemaindiv.toggle();
 //	officeroomdiv.toggle();
 	fandiv.toggle();
-    if(staticimgdiv.paused==false){
+	playcamerafeedanimation(feedopen);
+    if(feedopen==false){
     	staticimgdiv.play();
+    	feedopen=true;
+        currentPowerUsage++;
+        updatePowerUsage();
     }
     else {
     	staticimgdiv.pause();
+    	feedopen=false;
+        currentPowerUsage--;
+        updatePowerUsage();
     };
 }
 
@@ -186,12 +236,89 @@ button1cdiv.click(function(){
 	}
 });
 
+button2adiv.mouseenter(function(){
+	if(this.id!==("button-"+currentRoom)){
+		this.style.backgroundColor='#505050';
+	}
+	else this.style.backgroundColor='#107010';
+});
+button2adiv.mouseleave(function(){
+	if(this.id!==("button-"+currentRoom)){
+		this.style.backgroundColor='#101010';
+	}
+});
+button2adiv.click(function(){
+	if(currentRoom!=="2a"){
+		this.style.backgroundColor='#107010';
+		updatecurrentRoom("2a");
+		resetCameraButtons(currentRoom);
+	}
+});
+
+button2bdiv.mouseenter(function(){
+	if(this.id!==("button-"+currentRoom)){
+		this.style.backgroundColor='#505050';
+	}
+	else this.style.backgroundColor='#107010';
+});
+button2bdiv.mouseleave(function(){
+	if(this.id!==("button-"+currentRoom)){
+		this.style.backgroundColor='#101010';
+	}
+});
+button2bdiv.click(function(){
+	if(currentRoom!=="2b"){
+		this.style.backgroundColor='#107010';
+		updatecurrentRoom("2b");
+		resetCameraButtons(currentRoom);
+	}
+});
+
+button5div.mouseenter(function(){
+	if(this.id!==("button-"+currentRoom)){
+		this.style.backgroundColor='#505050';
+	}
+	else this.style.backgroundColor='#107010';
+});
+button5div.mouseleave(function(){
+	if(this.id!==("button-"+currentRoom)){
+		this.style.backgroundColor='#101010';
+	}
+});
+button5div.click(function(){
+	if(currentRoom!=="5"){
+		this.style.backgroundColor='#107010';
+		updatecurrentRoom("5");
+		resetCameraButtons(currentRoom);
+	}
+});
+
+button7div.mouseenter(function(){
+	if(this.id!==("button-"+currentRoom)){
+		this.style.backgroundColor='#505050';
+	}
+	else this.style.backgroundColor='#107010';
+});
+button7div.mouseleave(function(){
+	if(this.id!==("button-"+currentRoom)){
+		this.style.backgroundColor='#101010';
+	}
+});
+button7div.click(function(){
+	if(currentRoom!=="7"){
+		this.style.backgroundColor='#107010';
+		updatecurrentRoom("7");
+		resetCameraButtons(currentRoom);
+	}
+});
+
 buttonopenclosecameradiv.click(function(){
+//	playcamerafeedanimation(feedopen);
 	OpenCloseFeed();
 });
 officecamerarightdiv.mouseenter(function(){
-	officeXInterval = setInterval(function(){
-		if(officeX>=380) {document.getElementById("officecameraright").style.display="none";return;};
+	officeXInterval = setInterval(function(){//380
+		if(officeX>=(windowwidth/5)) {document.getElementById("officecameraright").style.display="none";return;};
 		document.getElementById("officecameraleft").style.display="block";
 		officeX=(officeX+10);
 		document.getElementById("office").style.webkitTransform="translate(-"+officeX+"px)";
@@ -219,11 +346,15 @@ doorbuttonsleft_lightdiv.click(function(){
 		officemaindiv.css("background-image", "url('"+officelightstates[0][1].src+"')");
 		doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[2].src+"')");
 		leftlighton=true;
+        currentPowerUsage++;
+        updatePowerUsage();
 	}
 	else if(rightlighton!==true) {
 		officemaindiv.css("background-image", "url('"+officestates[0].src+"')");
 		doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[1].src+"')");
 		leftlighton=false;
+        currentPowerUsage--;
+        updatePowerUsage();
 	};
 });
 
@@ -231,10 +362,26 @@ doorbuttonsleft_doordiv.click(function(){
 	if(leftdooropen==false) {
 		playdooranimationleft(0);
 		leftdooropen=true;
+		if(leftlighton) {
+			doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[4].src+"')");
+		}
+		else {
+			doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[3].src+"')");
+		};
+        currentPowerUsage++;
+        updatePowerUsage();
 	}
 	else {
 		playdooranimationleft(1);
 		leftdooropen=false;
+		if(leftlighton) {
+			doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[2].src+"')");
+		}
+		else {
+			doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[1].src+"')");
+		};
+        currentPowerUsage--;
+        updatePowerUsage();
 	};
 });
 
@@ -242,10 +389,26 @@ doorbuttonsright_doordiv.click(function(){
 	if(rightdooropen==false) {
 		playdooranimationright(0);
 		rightdooropen=true;
+		if(rightlighton) {
+			doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[4].src+"')");
+		}
+		else {
+			doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[3].src+"')");
+		};
+        currentPowerUsage++;
+        updatePowerUsage();
 	}
 	else {
 		playdooranimationright(1);
 		rightdooropen=false;
+		if(rightlighton) {
+			doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[2].src+"')");
+		}
+		else {
+			doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[1].src+"')");
+		};
+        currentPowerUsage--;
+        updatePowerUsage();
 	};
 });
 
@@ -254,11 +417,15 @@ doorbuttonsright_lightdiv.click(function(){
 		officemaindiv.css("background-image", "url('"+officelightstates[0][0].src+"')");
 		doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[2].src+"')");
 		rightlighton=true;
+        currentPowerUsage++;
+        updatePowerUsage();
 	}
 	else if(leftlighton!==true) {
 		officemaindiv.css("background-image", "url('"+officestates[0].src+"')");
 		doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[1].src+"')");
 		rightlighton=false;
+        currentPowerUsage--;
+        updatePowerUsage();
 	};
 });
 // ==============================================END OF BUTTON EVENTS=======================================
@@ -274,6 +441,40 @@ function playdooranimationright(inReverse){
 		}
 	}
 }
+
+function playcamerafeedanimation(inReverse){
+	if(inReverse==0) {
+		camerafeedanimationdiv.css("display","block");
+		for(x=0;x<(10);x++){
+			eval('setTimeout(function(){camerafeedanimationdiv.attr("src",camerafeedanimationimage['+x+'].src);},(30*('+x+'+1)));')
+			eval('setTimeout(function(){camerafeedanimationdiv.css("display","none");},(330));')
+		}
+	}
+	else if(inReverse==1) {
+		camerafeedanimationdiv.css("display","block");
+		for(x=9;x>=(0);x--){
+			eval('setTimeout(function(){camerafeedanimationdiv.attr("src",camerafeedanimationimage['+x+'].src);},(20*(Math.abs('+x+'-9))));')
+			eval('setTimeout(function(){camerafeedanimationdiv.css("display","none");},(200));')
+		}
+	};
+}
+
+function playroomanimation(room,randomnumber){
+	switch(room) {
+		case "2a":
+			for(x=0;x<(9);x++){
+				if(randomnumber>0.5) {
+					eval('setTimeout(function(){roomdiv.attr("src",room2aimage['+(x & 1)+'].src);},(45*(Math.abs('+x+'+1))));');
+				}
+				else {
+					eval('setTimeout(function(){roomdiv.attr("src",room2aimage['+(x & 1)+'].src);},(15*(Math.abs('+x+'+1))));');
+				}
+			}
+            break;
+		default:
+			alert("Invalid or no room name given!");
+	}
+};
 
 function playdooranimationleft(inReverse){
 	if(inReverse==0) {
