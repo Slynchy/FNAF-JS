@@ -46,6 +46,7 @@ var powerusageimage = [];
 var powerusagenumbersimage = [];
 var timehourimage = [];
 var room2aimage = [];
+var room2afoxxyanim = [];
 
 var officelightstates = [];
 var officestates = [];
@@ -95,6 +96,10 @@ for(x=0;x<10;x++){
 for(x=0;x<2;x++){
 	room2aimage[x] = new Image();
 	room2aimage[x].src = "graphics/rooms/2a/"+x+".png";
+};
+for(x=0;x<31;x++){
+	room2afoxxyanim[x] = new Image();
+	room2afoxxyanim[x].src = "graphics/rooms/2a/foxxy/"+x+".png";
 };
 
 

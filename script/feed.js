@@ -9,6 +9,11 @@ var currentPowerUsage = 0;
 var currenthour = 0;
 var hours = [];
 var timeCounter=0;
+var foxxyrunning = false;
+var foxxytimeout;
+var foxxytimer=0;
+var playedfoxxyrunninganimation=false;
+var foxxyrunninganimationtimeout = [];
 hours[0] = 12;
 for(x=1;x<7;x++){
 	hours[x] = x;
@@ -16,11 +21,11 @@ for(x=1;x<7;x++){
 
 // roomstates: 0 = default, 1 = different, etc.
 var currRoomStates=[{name:"1a",roomstate:0},
-{name:"1b",roomstate:0},
+                    {name:"1b",roomstate:0},
 {name:"1c",roomstate:0},
 {name:"2a",roomstate:0},
 {name:"2b",roomstate:0},
-{name:"5",roomstate:0},
+{name:"5",roomstate:0,AIStates:[1,2]},
 {name:"7",roomstate:0}
 ];
 
@@ -42,7 +47,8 @@ function updateAIPosition(AIID,AIstate,newroom,roomstate,oldroomstate){
 
 var animatronicStates = [{name:"Chica",currentRoom:"1a",state:0},
                          {name:"Bonnie",currentRoom:"1a",state:0},
-                         {name:"Freddy",currentRoom:"1a",state:0}
+                         {name:"Freddy",currentRoom:"1a",state:0},
+                         {name:"Foxxy",currentRoom:"1c",state:0}
 						];
 
 function searchForState(room){
@@ -61,12 +67,16 @@ function searchForRoomID(roomname){
     };
 };
 
-var updateAIState = function(AIID,state,newroom,roomID){
-	if(state=="") state = 1;//parseInt(state);
+function updateAIState(AIID,state,newroom,roomID){
+	if(!AIID){
+		console.log("updateAIState:\nAIID - ID of the AI to update\nstate - What state to set it to\nnewroom - What room to change to\nroomID - I don't fucking know, the ID of the room but I don't know what it is used for.");
+		return;
+	};
+	if(state=="") state = 0;//parseInt(state);
 //    console.log(typeof roomID);
 //	if((typeof roomID) != "number") return console.log("Room name not an integer!");
-    if(newroom!=="") animatronicStates[AIID].currentRoom = newroom;
-    if(newroom!=="") animatronicStates[AIID].state = state;
+    if(newroom!=="") console.log("No new room specified, expect errors if unintended");//animatronicStates[AIID].currentRoom = newroom;
+   //  if(newroom!=="") animatronicStates[AIID].state = state;
 	
 	switch(AIID) {
 		case 0:// chica
@@ -78,6 +88,30 @@ var updateAIState = function(AIID,state,newroom,roomID){
             }
             break;
 		case 1: //Bunny
+            animatronicStates[AIID].currentRoom = newroom;
+			break;
+		case 3: //Foxy
+            switch(state) {
+                case 0: // hiding
+					updateRoomState("1c",0,1);
+                    break;   
+                case 1: // peeking round curtain
+					updateRoomState("1c",1,1);
+                    break;
+                case 2: // visible
+					updateRoomState("1c",2,1);
+                    break;
+                case 3: // OSHIT IT'S MISSING; IT'S ON ITS WAY
+					updateRoomState("1c",3,1);
+					foxxyrunning = true;
+                    break;
+                case 4: // damn bro you ded
+                    break;
+                case 5: // "Curses, foiled again! [bangs door in anger]"
+                    break;
+            }
+			animatronicStates[AIID].state=state;
+			foxxytimer=0;
 			break;
 		default:
 			alert("Invalid or no room name given!");
@@ -157,6 +191,31 @@ var updateRoomState = function(roomname,state,timeout){
 			}
 			if(leftornot==0 && currentRoom==roomname) roomdiv.css("left","0");
 			break;
+		case "1c":
+			currRoomStates[2].roomstate=state;
+			if(currentRoom == roomname) updateRoomStateStatic() //document.getElementById('static').style.opacity="1";
+			if(currentRoom == roomname) roomdiv.attr("src","graphics/rooms/1c/"+currRoomStates[2].roomstate+".png");
+			if(leftornot==0 && currentRoom==roomname) roomdiv.css("left","0");
+			break;
+		case "5":
+			currRoomStates[5].roomstate=state;
+			if(currentRoom == roomname) updateRoomStateStatic(4000); //document.getElementById('static').style.opacity="1";
+			switch(state) {
+				case 0: // empty
+					setTimeout(function(){
+						roomdiv.attr("src","graphics/rooms/5/"+currRoomStates[5].roomstate+".png");
+					}, 3000);
+					break;
+				case 1: // bonny
+					setTimeout(function(){
+						roomdiv.attr("src","graphics/rooms/5/"+currRoomStates[5].roomstate+".png");
+					}, 3000);
+					break;
+				default:
+					alert("penis");
+			}
+			if(leftornot==0 && currentRoom==roomname) roomdiv.css("left","0");
+			break;
 		default:
 			alert("Invalid or no room name given!");
 	}
@@ -178,7 +237,12 @@ function updatecurrentRoom(roomparameter) {
 	if(currentroomstatetoset== -1) return console.log("updatecurrentRoom() error - Invalid parameter given");
 	currentRoomID=searchForRoomID(roomparameter)
 	updateRoomStateStatic(175);
-	roomdiv.attr("src","graphics/rooms/"+currentRoom+"/"+currRoomStates[currentroomstatetoset2].roomstate+".png");
+//	if(foxxyrunning && playedfoxxyrunninganimation) {
+//		roomdiv.attr("src","graphics/rooms/"+currentRoom+"/"+currRoomStates[currentroomstatetoset2].roomstate+".png");
+//	}
+//	else {
+		roomdiv.attr("src","graphics/rooms/"+currentRoom+"/"+currRoomStates[currentroomstatetoset2].roomstate+".png");
+//	};
 	roomdiv.css("left","0");
 	if(rooms[currentRoomID].leftadjustment!==0){
 		roomdiv.css("left","-="+rooms[currentRoomID].leftadjustment);
@@ -188,6 +252,14 @@ function updatecurrentRoom(roomparameter) {
 	}
 	else {
 		roomdiv.addClass("roomtest");
+	};
+	if(currentRoom!=="2a") {
+		for(x=0;x<31;x++){
+			clearTimeout(foxxyrunninganimationtimeout[x]);
+		};
+	}
+	else if(foxxyrunning==true && currentRoom=="2a"){
+		setTimeout(playFoxxyRunningAnimation,800);
 	};
 }
 /*
@@ -245,11 +317,36 @@ function updatePowerUsage() {
 	powerusagediv.attr("src","graphics/camera/power"+(currentPowerUsage+1)+".png");
 }
 
+function updateFoxxyAI() {
+	switch(animatronicStates[3].state) {
+		case 0: 
+			break;
+		case 1: 
+			foxxytimer++;
+			if(foxxytimer==5){
+				updateAIState(3,2);
+			}
+			break;
+		case 2: 
+			foxxytimer++;
+			if(foxxytimer==5){
+				updateAIState(3,3);
+			}
+			break;
+		case 3: 
+			break;
+		case 4: 
+			break;
+		default:
+	}
+}
+
 function mainThread() {
     updatePowerPercent();
     updatePowerUsage();
     updateTime();
-    if(currentRoom=="2a") {
+	updateFoxxyAI();
+    if(currentRoom=="2a" && animatronicStates[3].state!==3) {
 		playroomanimation("2a",Math.random());
 	};
 }
@@ -293,10 +390,24 @@ function setDivImgFan(){
 	},180);
 };
 
+function playFoxxyRunningAnimation(){
+//	document.getElementById(elementID).src=pathtofile+"_"+frame2+".png"
+	for(x=0;x<31;x++){
+		eval('foxxyrunninganimationtimeout[x] = setTimeout(function(){roomdiv.attr("src",room2afoxxyanim['+x+'].src);},(35*'+x+'));');
+	};
+	setTimeout(function(){
+		foxxyrunning=false;
+		animatronicStates[3].state=4;
+		},(3350));
+};
+
 //mainThread();
 document.getElementById("body").style.display="block";
 //camerapositionTick();
 var mainThreadID = setInterval('mainThread()', 1000);
+foxxytimeout=setTimeout(function(){
+	updateAIState(3,1);
+},5000);
 //var fananimThreadID = setInterval('playanimation("graphics/rooms/office/fan",900,3,"fan")', 905);
 //var cameraanimId = setInterval('camerapositionTick()', 8500);
 var recordanimId; //= setInterval('recordTick()', 1000);
