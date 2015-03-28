@@ -1,123 +1,12 @@
-var roomdiv = $("#room");
-var staticdiv = $("#static");
-var staticimgdiv = document.getElementById("staticimg");
-var recorddiv = $("#record");
-var doorleftdiv = $("#doorleft");
-var doorrightdiv = $("#doorright");
-var doorbuttonsleftdiv = $("#doorbuttonsleft");
-var doorbuttonsrightdiv = $("#doorbuttonsright");
-var doorbuttonsleft_lightdiv = $("#doorbuttonsleft_light");
-var doorbuttonsleft_doordiv = $("#doorbuttonsleft_door");
-var doorbuttonsright_doordiv = $("#doorbuttonsright_door");
-var doorbuttonsright_lightdiv = $("#doorbuttonsright_light");
-var camerafeeddiv = $("#camerafeed");
-//var officediv = $("#office");
-var officemaindiv = $("#officemain");
-
-var windowwidth = $( document ).width();
-window.onresize = function(event) {
-    windowwidth = $( document ).width();
-};
-
-//var officeroomdiv = $("#officeroom");
-var fandiv = $("#fan");
-var officecamerarightdiv = $("#officecameraright");
-var officecameraleftdiv = $("#officecameraleft");
-var numberonediv = $("#numberone");
-var numbertwodiv = $("#numbertwo");
-var numberthreediv = $("#numberthree");
-var timehourdiv = $("#timehour");
-var timehourextradiv = $("#timehourextra");
-var powerusagediv = $("#powerusage");
-var camerafeedanimationdiv = $("#camerafeedanimation");
-var officeX=0
-var officeXInterval;
-var officeXOtherInterval;
-var leftdooropen=false;
-var rightdooropen=false;
-var leftlighton=false;
-var rightlighton=false;
-var yArray = ["left","right"];
-
-var camerafeedanimationimage = [];
-var doorleftanim = [];
-var doorrightanim = [];
-var powerusageimage = [];
-var powerusagenumbersimage = [];
-var timehourimage = [];
-var room2aimage = [];
-var room2afoxxyanim = [];
-
-var officelightstates = [];
-var officestates = [];
-var buttonleftstates = [];
-var buttonrightstates = [];
-for(x=0;x<1;x++){
-	officestates[x] = new Image();
-	officestates[x].src = "graphics/rooms/office/"+x+".png";
-};
-for(x=0;x<(officestates.length);x++){
-	for(y=0;y<2;y++){
-		if(!officelightstates[x]) officelightstates[x] = [];
-		officelightstates[x][y] = new Image();
-		officelightstates[x][y].src = "graphics/rooms/office/"+x+"_light"+yArray[y]+".png";
-	};
-};
-for(x=1;x<5;x++){
-	buttonleftstates[x] = new Image();
-	buttonleftstates[x].src = "graphics/rooms/office/buttons/buttonleft_"+x+".png";
-};
-for(x=1;x<5;x++){
-	buttonrightstates[x] = new Image();
-	buttonrightstates[x].src = "graphics/rooms/office/buttons/buttonright_"+x+".png";
-};
-for(x=0;x<14;x++){
-	doorrightanim[x] = new Image();
-	doorrightanim[x].src = "graphics/rooms/office/doors/right/"+x+".png";
-	doorleftanim[x] = new Image();
-	doorleftanim[x].src = "graphics/rooms/office/doors/left/"+x+".png";
-};
-for(x=1;x<6;x++){
-	powerusageimage[x] = new Image();
-	powerusageimage[x].src = "graphics/camera/power"+x+".png";
-};
-for(x=0;x<10;x++){
-	powerusagenumbersimage[x] = new Image();
-	powerusagenumbersimage[x].src = "graphics/camera/ui/powernumbers/"+x+".png";
-};
-for(x=0;x<7;x++){
-	timehourimage[x] = new Image();
-	timehourimage[x].src = "graphics/camera/ui/time"+x+".png";
-};
-for(x=0;x<10;x++){
-	camerafeedanimationimage[x] = new Image();
-	camerafeedanimationimage[x].src = "graphics/camera/camerafeedanimation/"+x+".png";
-};
-for(x=0;x<2;x++){
-	room2aimage[x] = new Image();
-	room2aimage[x].src = "graphics/rooms/2a/"+x+".png";
-};
-for(x=0;x<31;x++){
-	room2afoxxyanim[x] = new Image();
-	room2afoxxyanim[x].src = "graphics/rooms/2a/foxxy/"+x+".png";
-};
-
-
-
-
-var button1adiv = $("#button-1a");
-var button1bdiv = $("#button-1b");
-var button1cdiv = $("#button-1c");
-var button2adiv = $("#button-2a");
-var button2bdiv = $("#button-2b");
-var button5div = $("#button-5");
-var button7div = $("#button-7");
-var buttonopenclosecameradiv = $("#openclosecamera");
+//
+// ui.js
+// The JS for handling UI changes and functions
+//
+// Last updated - 27/03/2015 @ 12:29pm
 
 function staticTick() {
   randomcheck++
   if(randomcheck>8) randomcheck=1;
-//  var elem = document.getElementById('staticimg');
   staticimgdiv.src=staticanim[randomcheck].src;
 
   staticId = setTimeout('staticTick()', 30);
@@ -131,11 +20,8 @@ function OpenCloseFeed() {
 		camerafeeddiv.toggle();
 		officemaindiv.toggle();
 	};
-//	officediv.toggle();
-//	officemaindiv.toggle();
-//	officeroomdiv.toggle();
-	fandiv.toggle();
 	playcamerafeedanimation(feedopen);
+	fandiv.toggle();
     if(feedopen==false){
     	staticimgdiv.play();
     	feedopen=true;
@@ -152,21 +38,20 @@ function OpenCloseFeed() {
 
 function updateRoomStateStatic(duration){
     if(duration=="") duration = 2000;
-	if(animatestatic==0) {
-		animatestatic=1;
-		staticdiv.animate({
-			opacity: 2
-		},0,function(){
-			animatestatic=2;
-			setTimeout(function(){
+	animationduration = 1000;
+	animatestatic=1;
+	staticdiv.animate({
+		opacity: 2
+	},0,function(){
+		animatestatic=2;
+		setTimeout(function(){
+			staticdiv.animate({
+				opacity: 0.25
+			},animationduration,function(){
 				animatestatic=0;
-				staticdiv.animate({
-					opacity: 0.25
-				},1000,function(){
-				});
-			}, duration)
-		});
-	}
+			});
+		}, duration);
+	});
 }
 
 function camerapositionTick() {
@@ -196,7 +81,7 @@ button1adiv.mouseleave(function(){
 	}
 });
 button1adiv.click(function(){
-	if(currentRoom!=="1a"){
+	if(currentRoom!=="1a" && animatestatic<1){
 		this.style.backgroundColor='#107010';
 		updatecurrentRoom("1a");
 		resetCameraButtons(currentRoom);
@@ -215,7 +100,7 @@ button1bdiv.mouseleave(function(){
 	}
 });
 button1bdiv.click(function(){
-	if(currentRoom!=="1b"){
+	if(currentRoom!=="1b" && animatestatic<1){
 		this.style.backgroundColor='#107010';
 		updatecurrentRoom("1b");
 		resetCameraButtons(currentRoom);
@@ -234,7 +119,7 @@ button1cdiv.mouseleave(function(){
 	}
 });
 button1cdiv.click(function(){
-	if(currentRoom!=="1c"){
+	if(currentRoom!=="1c" && animatestatic<1){
 		this.style.backgroundColor='#107010';
 		updatecurrentRoom("1c");
 		resetCameraButtons(currentRoom);
@@ -253,7 +138,7 @@ button2adiv.mouseleave(function(){
 	}
 });
 button2adiv.click(function(){
-	if(currentRoom!=="2a"){
+	if(currentRoom!=="2a" && animatestatic<1){
 		this.style.backgroundColor='#107010';
 		updatecurrentRoom("2a");
 		resetCameraButtons(currentRoom);
@@ -272,7 +157,7 @@ button2bdiv.mouseleave(function(){
 	}
 });
 button2bdiv.click(function(){
-	if(currentRoom!=="2b"){
+	if(currentRoom!=="2b" && animatestatic<1){
 		this.style.backgroundColor='#107010';
 		updatecurrentRoom("2b");
 		resetCameraButtons(currentRoom);
@@ -291,7 +176,7 @@ button5div.mouseleave(function(){
 	}
 });
 button5div.click(function(){
-	if(currentRoom!=="5"){
+	if(currentRoom!=="5" && animatestatic<1){
 		this.style.backgroundColor='#107010';
 		updatecurrentRoom("5");
 		resetCameraButtons(currentRoom);
@@ -310,7 +195,7 @@ button7div.mouseleave(function(){
 	}
 });
 button7div.click(function(){
-	if(currentRoom!=="7"){
+	if(currentRoom!=="7" && animatestatic<1){
 		this.style.backgroundColor='#107010';
 		updatecurrentRoom("7");
 		resetCameraButtons(currentRoom);
@@ -507,13 +392,3 @@ function resetCameraButtons(current){
 		}
 	}
 }
-/*
-function readMouseMove(e){
-	mousePosition = [];
-	mousePosition[0] = e.clientX;
-	mousePosition[1] = e.clientY;
-	return mousePosition;
-}
-document.onmousemove = readMouseMove;
-window.screen.availHeight
-*/

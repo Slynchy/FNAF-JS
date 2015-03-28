@@ -1,19 +1,29 @@
-var currentRoom = "1a";
-var currentRoomID = 0;
-var animatestatic = 0;
-var showrecord = false;
-var feedopen = false;
-var fananim =[];
-var currentPower = 100;
-var currentPowerUsage = 0;
-var currenthour = 0;
-var hours = [];
-var timeCounter=0;
-var foxxyrunning = false;
-var foxxytimeout;
-var foxxytimer=0;
-var playedfoxxyrunninganimation=false;
-var foxxyrunninganimationtimeout = [];
+//
+// FNAF-JS
+// Five Night's at Freddy's - JavaScript
+//
+// Original game by Scott Cawthon
+//
+// Ported by Sam 'Slynch' Lynch
+//
+// Last updated - 27/03/2015 @ 12:28pm
+
+function loadgame() {
+	loadroomImages();
+	loadEverythingElse();
+	//mainThread();
+	document.getElementById("body").style.display="block";
+	//camerapositionTick();
+	var mainThreadID = setInterval('mainThread()', 1000);
+	foxxytimeout=setTimeout(function(){
+		updateAIState(3,1);
+	},5000);
+	var recordanimId = setInterval('recordTick()', 1000);
+	var timer = $.timer(function() {
+	   setDivImgFan()
+	}, 180, true);
+};
+
 hours[0] = 12;
 for(x=1;x<7;x++){
 	hours[x] = x;
@@ -230,6 +240,7 @@ var randomcheck=1
 
 function updatecurrentRoom(roomparameter) {
 	if(roomparameter=="") return console.log("updatecurrentRoom() error - No parameter given");
+//	if(animatestatic>0) return console.log("updatecurrentRoom() error - Playing animation, aborting");
 	currentRoom=roomparameter;
 	currentroomstatetoset = 0
 	currentroomstatetoset = searchForState(roomparameter);
@@ -237,12 +248,7 @@ function updatecurrentRoom(roomparameter) {
 	if(currentroomstatetoset== -1) return console.log("updatecurrentRoom() error - Invalid parameter given");
 	currentRoomID=searchForRoomID(roomparameter)
 	updateRoomStateStatic(175);
-//	if(foxxyrunning && playedfoxxyrunninganimation) {
-//		roomdiv.attr("src","graphics/rooms/"+currentRoom+"/"+currRoomStates[currentroomstatetoset2].roomstate+".png");
-//	}
-//	else {
-		roomdiv.attr("src","graphics/rooms/"+currentRoom+"/"+currRoomStates[currentroomstatetoset2].roomstate+".png");
-//	};
+	roomdiv.attr("src",roomImages[currentRoomID][currRoomStates[currentroomstatetoset2].roomstate].src);    //"graphics/rooms/"+currentRoom+"/"+currRoomStates[currentroomstatetoset2].roomstate+".png");
 	roomdiv.css("left","0");
 	if(rooms[currentRoomID].leftadjustment!==0){
 		roomdiv.css("left","-="+rooms[currentRoomID].leftadjustment);
@@ -262,23 +268,12 @@ function updatecurrentRoom(roomparameter) {
 		setTimeout(playFoxxyRunningAnimation,800);
 	};
 }
-/*
-for(x=1;x<9;x++){
-	staticanim[0+x] = new Image();
-	staticanim[0+x].src = "graphics/camera/static_"+x+".png";
-}*/
 for(x=1;x<4;x++){
 	fananim[0+x] = new Image();
 	fananim[0+x].src = "graphics/rooms/office/fan_"+x+".png";
 }
 
 function updatePowerPercent() {
-/*	if(currentPowerUsage==0) {
-		currentPower-=(1/7);
-	}
-	else {
-		currentPower-=(currentPowerUsage/4.6);
-	};*/
 	switch(currentPowerUsage) {
 				case 0: 
 					currentPower-=(0.141);
@@ -296,20 +291,23 @@ function updatePowerPercent() {
 					currentPower-=(0.553);
 					break;
 				default:
-	}
+	};
     var digit1 = currentPower.toString()[0];
     var digit2 = currentPower.toString()[1];
     var digit3 = currentPower.toString()[2];
     digit1 = parseInt(digit1);
     digit2 = parseInt(digit2);
     digit3 = parseInt(digit3);
-	numberonediv.attr("src",powerusagenumbersimage[digit1].src);
-	numbertwodiv.attr("src",powerusagenumbersimage[digit2].src);
-    if(typeof currentPower.toString()[2] == "undefined" || currentPower.toString()[2] == "0" || currentPower.toString()[2] == ".") {
+	if (currentPower<=0){
+    	numberonediv.attr("src","graphics/rooms/office/cameraposition.png");
+    	numbertwodiv.attr("src","graphics/rooms/office/cameraposition.png");
+	} else if(currentPower<10) {
+        numberonediv.attr("src",powerusagenumbersimage[digit1].src);
+    	numbertwodiv.attr("src","graphics/rooms/office/cameraposition.png");
+	} else if (currentPower<100) {
+        numberonediv.attr("src",powerusagenumbersimage[digit1].src);
+		numbertwodiv.attr("src",powerusagenumbersimage[digit2].src);
     	numberthreediv.attr("src","graphics/rooms/office/cameraposition.png");
-    }
-    else {
-        numberthreediv.attr("src",powerusagenumbersimage[digit3].src);
     };
 }
 
@@ -391,7 +389,6 @@ function setDivImgFan(){
 };
 
 function playFoxxyRunningAnimation(){
-//	document.getElementById(elementID).src=pathtofile+"_"+frame2+".png"
 	for(x=0;x<31;x++){
 		eval('foxxyrunninganimationtimeout[x] = setTimeout(function(){roomdiv.attr("src",room2afoxxyanim['+x+'].src);},(35*'+x+'));');
 	};
@@ -401,18 +398,4 @@ function playFoxxyRunningAnimation(){
 		},(3350));
 };
 
-//mainThread();
-document.getElementById("body").style.display="block";
-//camerapositionTick();
-var mainThreadID = setInterval('mainThread()', 1000);
-foxxytimeout=setTimeout(function(){
-	updateAIState(3,1);
-},5000);
-//var fananimThreadID = setInterval('playanimation("graphics/rooms/office/fan",900,3,"fan")', 905);
-//var cameraanimId = setInterval('camerapositionTick()', 8500);
-var recordanimId; //= setInterval('recordTick()', 1000);
-//playanimation("graphics/rooms/office/fan",900,3,"fan");
-//var fananimation = setInterval("setDivImgFan()",180);
-var timer = $.timer(function() {
-   setDivImgFan()
-}, 180, true);
+loadgame();
