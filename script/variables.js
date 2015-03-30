@@ -4,7 +4,8 @@
 //
 // Last updated - 27/03/2015 @ 12:29pm
 
-
+var mainmenuanimInterval1;
+var mainmenuanimInterval2;
 
 // amountofimages is the amount of images, but the highest number will be 1 less than that number.
 // so image 4 in an array will be amountofimages-1
@@ -16,9 +17,14 @@ var roomImagesIndex = [{name: "1a",amountofImages: 5},
 {name: "5",amountofImages: 3},
 {name: "7",amountofImages: 1}]
 
+var MAINBODY = $("#mainbody");
+var mainmenu = $("#mainmenu");
+var amduatlogo = $("#amduatlogo");
+var mainmenufazbearanimdiv = $("#mainmenufazbearanim");
 var roomdiv = $("#room");
 var staticdiv = $("#static");
 var staticimgdiv = document.getElementById("staticimg");
+var mainmenustaticimgdiv = document.getElementById("mainmenustaticimg");
 var recorddiv = $("#record");
 var doorleftdiv = $("#doorleft");
 var doorrightdiv = $("#doorright");
@@ -65,6 +71,7 @@ var powerusagenumbersimage = [];
 var timehourimage = [];
 var room2aimage = [];
 var room2afoxxyanim = [];
+var mainmenufazbear = [];
 
 var officelightstates = [];
 var officestates = [];
@@ -98,3 +105,23 @@ var playedfoxxyrunninganimation=false;
 var foxxyrunninganimationtimeout = [];
 
 var roomImages = [];
+
+
+// roomstates: 0 = default, 1 = different, etc.
+var currRoomStates=[{name:"1a",roomstate:0},
+                    {name:"1b",roomstate:0},
+{name:"1c",roomstate:0},
+{name:"2a",roomstate:0},
+{name:"2b",roomstate:0},
+{name:"5",roomstate:0,AIStates:[1,2]},
+{name:"7",roomstate:0}
+];
+
+var rooms=[{name:"1a",movingcamera:true,leftadjustment:0},
+{name:"1b",movingcamera:false,leftadjustment:0},
+{name:"1c",movingcamera:false,leftadjustment:22},
+{name:"2a",movingcamera:false,leftadjustment:22},
+{name:"2b",movingcamera:false,leftadjustment:13},
+{name:"5",movingcamera:false,leftadjustment:13},
+{name:"7",movingcamera:false,leftadjustment:22}
+];

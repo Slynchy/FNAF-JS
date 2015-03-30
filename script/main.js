@@ -6,12 +6,17 @@
 //
 // Ported by Sam 'Slynch' Lynch
 //
-// Last updated - 27/03/2015 @ 12:28pm
+// Last updated - 30/03/2015 @ 03:04am - wrestlemania :D
 
 function loadgame() {
 	loadroomImages();
 	loadEverythingElse();
 	//mainThread();
+	clearInterval(mainmenuanimInterval1);
+	document.getElementById("mainmenustaticimg").style.display="none";
+	document.getElementById("timekeeper").style.display="block";
+	document.getElementById("openclosecamera").style.display="block";
+	document.getElementById("power").style.display="block";
 	document.getElementById("body").style.display="block";
 	//camerapositionTick();
 	var mainThreadID = setInterval('mainThread()', 1000);
@@ -28,25 +33,6 @@ hours[0] = 12;
 for(x=1;x<7;x++){
 	hours[x] = x;
 };
-
-// roomstates: 0 = default, 1 = different, etc.
-var currRoomStates=[{name:"1a",roomstate:0},
-                    {name:"1b",roomstate:0},
-{name:"1c",roomstate:0},
-{name:"2a",roomstate:0},
-{name:"2b",roomstate:0},
-{name:"5",roomstate:0,AIStates:[1,2]},
-{name:"7",roomstate:0}
-];
-
-var rooms=[{name:"1a",movingcamera:true,leftadjustment:0},
-{name:"1b",movingcamera:false,leftadjustment:0},
-{name:"1c",movingcamera:false,leftadjustment:350},
-{name:"2a",movingcamera:false,leftadjustment:300},
-{name:"2b",movingcamera:false,leftadjustment:150},
-{name:"5",movingcamera:false,leftadjustment:150},
-{name:"7",movingcamera:false,leftadjustment:250}
-];
 
 function updateAIPosition(AIID,AIstate,newroom,roomstate,oldroomstate){
     updateRoomState(animatronicStates[AIID].currentRoom,oldroomstate,1); //old room
@@ -251,7 +237,7 @@ function updatecurrentRoom(roomparameter) {
 	roomdiv.attr("src",roomImages[currentRoomID][currRoomStates[currentroomstatetoset2].roomstate].src);    //"graphics/rooms/"+currentRoom+"/"+currRoomStates[currentroomstatetoset2].roomstate+".png");
 	roomdiv.css("left","0");
 	if(rooms[currentRoomID].leftadjustment!==0){
-		roomdiv.css("left","-="+rooms[currentRoomID].leftadjustment);
+		roomdiv.css("left","-"+rooms[currentRoomID].leftadjustment+"%");
 	};
 	if(rooms[currentRoomID].movingcamera==false){
 		roomdiv.removeClass("roomtest");
@@ -267,10 +253,6 @@ function updatecurrentRoom(roomparameter) {
 	else if(foxxyrunning==true && currentRoom=="2a"){
 		setTimeout(playFoxxyRunningAnimation,800);
 	};
-}
-for(x=1;x<4;x++){
-	fananim[0+x] = new Image();
-	fananim[0+x].src = "graphics/rooms/office/fan_"+x+".png";
 }
 
 function updatePowerPercent() {
@@ -344,7 +326,7 @@ function mainThread() {
     updatePowerUsage();
     updateTime();
 	updateFoxxyAI();
-    if(currentRoom=="2a" && animatronicStates[3].state!==3) {
+	if(currentRoom=="2a" && animatronicStates[3].state!==3) {
 		playroomanimation("2a",Math.random());
 	};
 }
@@ -398,4 +380,43 @@ function playFoxxyRunningAnimation(){
 		},(3350));
 };
 
-loadgame();
+function mainmenu(){
+	document.getElementById("mainmenu").style.display="block";
+	mainmenuanimInterval1 = setInterval(function(){
+		penis=Math.random();
+		if(penis>0.8) {
+			for(x=0;x<(6);x++){
+				eval('setTimeout(function(){mainmenufazbearanimdiv.attr("src",mainmenufazbear['+(x & 3)+'].src);},(65*(Math.abs('+x+'+1))));');
+			};
+		}
+		else if(penis<0.8 && penis>0.6) {
+			for(x=0;x<(7);x++){
+				eval('setTimeout(function(){mainmenufazbearanimdiv.attr("src",mainmenufazbear['+(x & 2)+'].src);},(45*(Math.abs('+x+'+1))));');
+			};
+		} else if(penis<0.6 && penis>0.4) {
+			for(x=0;x<(7);x++){
+				eval('setTimeout(function(){mainmenufazbearanimdiv.attr("src",mainmenufazbear['+(x & 1)+'].src);},(25*(Math.abs('+x+'+1))));');
+			};
+		} else {
+			mainmenufazbearanimdiv.attr("src",mainmenufazbear[0].src)
+		};
+	},1000);
+//	staticdiv.css("display","block");
+};
+
+function introduction(){
+	amduatlogo.animate({
+		opacity: 2
+	},1000,function(){
+		setTimeout(function(){
+			amduatlogo.animate({
+				opacity: 0
+			},1000,function(){
+		//		mainmenu();
+			});
+		}, 2000);
+	});
+};
+
+//setTimeout(introduction,1650);
+mainmenu();
