@@ -7,6 +7,8 @@
 var mainmenuanimInterval1;
 var mainmenuanimInterval2;
 
+var mainThreadID;
+
 // amountofimages is the amount of images, but the highest number will be 1 less than that number.
 // so image 4 in an array will be amountofimages-1
 var roomImagesIndex = [{name: "1a",amountofImages: 5},
@@ -72,6 +74,8 @@ var timehourimage = [];
 var room2aimage = [];
 var room2afoxxyanim = [];
 var mainmenufazbear = [];
+var foxxyofficeanim = [];
+var foxxyofficeanimtimeout = [];
 
 var officelightstates = [];
 var officestates = [];
@@ -118,8 +122,8 @@ var currRoomStates=[{name:"1a",roomstate:0},
 ];
 
 var rooms=[{name:"1a",movingcamera:true,leftadjustment:0},
-{name:"1b",movingcamera:false,leftadjustment:0},
-{name:"1c",movingcamera:false,leftadjustment:22},
+{name:"1b",movingcamera:false,leftadjustment:12},
+{name:"1c",movingcamera:false,leftadjustment:17},
 {name:"2a",movingcamera:false,leftadjustment:22},
 {name:"2b",movingcamera:false,leftadjustment:13},
 {name:"5",movingcamera:false,leftadjustment:13},

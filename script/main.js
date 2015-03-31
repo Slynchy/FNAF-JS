@@ -8,6 +8,19 @@
 //
 // Last updated - 30/03/2015 @ 03:04am - wrestlemania :D
 
+function mainThread() {
+    updatePowerPercent();
+    updatePowerUsage();
+    updateTime();
+	if(currentRoom=="1c") {
+		foxxytimer=0;
+	};
+	updateFoxxyAI();
+	if(currentRoom=="2a" && animatronicStates[3].state!==3) {
+		playroomanimation("2a",Math.random());
+	};
+};
+
 function loadgame() {
 	loadroomImages();
 	loadEverythingElse();
@@ -19,10 +32,10 @@ function loadgame() {
 	document.getElementById("power").style.display="block";
 	document.getElementById("body").style.display="block";
 	//camerapositionTick();
-	var mainThreadID = setInterval('mainThread()', 1000);
-	foxxytimeout=setTimeout(function(){
-		updateAIState(3,1);
-	},5000);
+	mainThreadID = setInterval('mainThread()', 1000);
+//	foxxytimeout=setTimeout(function(){
+//		updateAIState(3,1);
+//	},5000);
 	var recordanimId = setInterval('recordTick()', 1000);
 	var timer = $.timer(function() {
 	   setDivImgFan()
@@ -113,7 +126,7 @@ function updateAIState(AIID,state,newroom,roomID){
 			alert("Invalid or no room name given!");
 	}
 	
-	return console.log("AI "+animatronicStates[AIID].name+" state updated");
+	return console.log("AI "+animatronicStates[AIID].name+" state updated to "+state);
 };
 
 var updateRoomState = function(roomname,state,timeout){
@@ -192,6 +205,10 @@ var updateRoomState = function(roomname,state,timeout){
 			if(currentRoom == roomname) updateRoomStateStatic() //document.getElementById('static').style.opacity="1";
 			if(currentRoom == roomname) roomdiv.attr("src","graphics/rooms/1c/"+currRoomStates[2].roomstate+".png");
 			if(leftornot==0 && currentRoom==roomname) roomdiv.css("left","0");
+			if(rooms[currentRoomID].leftadjustment!==0){
+				roomdiv.css("left","0%");
+				roomdiv.css("left","-"+rooms[currentRoomID].leftadjustment+"%");
+			};
 			break;
 		case "5":
 			currRoomStates[5].roomstate=state;
@@ -251,7 +268,7 @@ function updatecurrentRoom(roomparameter) {
 		};
 	}
 	else if(foxxyrunning==true && currentRoom=="2a"){
-		setTimeout(playFoxxyRunningAnimation,800);
+		setTimeout(playFoxxyRunningAnimation,600);
 	};
 }
 
@@ -300,35 +317,46 @@ function updatePowerUsage() {
 function updateFoxxyAI() {
 	switch(animatronicStates[3].state) {
 		case 0: 
+			foxxytimer++;
+			if(foxxytimer>=25){
+				updateAIState(3,1);
+			}
 			break;
 		case 1: 
 			foxxytimer++;
-			if(foxxytimer==5){
+			if(foxxytimer>=25){
 				updateAIState(3,2);
 			}
 			break;
 		case 2: 
 			foxxytimer++;
-			if(foxxytimer==5){
+			if(foxxytimer>=25){
 				updateAIState(3,3);
 			}
 			break;
 		case 3: 
+			foxxytimer++;
+			if(foxxytimer>=5 && leftdooropen==false){
+				if(feedopen=false){
+					OpenCloseFeed();
+				};
+				playfoxxyofficeanimation();
+			} else if(foxxytimer<5 && leftdooropen==true){
+				updateAIState(3,4);
+			};
 			break;
 		case 4: 
+			foxxytimer++;
+			if(foxxytimer<=9 && leftdooropen==true){
+				currentPower-=(0.775);
+			} else if(foxxytimer<=9 && leftdooropen==false){
+				playfoxxyofficeanimation();
+			} else if(foxxytimer>=10 && leftdooropen==true){
+				updateAIState(3,0);
+			};
 			break;
 		default:
 	}
-}
-
-function mainThread() {
-    updatePowerPercent();
-    updatePowerUsage();
-    updateTime();
-	updateFoxxyAI();
-	if(currentRoom=="2a" && animatronicStates[3].state!==3) {
-		playroomanimation("2a",Math.random());
-	};
 }
 
 function updateTime() {
@@ -346,13 +374,14 @@ function updateTime() {
 }
 
 function recordTick() {
-//	if($("#record").css("display")=="block") {
+//	if($("#record").css("display")=="block") {9px');
+		recorddiv.toggle();
 	if(showrecord==true) {
-		recorddiv.css("left", '-=9999px');
+//		recorddiv.css("left", '-=999
 		showrecord=false;
 	}
 	else {
-		recorddiv.css("left", '+=9999px');
+//		recorddiv.css("left", '+=9999px');
 		showrecord=true;
 	};
 }
@@ -368,6 +397,22 @@ function setDivImgFan(){
 	setTimeout(function(){
 		fandiv.attr("src",fananim[3].src);
 	},180);
+};
+
+function playfoxxyofficeanimation(){
+	document.getElementById("officecameraleft").style.display="none";
+	document.getElementById("officecameraright").style.display="none";
+	document.getElementById("openclosecamera").style.display="none";
+	document.getElementById("doorleft").style.display="none";
+	for(x=0;x<21;x++){
+	//	eval('foxxyofficeanimtimeout[x] = setTimeout(function(){officemaindiv.css("background-image",foxxyofficeanim['+x+'].src);},(35*'+x+'));');
+		eval('foxxyofficeanimtimeout[x] = setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+foxxyofficeanim['+x+'].src+")";},(35*'+x+'));');
+		
+	};
+	clearInterval(mainThreadID);
+	setTimeout(function(){
+		alert("penis");
+		},(2350));
 };
 
 function playFoxxyRunningAnimation(){

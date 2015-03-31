@@ -69,7 +69,11 @@ function loadEverythingElse(){
 	for(x=1;x<4;x++){
 		fananim[0+x] = new Image();
 		fananim[0+x].src = "graphics/rooms/office/fan_"+x+".png";
-	}
+	};
+	for(x=0;x<21;x++){
+		foxxyofficeanim[x] = new Image();
+		foxxyofficeanim[x].src = "graphics/rooms/office/foxxy/"+x+".png";
+	};
 }
 for(x=0;x<4;x++){
 	mainmenufazbear[x] = new Image();
