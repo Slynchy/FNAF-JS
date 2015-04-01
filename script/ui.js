@@ -37,8 +37,8 @@ function OpenCloseFeed() {
 }
 
 function updateRoomStateStatic(duration){
-    if(duration=="") duration = 2000;
-	animationduration = 1000;
+    if(duration=="") duration = 500;
+	animationduration = 250;
 	animatestatic=1;
 	staticdiv.animate({
 		opacity: 2

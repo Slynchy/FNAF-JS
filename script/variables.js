@@ -7,6 +7,13 @@
 var mainmenuanimInterval1;
 var mainmenuanimInterval2;
 
+var baseFoxyTime = 6;
+var foxydifficulty;
+var foxydifficultyarray = [];
+for(x=20;x>=1;x--){
+	foxydifficultyarray[x] = (baseFoxyTime += 2)
+};
+
 var mainThreadID;
 
 // amountofimages is the amount of images, but the highest number will be 1 less than that number.
@@ -19,6 +26,7 @@ var roomImagesIndex = [{name: "1a",amountofImages: 5},
 {name: "5",amountofImages: 3},
 {name: "7",amountofImages: 1}]
 
+var poweroutimg = [];
 var MAINBODY = $("#mainbody");
 var mainmenu = $("#mainmenu");
 var amduatlogo = $("#amduatlogo");

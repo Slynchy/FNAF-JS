@@ -74,6 +74,10 @@ function loadEverythingElse(){
 		foxxyofficeanim[x] = new Image();
 		foxxyofficeanim[x].src = "graphics/rooms/office/foxxy/"+x+".png";
 	};
+	for(x=0;x<2;x++){
+		poweroutimg[x] = new Image();
+		poweroutimg[x].src = "graphics/rooms/office/powerout"+x+".png";
+	};
 }
 for(x=0;x<4;x++){
 	mainmenufazbear[x] = new Image();

@@ -7,12 +7,12 @@
 // Ported by Sam 'Slynch' Lynch
 //
 // Last updated - 30/03/2015 @ 03:04am - wrestlemania :D
-
+foxydifficulty = 1;
 function mainThread() {
     updatePowerPercent();
     updatePowerUsage();
     updateTime();
-	if(currentRoom=="1c") {
+	if(currentRoom=="1c" && feedopen == true) {
 		foxxytimer=0;
 	};
 	updateFoxxyAI();
@@ -27,6 +27,7 @@ function loadgame() {
 	//mainThread();
 	clearInterval(mainmenuanimInterval1);
 	document.getElementById("mainmenustaticimg").style.display="none";
+	document.getElementById("mainmenu").style.display="none";
 	document.getElementById("timekeeper").style.display="block";
 	document.getElementById("openclosecamera").style.display="block";
 	document.getElementById("power").style.display="block";
@@ -39,7 +40,7 @@ function loadgame() {
 	var recordanimId = setInterval('recordTick()', 1000);
 	var timer = $.timer(function() {
 	   setDivImgFan()
-	}, 180, true);
+	}, 90, true);
 };
 
 hours[0] = 12;
@@ -318,19 +319,19 @@ function updateFoxxyAI() {
 	switch(animatronicStates[3].state) {
 		case 0: 
 			foxxytimer++;
-			if(foxxytimer>=25){
+			if(foxxytimer>=foxydifficultyarray[foxydifficulty]){
 				updateAIState(3,1);
 			}
 			break;
 		case 1: 
 			foxxytimer++;
-			if(foxxytimer>=25){
+			if(foxxytimer>=foxydifficultyarray[foxydifficulty]){
 				updateAIState(3,2);
 			}
 			break;
 		case 2: 
 			foxxytimer++;
-			if(foxxytimer>=25){
+			if(foxxytimer>=foxydifficultyarray[foxydifficulty]){
 				updateAIState(3,3);
 			}
 			break;
@@ -415,6 +416,32 @@ function playfoxxyofficeanimation(){
 		},(2350));
 };
 
+function playpoweroutageanimation(duration){
+	if(duration=="") duration = 60;
+	document.getElementById("openclosecamera").style.display="none";
+	document.getElementById("fan").style.display="none";
+	document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[0].src+")";
+	for(x=0;x<60;x++){
+		eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg['+(x & 1)+'].src+")";},(105*'+x+'));');
+	};
+/*	for(x=0;x<=(duration/4);x++){
+		eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg['+(x & 1)+'].src+")";},(105*'+x+'));');
+	};
+	for(x=(duration/4);x<=((duration/4)*2);x++){
+		eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg['+x & 1+'].src+")";},(135*'+x+'));');
+	};
+	for(x=((duration/4)*2);x<=((duration/4)*3);x++){
+		eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg['+x & 1+'].src+")";},(45*'+x+'));');
+	};
+	for(x=((duration/4)*3);x<=(duration);x++){
+		eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg['+x & 1+'].src+")";},(95*'+x+'));');
+	};*/
+	clearInterval(mainThreadID);
+//	setTimeout(function(){
+//		alert("penis");
+//		},(2350));
+};
+
 function playFoxxyRunningAnimation(){
 	for(x=0;x<31;x++){
 		eval('foxxyrunninganimationtimeout[x] = setTimeout(function(){roomdiv.attr("src",room2afoxxyanim['+x+'].src);},(35*'+x+'));');
@@ -426,6 +453,7 @@ function playFoxxyRunningAnimation(){
 };
 
 function mainmenu(){
+	document.getElementById("amduatlogo").style.display="none";
 	document.getElementById("mainmenu").style.display="block";
 	mainmenuanimInterval1 = setInterval(function(){
 		penis=Math.random();
@@ -449,19 +477,32 @@ function mainmenu(){
 //	staticdiv.css("display","block");
 };
 
+function gameoverPowerFailure(){
+	if(feedopen==true) {
+		OpenCloseFeed();
+	};
+	document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[0].src+")";
+};
+
+function gameover(){
+	document.getElementById("mainmenustaticimg").style.display="none";
+	document.getElementById("mainmenu").style.display="none";
+	document.getElementById("timekeeper").style.display="none";
+	document.getElementById("openclosecamera").style.display="none";
+	document.getElementById("power").style.display="none";
+	document.getElementById("body").style.display="none";
+	document.getElementById("gameover").style.display="block";
+};
+
 function introduction(){
-	amduatlogo.animate({
-		opacity: 2
+	$('#amduatlogo').animate({
+		opacity: 1
 	},1000,function(){
 		setTimeout(function(){
-			amduatlogo.animate({
-				opacity: 0
-			},1000,function(){
-		//		mainmenu();
-			});
+			eval('$("#amduatlogo").animate({opacity: 0},1000,function(){setTimeout(mainmenu,2000);});')
 		}, 2000);
 	});
 };
 
-//setTimeout(introduction,1650);
-mainmenu();
+setTimeout(introduction,1650);
+//mainmenu();
