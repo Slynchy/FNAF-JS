@@ -6,8 +6,8 @@
 //
 // Ported by Sam 'Slynch' Lynch
 //
-// Last updated - 30/03/2015 @ 03:04am - wrestlemania :D
-foxydifficulty = 1;
+// Last updated - 03/04/2015 @ 01:42am 
+foxydifficulty = 0;
 function mainThread() {
     updatePowerPercent();
     updatePowerUsage();
@@ -16,7 +16,11 @@ function mainThread() {
 		foxxytimer=0;
 	};
 	updateFoxxyAI();
-	if(currentRoom=="2a" && animatronicStates[3].state!==3) {
+	if(currentRoom=="2a" && animatronicStates[3].state!==3 && play2aanimation==false) {
+		play2aanimation=true;
+		setTimeout(function(){
+			play2aanimation=false;
+			},445);
 		playroomanimation("2a",Math.random());
 	};
 };
@@ -244,7 +248,18 @@ var randomcheck=1
 
 function updatecurrentRoom(roomparameter) {
 	if(roomparameter=="") return console.log("updatecurrentRoom() error - No parameter given");
-//	if(animatestatic>0) return console.log("updatecurrentRoom() error - Playing animation, aborting");
+	console.log(play2aanimation);
+	
+	// COMMENCE HACKY FIX FOR ROOM ANIMATION LEAKING TO NEXT ROOM, WILL NEED TO REUSE LATER
+	if(play2aanimation==true){
+		console.log("penis "+play2aanimation);
+		setTimeout(function(){
+			updatecurrentRoom(roomparameter);
+			},450);
+		return;
+	};
+	// END 
+	
 	currentRoom=roomparameter;
 	currentroomstatetoset = 0
 	currentroomstatetoset = searchForState(roomparameter);
@@ -255,10 +270,10 @@ function updatecurrentRoom(roomparameter) {
 	roomdiv.attr("src",roomImages[currentRoomID][currRoomStates[currentroomstatetoset2].roomstate].src);    //"graphics/rooms/"+currentRoom+"/"+currRoomStates[currentroomstatetoset2].roomstate+".png");
 	roomdiv.css("left","0");
 	if(rooms[currentRoomID].leftadjustment!==0){
-		roomdiv.css("left","-"+rooms[currentRoomID].leftadjustment+"%");
+//		roomdiv.css("left","-"+rooms[currentRoomID].leftadjustment+"%");
 	};
 	if(rooms[currentRoomID].movingcamera==false){
-		roomdiv.removeClass("roomtest");
+//		roomdiv.removeClass("roomtest");
 	}
 	else {
 		roomdiv.addClass("roomtest");
@@ -401,6 +416,9 @@ function setDivImgFan(){
 };
 
 function playfoxxyofficeanimation(){
+	if(feedopen==true) {
+		OpenCloseFeed();
+	};
 	document.getElementById("officecameraleft").style.display="none";
 	document.getElementById("officecameraright").style.display="none";
 	document.getElementById("openclosecamera").style.display="none";
@@ -412,7 +430,7 @@ function playfoxxyofficeanimation(){
 	};
 	clearInterval(mainThreadID);
 	setTimeout(function(){
-		alert("penis");
+		alert("Foxy!");
 		},(2350));
 };
 
@@ -504,5 +522,5 @@ function introduction(){
 	});
 };
 
-setTimeout(introduction,1650);
-//mainmenu();
+//setTimeout(introduction,1650);
+mainmenu();

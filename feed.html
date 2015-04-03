@@ -5,6 +5,8 @@
   <title>Live Feed</title>
   <script src="jquery.min.js" type="text/javascript"></script>
   <link rel="stylesheet" type="text/css" href="feed.css" />
+  <link rel="stylesheet" type="text/css" media="screen and (max-device-width: 1920px)" href="1080.css" />
+  <link rel="stylesheet" type="text/css" media="screen and (max-device-width: 640px)" href="640.css" />
 </head>
 
 <body id="mainbody">
@@ -25,7 +27,7 @@
 	<div id="body" style="display:none;">
 	<img id="camerafeedanimation" style="width:100%;height:100%;position:fixed;z-index:200;display:none;" src="graphics/camera/camerafeedanimation/0.png"></img>
 	<div id="camerafeed" class="main" style="display:none;">
-		<img id="room" style="width:129%;height:129%;position: fixed;top:-200px;" class="roomtest" src="graphics/rooms/1a/0.png"></img>
+		<img id="room" style="width:129%;height:129%;position: fixed;top:-16%;" class="roomtest" src="graphics/rooms/1a/0.png"></img>
 		<img id="record" src="graphics/camera/record.png" style="position:absolute;left:70px;top:45px;z-index:210" />
 		<div id="static" class="static"><video id="staticimg" src="graphics/camera/static_test5.webm" autoplay loop hidecontrols preload /></div>
 		<div id="camera" class="camera"></div>
@@ -61,7 +63,7 @@
 		<img id="officecameraright" src="graphics/rooms/office/cameraposition.png" style="position:absolute;width:10%;height:100%;right:0px" />
 		<img id="officecameraleft" src="graphics/rooms/office/cameraposition.png" style="position:absolute;width:10%;height:100%;left:0px" />
 	<img id="openclosecamera" src="graphics/camera/openclosecamera.png" style="position:absolute;bottom:35px;right:10%;z-index:106;display:none;width:31.25%;height:5.55%;" />
-	<div id="timekeeper" style="position:absolute;right:70px;top:45px;display:none;zoom:0.8;">
+	<div id="timekeeper" style="position:absolute;right:70px;top:45px;display:none;">
 		<img id="timehour" src="graphics/camera/ui/time1.png" style="position:absolute;top:1px;right:100px" />
 		<img id="timehourextra" src="graphics/camera/ui/time2.png" style="position:absolute;right:70px;" />
 		<img id="timeAM" src="graphics/camera/ui/timeAM.png" style="" />
@@ -69,7 +71,7 @@
 			<img id="timenightnumber" src="graphics/camera/ui/1.png" style="position:absolute;left:20px;top:44px"/>
 		</img>
 	</div>
-	<div id="power" style="position:absolute;left:9%;bottom:-6%;display:none;width:45%;height:25%;zoom:1.4;">
+	<div id="power" style="position:absolute;left:9%;bottom:-6%;display:none;width:45%;height:25%;">
 		<img id="powerleft" src="graphics/camera/powerleft.png" style="vertical-align: middle;" />	<img id="numberone" src="graphics/camera/ui/powernumbers/1.png" style="vertical-align: middle;zoom:0.7;" /><img id="numbertwo" src="graphics/camera/ui/powernumbers/0.png" style="vertical-align: middle;zoom:0.7;" /><img id="numberthree" src="graphics/camera/ui/powernumbers/0.png" style="vertical-align: middle;zoom:0.7;" /> <img id="numberpercent" src="graphics/camera/ui/powernumbers/%.png" style="vertical-align: text-bottom;zoom:0.7;" /><br><br>
 		<img id="powerword" src="graphics/camera/powerusage.png" style="vertical-align: middle;" />
 		<img id="powerusage" src="graphics/camera/power1.png" style="vertical-align: middle;" />

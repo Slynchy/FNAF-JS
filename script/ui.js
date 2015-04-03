@@ -2,7 +2,7 @@
 // ui.js
 // The JS for handling UI changes and functions
 //
-// Last updated - 27/03/2015 @ 12:29pm
+// Last updated - 03/04/2015 @ 01:42am 
 
 function staticTick() {
   randomcheck++

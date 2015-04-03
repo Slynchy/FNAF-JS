@@ -2,7 +2,7 @@
 // loading.js
 // The JS for loading the game (purely to reduce clutter)
 //
-// Last updated - 27/03/2015 @ 12:29pm
+// Last updated - 03/04/2015 @ 01:42am 
 
 loadroomImages = function(){
 	for(x=0;x<roomImagesIndex.length;x++){

@@ -158,12 +158,12 @@ background-color:#101010;
 } 
 
 .roomtest {
-  -webkit-animation: play 6s linear infinite alternate;
+  -webkit-animation: play 7s linear infinite alternate;
 }
 
 @-webkit-keyframes play {
-    from { -webkit-transform:translateX(0px) }
-    to { -webkit-transform:translateX(-300px) }
+    from { -webkit-transform:translateX(-5%) }
+    to { -webkit-transform:translateX(-20%) }
 }
 
 div.camera {
