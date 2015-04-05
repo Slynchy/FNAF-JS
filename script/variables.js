@@ -6,6 +6,15 @@
 
 var mainmenuanimInterval1;
 var mainmenuanimInterval2;
+var timer;
+
+var freddyanimationgameover = [];
+
+var audiochannels = [];
+for(x=1;x<=4;x++){
+	audiochannels[x] = document.getElementById("channel"+x);
+	audiochannels[x].volume=0.3;
+};
 
 var baseFoxyTime = 6;
 var foxydifficulty;

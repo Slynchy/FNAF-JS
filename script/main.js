@@ -7,7 +7,25 @@
 // Ported by Sam 'Slynch' Lynch
 //
 // Last updated - 03/04/2015 @ 01:42am 
+
 foxydifficulty = 0;
+
+function playSound(src,channelnumber){
+	if((typeof channelnumber)=="undefined") {
+	
+	};
+	if((typeof src)=="undefined") {
+		return console.log("playSound() error - no sound specified");
+	};
+	for(x=1;x<=4;x++){
+		if(audiochannels[x].paused==true){
+			audiochannels[x].src=src;
+			return console.log("Channel "+x+" now playing "+src);
+		};
+	};
+	console.log("No channels available!");
+};
+
 function mainThread() {
     updatePowerPercent();
     updatePowerUsage();
@@ -42,7 +60,7 @@ function loadgame() {
 //		updateAIState(3,1);
 //	},5000);
 	var recordanimId = setInterval('recordTick()', 1000);
-	var timer = $.timer(function() {
+	timer = $.timer(function() {
 	   setDivImgFan()
 	}, 90, true);
 };
@@ -381,11 +399,12 @@ function updateTime() {
     	timeCounter=0;
         currenthour++;
     }
-    if(currenthour>0){
+    if(currenthour>0 && currenthour<6){
 		timehourextradiv.attr("src",timehourimage[currenthour].src);
         document.getElementById("timehour").style.display="none"
     }
-    else {
+    else if(currenthour==6){
+		
     };
 }
 
@@ -430,8 +449,31 @@ function playfoxxyofficeanimation(){
 	};
 	clearInterval(mainThreadID);
 	setTimeout(function(){
-		alert("Foxy!");
+		gameoverstatic();
 		},(2350));
+};
+
+function playfreddygameoveranimation(){
+	document.getElementById("officemain").style.backgroundImage="none";
+	document.getElementById("doorbuttonsleft").style.display="none";
+	document.getElementById("doorbuttonsright").style.display="none";
+	document.getElementById("doorright").style.display="none";
+	document.getElementById("doorleft").style.display="none";
+	document.getElementById("officecameraleft").style.display="none";
+	document.getElementById("officecameraright").style.display="none";
+	document.getElementById("openclosecamera").style.display="none";
+	for(x=0;x<20;x++){
+		eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+freddyanimationgameover['+x+'].src+")";},(45*'+x+'));');
+	};
+	gameoverstatic();
+};
+
+function gameoverstatic(){
+	setTimeout(function(){
+		document.getElementById("gameoverstaticimg").style.display="block";
+		document.getElementById("gameoverstaticimg").play();
+		gameover();
+	},900);
 };
 
 function playpoweroutageanimation(duration){
@@ -442,22 +484,7 @@ function playpoweroutageanimation(duration){
 	for(x=0;x<60;x++){
 		eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg['+(x & 1)+'].src+")";},(105*'+x+'));');
 	};
-/*	for(x=0;x<=(duration/4);x++){
-		eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg['+(x & 1)+'].src+")";},(105*'+x+'));');
-	};
-	for(x=(duration/4);x<=((duration/4)*2);x++){
-		eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg['+x & 1+'].src+")";},(135*'+x+'));');
-	};
-	for(x=((duration/4)*2);x<=((duration/4)*3);x++){
-		eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg['+x & 1+'].src+")";},(45*'+x+'));');
-	};
-	for(x=((duration/4)*3);x<=(duration);x++){
-		eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg['+x & 1+'].src+")";},(95*'+x+'));');
-	};*/
 	clearInterval(mainThreadID);
-//	setTimeout(function(){
-//		alert("penis");
-//		},(2350));
 };
 
 function playFoxxyRunningAnimation(){
@@ -492,25 +519,73 @@ function mainmenu(){
 			mainmenufazbearanimdiv.attr("src",mainmenufazbear[0].src)
 		};
 	},1000);
-//	staticdiv.css("display","block");
 };
 
 function gameoverPowerFailure(){
 	if(feedopen==true) {
 		OpenCloseFeed();
 	};
+	timer.stop();
+	document.getElementById("fan").style.display="none";
 	document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[0].src+")";
+	testpenisdick = 'setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[1].src+")"},(450*5))'
+	testpenisdick1 = 'setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[';
+	testpenisdick2 = '].src+")"},(450*';
+	testpenisdick3 = '))';
+	console.log(testpenisdick1+testpenisdick2+testpenisdick3);
+	duration = ((Math.random()*100)*0.66);
+	console.log(duration);
+	for(x=1;x<duration;x++){
+		eval(testpenisdick1+(x & 1)+testpenisdick2+x+testpenisdick3);
+	};
+	setTimeout(function(){
+//		gameover();
+		playfreddygameoveranimation();
+		
+	},450*duration);
 };
 
 function gameover(){
-	document.getElementById("mainmenustaticimg").style.display="none";
-	document.getElementById("mainmenu").style.display="none";
-	document.getElementById("timekeeper").style.display="none";
-	document.getElementById("openclosecamera").style.display="none";
-	document.getElementById("power").style.display="none";
-	document.getElementById("body").style.display="none";
-	document.getElementById("gameover").style.display="block";
+	setTimeout(function(){
+		document.getElementById("gameoverstaticimg").pause();
+		document.getElementById("mainmenustaticimg").style.display="none";
+		document.getElementById("mainmenu").style.display="none";
+		document.getElementById("timekeeper").style.display="none";
+		document.getElementById("openclosecamera").style.display="none";
+		document.getElementById("power").style.display="none";
+		document.getElementById("body").style.display="none";
+		document.getElementById("gameover").style.display="block";
+		document.getElementById("gameover").style.opacity="0";
+		$("#gameover").animate({
+			opacity: "1"
+		},2000,function(){
+//			eval('setTimeout(function(){location.reload();},5000)');
+			eval('setTimeout(function(){resetgame();mainmenu();},5000)');
+		});
+		$("#gameoverstaticimg").animate({
+			opacity: "0"
+		},2000);
+	},8000);
 };
+
+function resetgame(){
+	document.getElementById("gameoverstaticimg").style.display="none";
+	document.getElementById("gameoverstaticimg").style.opacity="2";
+	document.getElementById("gameover").style.display="none";
+	document.getElementById("mainmenu").style.display="none";
+	document.getElementById("officemain").style.backgroundImage="url('graphics/rooms/office/0.png')";
+	currentPower = 100;
+	currentPowerUsage = 0;
+	currenthour = 0;
+	document.getElementById("doorbuttonsleft").style.display="block";
+	document.getElementById("doorbuttonsright").style.display="block";
+	document.getElementById("doorright").style.display="block";
+	document.getElementById("doorleft").style.display="block";
+	document.getElementById("officecameraleft").style.display="block";
+	document.getElementById("officecameraright").style.display="block";
+	document.getElementById("mainmenustaticimg").style.display="block";
+	
+}
 
 function introduction(){
 	$('#amduatlogo').animate({

@@ -78,6 +78,10 @@ function loadEverythingElse(){
 		poweroutimg[x] = new Image();
 		poweroutimg[x].src = "graphics/rooms/office/powerout"+x+".png";
 	};
+	for(x=0;x<20;x++){
+		freddyanimationgameover[x] = new Image();
+		freddyanimationgameover[x].src = "graphics/gameover/freddy/"+x+".png";
+	};
 }
 for(x=0;x<4;x++){
 	mainmenufazbear[x] = new Image();
