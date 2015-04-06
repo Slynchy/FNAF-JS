@@ -2,7 +2,7 @@
 // variables.js
 // The JS for setting all variables prior to launch
 //
-// Last updated - 03/04/2015 @ 01:42am 
+// Last updated - 06/04/2015 @ 01:42am 
 
 var mainmenuanimInterval1;
 var mainmenuanimInterval2;
@@ -137,7 +137,8 @@ var currRoomStates=[{name:"1a",roomstate:0},
 {name:"2a",roomstate:0},
 {name:"2b",roomstate:0},
 {name:"5",roomstate:0,AIStates:[1,2]},
-{name:"7",roomstate:0}
+{name:"7",roomstate:0},
+{name:"office",roomstate:0}
 ];
 
 var rooms=[{name:"1a",movingcamera:true,leftadjustment:0},
@@ -148,3 +149,32 @@ var rooms=[{name:"1a",movingcamera:true,leftadjustment:0},
 {name:"5",movingcamera:true,leftadjustment:13},
 {name:"7",movingcamera:true,leftadjustment:22}
 ];
+
+setVariables = function(){
+	for(x=0;x<currRoomStates.length;x++){
+		currRoomStates[x].roomstate=0;
+	};
+	
+	currentRoom = "1a";
+	currentRoomID = 0;
+	animatestatic=0;
+	showrecord = false;
+	feedopen = false;
+	currentPower = 100;
+	currentPowerUsage = 0;
+	currenthour = 0;
+	timeCounter=0;
+	foxxyrunning = false;
+	foxxytimer=0;
+	playedfoxxyrunninganimation=false;
+	
+	officeX=0
+	document.getElementById("office").style.webkitTransform="none";
+	officeXInterval;
+	officeXOtherInterval;
+	leftdooropen=false;
+	rightdooropen=false;
+	leftlighton=false;
+	rightlighton=false;
+	play2aanimation=false;
+};

@@ -6,11 +6,16 @@
 //
 // Ported by Sam 'Slynch' Lynch
 //
-// Last updated - 03/04/2015 @ 01:42am 
+// Last updated - 06/04/2015 @ 01:42am 
 
+var DEBUG_MODE = false;
+
+assertButtons();
 foxydifficulty = 0;
+var cachedbody = document.getElementById("alldahtml").innerHTML;
 
 function playSound(src,channelnumber){
+	if(DEBUG_MODE) return;
 	if((typeof channelnumber)=="undefined") {
 	
 	};
@@ -19,16 +24,33 @@ function playSound(src,channelnumber){
 	};
 	for(x=1;x<=4;x++){
 		if(audiochannels[x].paused==true){
-			audiochannels[x].src=src;
+			audiochannels[x].src=("sounds/"+src);
 			return console.log("Channel "+x+" now playing "+src);
 		};
 	};
 	console.log("No channels available!");
 };
 
+function stopSound(channelnumber){
+	if((typeof channelnumber)=="undefined") {
+		console.log("stopSound() error - no channel number specified");
+		console.log("Proceeding to stop all sound...");
+		for(x=1;x<=4;x++){
+			if(audiochannels[x].paused==false){
+				audiochannels[x].pause();
+				return console.log("Channel "+x+" is paused/stopped");
+			};
+		};
+		return;
+	};
+	return audiochannels[channelnumber].paused=true;
+};
+
 function mainThread() {
-    updatePowerPercent();
-    updatePowerUsage();
+	if(currentPower>0) {
+		updatePowerPercent();
+		updatePowerUsage();
+	}
     updateTime();
 	if(currentRoom=="1c" && feedopen == true) {
 		foxxytimer=0;
@@ -44,6 +66,7 @@ function mainThread() {
 };
 
 function loadgame() {
+	stopSound();
 	loadroomImages();
 	loadEverythingElse();
 	//mainThread();
@@ -71,9 +94,9 @@ for(x=1;x<7;x++){
 };
 
 function updateAIPosition(AIID,AIstate,newroom,roomstate,oldroomstate){
+	console.log("updateRoomState("+animatronicStates[AIID].currentRoom+","+oldroomstate+")");
     updateRoomState(animatronicStates[AIID].currentRoom,oldroomstate,1); //old room
 	updateAIState(AIID,AIstate,newroom);
-    console.log(animatronicStates[AIID].currentRoom);
     updateRoomState(newroom,roomstate); //new room
 }
 
@@ -107,7 +130,7 @@ function updateAIState(AIID,state,newroom,roomID){
 	if(state=="") state = 0;//parseInt(state);
 //    console.log(typeof roomID);
 //	if((typeof roomID) != "number") return console.log("Room name not an integer!");
-    if(newroom!=="") console.log("No new room specified, expect errors if unintended");//animatronicStates[AIID].currentRoom = newroom;
+    if(newroom=="") console.log("No new room specified, expect errors if unintended");//animatronicStates[AIID].currentRoom = newroom;
    //  if(newroom!=="") animatronicStates[AIID].state = state;
 	
 	switch(AIID) {
@@ -120,8 +143,15 @@ function updateAIState(AIID,state,newroom,roomID){
             }
             break;
 		case 1: //Bunny
-            animatronicStates[AIID].currentRoom = newroom;
-			break;
+            switch(state) {
+                case 0: //unseen
+					animatronicStates[AIID].currentRoom = newroom;
+                    break;   
+                case 1: //seen
+					animatronicStates[AIID].currentRoom = newroom;
+                    break;
+            }
+            break;
 		case 3: //Foxy
             switch(state) {
                 case 0: // hiding
@@ -252,6 +282,29 @@ var updateRoomState = function(roomname,state,timeout){
 			}
 			if(leftornot==0 && currentRoom==roomname) roomdiv.css("left","0");
 			break;
+		case "office":
+			currRoomStates[7].roomstate=state;
+//			if(currentRoom == roomname) updateRoomStateStatic(4000); //document.getElementById('static').style.opacity="1";
+			switch(state) {
+				case 0: // normal
+					setTimeout(function(){
+		//				officemaindiv.css("background-image","url("+officestates[0].src+")");
+					}, timeout);
+					break;
+				case 1: // bonny
+					setTimeout(function(){
+			//			officemaindiv.css("background-image","url("+officelightstates[1][0].src+")");
+					}, timeout);
+					break;
+				case 2: // chica
+					setTimeout(function(){
+			//			officemaindiv.css("background-image","url("+officelightstates[2][1].src+")");
+					}, timeout);
+					break;
+				default:
+					alert("penis");
+			}
+			break;
 		default:
 			alert("Invalid or no room name given!");
 	}
@@ -266,13 +319,11 @@ var randomcheck=1
 
 function updatecurrentRoom(roomparameter) {
 	if(roomparameter=="") return console.log("updatecurrentRoom() error - No parameter given");
-	console.log(play2aanimation);
 	
 	// COMMENCE HACKY FIX FOR ROOM ANIMATION LEAKING TO NEXT ROOM, WILL NEED TO REUSE LATER
 	if(play2aanimation==true){
-		console.log("penis "+play2aanimation);
 		setTimeout(function(){
-			updatecurrentRoom(roomparameter);
+			eval("button"+roomparameter+"div.click();");
 			},450);
 		return;
 	};
@@ -346,6 +397,7 @@ function updatePowerPercent() {
 
 function updatePowerUsage() {
 	powerusagediv.attr("src","graphics/camera/power"+(currentPowerUsage+1)+".png");
+	if(currentPower<=0) gameoverPowerFailure();
 }
 
 function updateFoxxyAI() {
@@ -488,11 +540,13 @@ function playpoweroutageanimation(duration){
 };
 
 function playFoxxyRunningAnimation(){
+	playSound("run.wav");
 	for(x=0;x<31;x++){
 		eval('foxxyrunninganimationtimeout[x] = setTimeout(function(){roomdiv.attr("src",room2afoxxyanim['+x+'].src);},(35*'+x+'));');
 	};
 	setTimeout(function(){
 		foxxyrunning=false;
+		if(leftdooropen==true) playSound("DOOR_POUNDING_ME_D0291401.wav");
 		animatronicStates[3].state=4;
 		},(3350));
 };
@@ -500,6 +554,7 @@ function playFoxxyRunningAnimation(){
 function mainmenu(){
 	document.getElementById("amduatlogo").style.display="none";
 	document.getElementById("mainmenu").style.display="block";
+	playSound("static2.wav");
 	mainmenuanimInterval1 = setInterval(function(){
 		penis=Math.random();
 		if(penis>0.8) {
@@ -522,11 +577,13 @@ function mainmenu(){
 };
 
 function gameoverPowerFailure(){
+	playSound("powerdown.wav");
 	if(feedopen==true) {
 		OpenCloseFeed();
 	};
 	timer.stop();
 	document.getElementById("fan").style.display="none";
+	document.getElementById("openclosecamera").style.display="none";
 	document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[0].src+")";
 	testpenisdick = 'setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[1].src+")"},(450*5))'
 	testpenisdick1 = 'setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[';
@@ -542,7 +599,7 @@ function gameoverPowerFailure(){
 //		gameover();
 		playfreddygameoveranimation();
 		
-	},450*duration);
+	},470*duration);
 };
 
 function gameover(){
@@ -574,9 +631,6 @@ function resetgame(){
 	document.getElementById("gameover").style.display="none";
 	document.getElementById("mainmenu").style.display="none";
 	document.getElementById("officemain").style.backgroundImage="url('graphics/rooms/office/0.png')";
-	currentPower = 100;
-	currentPowerUsage = 0;
-	currenthour = 0;
 	document.getElementById("doorbuttonsleft").style.display="block";
 	document.getElementById("doorbuttonsright").style.display="block";
 	document.getElementById("doorright").style.display="block";
@@ -584,8 +638,11 @@ function resetgame(){
 	document.getElementById("officecameraleft").style.display="block";
 	document.getElementById("officecameraright").style.display="block";
 	document.getElementById("mainmenustaticimg").style.display="block";
-	
-}
+/*	currentPower = 100;
+	currentPowerUsage = 0;
+	currenthour = 0;*/
+	setVariables();
+};
 
 function introduction(){
 	$('#amduatlogo').animate({

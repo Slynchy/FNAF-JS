@@ -2,7 +2,7 @@
 // loading.js
 // The JS for loading the game (purely to reduce clutter)
 //
-// Last updated - 03/04/2015 @ 01:42am 
+// Last updated - 06/04/2015 @ 01:42am 
 
 loadroomImages = function(){
 	for(x=0;x<roomImagesIndex.length;x++){
@@ -21,7 +21,7 @@ function loadEverythingElse(){
 		officestates[x] = new Image();
 		officestates[x].src = "graphics/rooms/office/"+x+".png";
 	};
-	for(x=0;x<(officestates.length);x++){
+	for(x=0;x<(3);x++){
 		for(y=0;y<2;y++){
 			if(!officelightstates[x]) officelightstates[x] = [];
 			officelightstates[x][y] = new Image();

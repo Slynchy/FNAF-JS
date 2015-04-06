@@ -2,7 +2,7 @@
 // ui.js
 // The JS for handling UI changes and functions
 //
-// Last updated - 03/04/2015 @ 01:42am 
+// Last updated - 06/04/2015 @ 01:42am 
 
 function staticTick() {
   randomcheck++
@@ -69,255 +69,261 @@ function camerapositionTick() {
 }
 
 // ==============================================BUTTON EVENTS==============================================
-button1adiv.mouseenter(function(){
-	if(this.id!==("button-"+currentRoom)){
-		this.style.backgroundColor='#505050';
-	}
-	else this.style.backgroundColor='#107010';
-});
-button1adiv.mouseleave(function(){
-	if(this.id!==("button-"+currentRoom)){
-		this.style.backgroundColor='#101010';
-	}
-});
-button1adiv.click(function(){
-	if(currentRoom!=="1a" && animatestatic<1){
-		this.style.backgroundColor='#107010';
-		updatecurrentRoom("1a");
-		resetCameraButtons(currentRoom);
-	}
-});
-
-button1bdiv.mouseenter(function(){
-	if(this.id!==("button-"+currentRoom)){
-		this.style.backgroundColor='#505050';
-	}
-	else this.style.backgroundColor='#107010';
-});
-button1bdiv.mouseleave(function(){
-	if(this.id!==("button-"+currentRoom)){
-		this.style.backgroundColor='#101010';
-	}
-});
-button1bdiv.click(function(){
-	if(currentRoom!=="1b" && animatestatic<1){
-		this.style.backgroundColor='#107010';
-		updatecurrentRoom("1b");
-		resetCameraButtons(currentRoom);
-	}
-});
-
-button1cdiv.mouseenter(function(){
-	if(this.id!==("button-"+currentRoom)){
-		this.style.backgroundColor='#505050';
-	}
-	else this.style.backgroundColor='#107010';
-});
-button1cdiv.mouseleave(function(){
-	if(this.id!==("button-"+currentRoom)){
-		this.style.backgroundColor='#101010';
-	}
-});
-button1cdiv.click(function(){
-	if(currentRoom!=="1c" && animatestatic<1){
-		this.style.backgroundColor='#107010';
-		updatecurrentRoom("1c");
-		resetCameraButtons(currentRoom);
-	}
-});
-
-button2adiv.mouseenter(function(){
-	if(this.id!==("button-"+currentRoom)){
-		this.style.backgroundColor='#505050';
-	}
-	else this.style.backgroundColor='#107010';
-});
-button2adiv.mouseleave(function(){
-	if(this.id!==("button-"+currentRoom)){
-		this.style.backgroundColor='#101010';
-	}
-});
-button2adiv.click(function(){
-	if(currentRoom!=="2a" && animatestatic<1){
-		this.style.backgroundColor='#107010';
-		updatecurrentRoom("2a");
-		resetCameraButtons(currentRoom);
-	}
-});
-
-button2bdiv.mouseenter(function(){
-	if(this.id!==("button-"+currentRoom)){
-		this.style.backgroundColor='#505050';
-	}
-	else this.style.backgroundColor='#107010';
-});
-button2bdiv.mouseleave(function(){
-	if(this.id!==("button-"+currentRoom)){
-		this.style.backgroundColor='#101010';
-	}
-});
-button2bdiv.click(function(){
-	if(currentRoom!=="2b" && animatestatic<1){
-		this.style.backgroundColor='#107010';
-		updatecurrentRoom("2b");
-		resetCameraButtons(currentRoom);
-	}
-});
-
-button5div.mouseenter(function(){
-	if(this.id!==("button-"+currentRoom)){
-		this.style.backgroundColor='#505050';
-	}
-	else this.style.backgroundColor='#107010';
-});
-button5div.mouseleave(function(){
-	if(this.id!==("button-"+currentRoom)){
-		this.style.backgroundColor='#101010';
-	}
-});
-button5div.click(function(){
-	if(currentRoom!=="5" && animatestatic<1){
-		this.style.backgroundColor='#107010';
-		updatecurrentRoom("5");
-		resetCameraButtons(currentRoom);
-	}
-});
-
-button7div.mouseenter(function(){
-	if(this.id!==("button-"+currentRoom)){
-		this.style.backgroundColor='#505050';
-	}
-	else this.style.backgroundColor='#107010';
-});
-button7div.mouseleave(function(){
-	if(this.id!==("button-"+currentRoom)){
-		this.style.backgroundColor='#101010';
-	}
-});
-button7div.click(function(){
-	if(currentRoom!=="7" && animatestatic<1){
-		this.style.backgroundColor='#107010';
-		updatecurrentRoom("7");
-		resetCameraButtons(currentRoom);
-	}
-});
-
-buttonopenclosecameradiv.click(function(){
-//	playcamerafeedanimation(feedopen);
-	OpenCloseFeed();
-});
-officecamerarightdiv.mouseenter(function(){
-	officeXInterval = setInterval(function(){//380
-		if(officeX>=(windowwidth/5)) {document.getElementById("officecameraright").style.display="none";return;};
-		document.getElementById("officecameraleft").style.display="block";
-		officeX=(officeX+10);
-		document.getElementById("office").style.webkitTransform="translate(-"+officeX+"px)";
-	//	console.log("Translated by +"+officeX);
-	},10);
-});
-officecamerarightdiv.mouseleave(function(){
-	clearInterval(officeXInterval);
-});
-officecameraleftdiv.mouseenter(function(){
-	officeXOtherInterval = setInterval(function(){
-		if(officeX==0) {document.getElementById("officecameraleft").style.display="none";return;};
-		document.getElementById("officecameraright").style.display="block";
-		officeX=(officeX-10);
-		document.getElementById("office").style.webkitTransform="translate(-"+officeX+"px)";
-	//	console.log("Translated by -"+officeX);
-	},10);
-});
-officecameraleftdiv.mouseleave(function(){
-	clearInterval(officeXOtherInterval);
-});
-
-doorbuttonsleft_lightdiv.click(function(){
-	if(leftlighton==false && rightlighton==false) {
-		officemaindiv.css("background-image", "url('"+officelightstates[0][1].src+"')");
-		doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[2].src+"')");
-		leftlighton=true;
-        currentPowerUsage++;
-        updatePowerUsage();
-	}
-	else if(rightlighton!==true) {
-		officemaindiv.css("background-image", "url('"+officestates[0].src+"')");
-		doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[1].src+"')");
-		leftlighton=false;
-        currentPowerUsage--;
-        updatePowerUsage();
-	};
-});
-
-doorbuttonsleft_doordiv.click(function(){
-	if(leftdooropen==false) {
-		playdooranimationleft(0);
-		leftdooropen=true;
-		if(leftlighton) {
-			doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[4].src+"')");
+assertButtons = function(){
+	button1adiv.mouseenter(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#505050';
 		}
-		else {
-			doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[3].src+"')");
-		};
-        currentPowerUsage++;
-        updatePowerUsage();
-	}
-	else {
-		playdooranimationleft(1);
-		leftdooropen=false;
-		if(leftlighton) {
+		else this.style.backgroundColor='#107010';
+	});
+	button1adiv.mouseleave(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#101010';
+		}
+	});
+	button1adiv.click(function(){
+		if(currentRoom!=="1a" && animatestatic<1){
+			this.style.backgroundColor='#107010';
+			updatecurrentRoom("1a");
+			resetCameraButtons(currentRoom);
+		}
+	});
+
+	button1bdiv.mouseenter(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#505050';
+		}
+		else this.style.backgroundColor='#107010';
+	});
+	button1bdiv.mouseleave(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#101010';
+		}
+	});
+	button1bdiv.click(function(){
+		if(currentRoom!=="1b" && animatestatic<1){
+			this.style.backgroundColor='#107010';
+			updatecurrentRoom("1b");
+			resetCameraButtons(currentRoom);
+		}
+	});
+
+	button1cdiv.mouseenter(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#505050';
+		}
+		else this.style.backgroundColor='#107010';
+	});
+	button1cdiv.mouseleave(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#101010';
+		}
+	});
+	button1cdiv.click(function(){
+		if(currentRoom!=="1c" && animatestatic<1){
+			this.style.backgroundColor='#107010';
+			updatecurrentRoom("1c");
+			resetCameraButtons(currentRoom);
+		}
+	});
+
+	button2adiv.mouseenter(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#505050';
+		}
+		else this.style.backgroundColor='#107010';
+	});
+	button2adiv.mouseleave(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#101010';
+		}
+	});
+	button2adiv.click(function(){
+		if(currentRoom!=="2a" && animatestatic<1){
+			this.style.backgroundColor='#107010';
+			updatecurrentRoom("2a");
+			resetCameraButtons(currentRoom);
+		}
+	});
+
+	button2bdiv.mouseenter(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#505050';
+		}
+		else this.style.backgroundColor='#107010';
+	});
+	button2bdiv.mouseleave(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#101010';
+		}
+	});
+	button2bdiv.click(function(){
+		if(currentRoom!=="2b" && animatestatic<1){
+			this.style.backgroundColor='#107010';
+			updatecurrentRoom("2b");
+			resetCameraButtons(currentRoom);
+		}
+	});
+
+	button5div.mouseenter(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#505050';
+		}
+		else this.style.backgroundColor='#107010';
+	});
+	button5div.mouseleave(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#101010';
+		}
+	});
+	button5div.click(function(){
+		if(currentRoom!=="5" && animatestatic<1){
+			this.style.backgroundColor='#107010';
+			updatecurrentRoom("5");
+			resetCameraButtons(currentRoom);
+		}
+	});
+
+	button7div.mouseenter(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#505050';
+		}
+		else this.style.backgroundColor='#107010';
+	});
+	button7div.mouseleave(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#101010';
+		}
+	});
+	button7div.click(function(){
+		if(currentRoom!=="7" && animatestatic<1){
+			this.style.backgroundColor='#107010';
+			updatecurrentRoom("7");
+			resetCameraButtons(currentRoom);
+		}
+	});
+
+	buttonopenclosecameradiv.click(function(){
+	//	playcamerafeedanimation(feedopen);
+		OpenCloseFeed();
+	});
+	officecamerarightdiv.mouseenter(function(){
+		officeXInterval = setInterval(function(){//380
+			if(officeX>=(windowwidth/5)) {document.getElementById("officecameraright").style.display="none";return;};
+			document.getElementById("officecameraleft").style.display="block";
+			officeX=(officeX+10);
+			document.getElementById("office").style.webkitTransform="translate(-"+officeX+"px)";
+		//	console.log("Translated by +"+officeX);
+		},10);
+	});
+	officecamerarightdiv.mouseleave(function(){
+		clearInterval(officeXInterval);
+	});
+	officecameraleftdiv.mouseenter(function(){
+		officeXOtherInterval = setInterval(function(){
+			if(officeX==0) {document.getElementById("officecameraleft").style.display="none";return;};
+			document.getElementById("officecameraright").style.display="block";
+			officeX=(officeX-10);
+			document.getElementById("office").style.webkitTransform="translate(-"+officeX+"px)";
+		//	console.log("Translated by -"+officeX);
+		},10);
+	});
+	officecameraleftdiv.mouseleave(function(){
+		clearInterval(officeXOtherInterval);
+	});
+
+	doorbuttonsleft_lightdiv.click(function(){
+		if(leftlighton==false && rightlighton==false) {
+			if(animatronicStates[1].currentRoom=="office"){
+				officemaindiv.css("background-image","url("+officelightstates[1][0].src+")");
+			} else {
+				officemaindiv.css("background-image", "url('"+officelightstates[0][1].src+"')");
+			};
 			doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[2].src+"')");
+			leftlighton=true;
+			currentPowerUsage++;
+			updatePowerUsage();
 		}
-		else {
+		else if(rightlighton!==true) {
+			officemaindiv.css("background-image", "url('"+officestates[0].src+"')");
 			doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[1].src+"')");
+			leftlighton=false;
+			currentPowerUsage--;
+			updatePowerUsage();
 		};
-        currentPowerUsage--;
-        updatePowerUsage();
-	};
-});
+	});
 
-doorbuttonsright_doordiv.click(function(){
-	if(rightdooropen==false) {
-		playdooranimationright(0);
-		rightdooropen=true;
-		if(rightlighton) {
-			doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[4].src+"')");
+	doorbuttonsleft_doordiv.click(function(){
+		if(leftdooropen==false) {
+			playdooranimationleft(0);
+			leftdooropen=true;
+			if(leftlighton) {
+				doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[4].src+"')");
+			}
+			else {
+				doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[3].src+"')");
+			};
+			currentPowerUsage++;
+			updatePowerUsage();
 		}
 		else {
-			doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[3].src+"')");
+			playdooranimationleft(1);
+			leftdooropen=false;
+			if(leftlighton) {
+				doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[2].src+"')");
+			}
+			else {
+				doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[1].src+"')");
+			};
+			currentPowerUsage--;
+			updatePowerUsage();
 		};
-        currentPowerUsage++;
-        updatePowerUsage();
-	}
-	else {
-		playdooranimationright(1);
-		rightdooropen=false;
-		if(rightlighton) {
+	});
+
+	doorbuttonsright_doordiv.click(function(){
+		if(rightdooropen==false) {
+			playdooranimationright(0);
+			rightdooropen=true;
+			if(rightlighton) {
+				doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[4].src+"')");
+			}
+			else {
+				doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[3].src+"')");
+			};
+			currentPowerUsage++;
+			updatePowerUsage();
+		}
+		else {
+			playdooranimationright(1);
+			rightdooropen=false;
+			if(rightlighton) {
+				doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[2].src+"')");
+			}
+			else {
+				doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[1].src+"')");
+			};
+			currentPowerUsage--;
+			updatePowerUsage();
+		};
+	});
+
+	doorbuttonsright_lightdiv.click(function(){
+		if(leftlighton==false && rightlighton==false) {
+			officemaindiv.css("background-image", "url('"+officelightstates[0][0].src+"')");
 			doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[2].src+"')");
+			rightlighton=true;
+			currentPowerUsage++;
+			updatePowerUsage();
 		}
-		else {
+		else if(leftlighton!==true) {
+			officemaindiv.css("background-image", "url('"+officestates[0].src+"')");
 			doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[1].src+"')");
+			rightlighton=false;
+			currentPowerUsage--;
+			updatePowerUsage();
 		};
-        currentPowerUsage--;
-        updatePowerUsage();
-	};
-});
-
-doorbuttonsright_lightdiv.click(function(){
-	if(leftlighton==false && rightlighton==false) {
-		officemaindiv.css("background-image", "url('"+officelightstates[0][0].src+"')");
-		doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[2].src+"')");
-		rightlighton=true;
-        currentPowerUsage++;
-        updatePowerUsage();
-	}
-	else if(leftlighton!==true) {
-		officemaindiv.css("background-image", "url('"+officestates[0].src+"')");
-		doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[1].src+"')");
-		rightlighton=false;
-        currentPowerUsage--;
-        updatePowerUsage();
-	};
-});
+	});
+};
 // ==============================================END OF BUTTON EVENTS=======================================
 function playdooranimationright(inReverse){
 	if(inReverse==0) {
