@@ -8,10 +8,16 @@
 //
 // Last updated - 06/04/2015 @ 01:42am 
 
-var DEBUG_MODE = false;
+var DEBUG_MODE = true;
+
+// set storage
+// localStorage["fnaf-js-savegame"] = "testicles";
+
+//get storage
+//console.log(localStorage["fnaf-js-savegame"]);
 
 assertButtons();
-foxydifficulty = 0;
+foxydifficulty = 19;
 var cachedbody = document.getElementById("alldahtml").innerHTML;
 
 function playSound(src,channelnumber){
@@ -55,7 +61,8 @@ function mainThread() {
 	if(currentRoom=="1c" && feedopen == true) {
 		foxxytimer=0;
 	};
-	updateFoxxyAI();
+//	updateBunnyAI();
+//	updateFoxxyAI();
 	if(currentRoom=="2a" && animatronicStates[3].state!==3 && play2aanimation==false) {
 		play2aanimation=true;
 		setTimeout(function(){
@@ -65,27 +72,14 @@ function mainThread() {
 	};
 };
 
+function loadgame2() {
+	loadgame();
+};
+
 function loadgame() {
 	stopSound();
 	loadroomImages();
 	loadEverythingElse();
-	//mainThread();
-	clearInterval(mainmenuanimInterval1);
-	document.getElementById("mainmenustaticimg").style.display="none";
-	document.getElementById("mainmenu").style.display="none";
-	document.getElementById("timekeeper").style.display="block";
-	document.getElementById("openclosecamera").style.display="block";
-	document.getElementById("power").style.display="block";
-	document.getElementById("body").style.display="block";
-	//camerapositionTick();
-	mainThreadID = setInterval('mainThread()', 1000);
-//	foxxytimeout=setTimeout(function(){
-//		updateAIState(3,1);
-//	},5000);
-	var recordanimId = setInterval('recordTick()', 1000);
-	timer = $.timer(function() {
-	   setDivImgFan()
-	}, 90, true);
 };
 
 hours[0] = 12;
@@ -94,17 +88,15 @@ for(x=1;x<7;x++){
 };
 
 function updateAIPosition(AIID,AIstate,newroom,roomstate,oldroomstate){
+	if(!AIID){
+		console.log("updateAIPosition(AI ID, AI new state, AI new room, new room state, old room state");
+		return;
+	};
 	console.log("updateRoomState("+animatronicStates[AIID].currentRoom+","+oldroomstate+")");
     updateRoomState(animatronicStates[AIID].currentRoom,oldroomstate,1); //old room
 	updateAIState(AIID,AIstate,newroom);
     updateRoomState(newroom,roomstate); //new room
 }
-
-var animatronicStates = [{name:"Chica",currentRoom:"1a",state:0},
-                         {name:"Bonnie",currentRoom:"1a",state:0},
-                         {name:"Freddy",currentRoom:"1a",state:0},
-                         {name:"Foxxy",currentRoom:"1c",state:0}
-						];
 
 function searchForState(room){
     for (var i=0; i < currRoomStates.length; i++) {
@@ -145,12 +137,17 @@ function updateAIState(AIID,state,newroom,roomID){
 		case 1: //Bunny
             switch(state) {
                 case 0: //unseen
-					animatronicStates[AIID].currentRoom = newroom;
+			//		animatronicStates[1].state = 0;
                     break;   
                 case 1: //seen
-					animatronicStates[AIID].currentRoom = newroom;
+			//		animatronicStates[1].state = 1;
+                    break;
+                case 2: //moving
+			//		animatronicStates[1].state = 2;
                     break;
             }
+			animatronicStates[AIID].state=state;
+			bunnytimer=0;
             break;
 		case 3: //Foxy
             switch(state) {
@@ -184,7 +181,7 @@ function updateAIState(AIID,state,newroom,roomID){
 
 var updateRoomState = function(roomname,state,timeout){
     if(timeout=="") timeout=3000;
-	if(state=="") state = 1//parseInt(state);
+	if(state=="") state = 0//parseInt(state);
 	if((typeof roomname) != "string") return console.log("Room name not a string!");
 	
 	switch(roomname) {
@@ -235,22 +232,34 @@ var updateRoomState = function(roomname,state,timeout){
                     }
 					break;
 				default:
-					alert("penis");
+					console.log("Not updating room 1a; not a valid state!");
 			}
 			if(leftornot==0) roomdiv.css("left","0");
 			break;
 		case "1b":
 			currRoomStates[1].roomstate=state;
-			if(currentRoom == roomname) updateRoomStateStatic() //document.getElementById('static').style.opacity="1";
+			if(currentRoom == roomname) {
+				updateRoomStateStatic() //document.getElementById('static').style.opacity="1";
+			};
 			switch(state) {
 				case 0: // bonny
 					setTimeout(function(){
-						roomdiv.src="graphics/rooms/1a/"+state+".png";
-					}, 3000);
+					//	roomdiv.src="graphics/rooms/1b/"+state+".png";
+						roomdiv.attr("src",roomImages[1][0].src);
+					}, 1);
+					break;
+				case 1: // bonny
+					setTimeout(function(){
+					//	roomdiv.src="graphics/rooms/1b/"+state+".png";
+						roomdiv.attr("src",roomImages[1][1].src);
+					}, 1);
 					break;
 				default:
-					alert("penis");
+					console.log("Not updating room 1b; not a valid state!");
 			}
+			if(currentRoom == roomname) {
+				updatecurrentRoom("1b");
+			};
 			if(leftornot==0 && currentRoom==roomname) roomdiv.css("left","0");
 			break;
 		case "1c":
@@ -278,7 +287,7 @@ var updateRoomState = function(roomname,state,timeout){
 					}, 3000);
 					break;
 				default:
-					alert("penis");
+					console.log("Not updating room 5; not a valid state!");
 			}
 			if(leftornot==0 && currentRoom==roomname) roomdiv.css("left","0");
 			break;
@@ -302,7 +311,7 @@ var updateRoomState = function(roomname,state,timeout){
 					}, timeout);
 					break;
 				default:
-					alert("penis");
+					console.log("Not updating room office; not a valid state!");
 			}
 			break;
 		default:
@@ -355,6 +364,9 @@ function updatecurrentRoom(roomparameter) {
 	else if(foxxyrunning==true && currentRoom=="2a"){
 		setTimeout(playFoxxyRunningAnimation,600);
 	};
+	if(currentRoom==animatronicStates[1].currentRoom && feedopen == true) {
+		updateAIState(1,1);
+	};
 }
 
 function updatePowerPercent() {
@@ -400,6 +412,47 @@ function updatePowerUsage() {
 	if(currentPower<=0) gameoverPowerFailure();
 }
 
+function updateBunnyAI() {
+	switch(animatronicStates[1].state) {
+		case 0:  // unseen
+		//	if(animatronicStates[1].currentRoom=="1b") return;
+			bunnytimer++;
+			if(bunnytimer>=5){
+			//	updateRoomState(roomname,state,timeout);
+			//	animatronicStates[1].state=2;
+				updateAIState(1,2);
+			}
+			break;
+		case 1:  // seen
+			if(currentRoom!=animatronicStates[1].currentRoom || feedopen == false) {
+				updateAIState(1,0);
+			};
+			break;
+		case 2:  // moving
+			if((Math.random()*100)<=50){
+		//		updateAIPosition(1,1,roomClosenessBunny[3].name,1,0)
+				animatronicStates[1].currentRoomArray+=1
+				console.log(roomClosenessBunny[4].name);
+				updateRoomState(roomClosenessBunny[4].name,2);
+				updateRoomState(roomClosenessBunny[5].name,2);
+				animatronicStates[1].currentRoom=roomClosenessBunny[4].name
+				console.log("closer!");
+				if(currentRoom!=animatronicStates[1].currentRoom || feedopen == false) {
+					updateAIState(1,0);
+				} else {
+					updateAIState(1,1);
+				};
+			} else {
+		//		updateAIPosition(1,1,roomClosenessBunny[currentBunnyRoomArray-1].name,1,0)
+		//		updateRoomState(roomClosenessBunny[4].name,0);
+				console.log("further!");
+		//		updateAIState(1,0);
+			};
+			break;
+		default:
+	}
+};
+
 function updateFoxxyAI() {
 	switch(animatronicStates[3].state) {
 		case 0: 
@@ -443,7 +496,7 @@ function updateFoxxyAI() {
 			break;
 		default:
 	}
-}
+};
 
 function updateTime() {
     timeCounter++;
@@ -477,13 +530,13 @@ function setDivImgFan(){
 //	document.getElementById(elementID).src=pathtofile+"_"+frame2+".png"
 	setTimeout(function(){
 		fandiv.attr("src",fananim[1].src);
-	},60);
+	},30);
 	setTimeout(function(){
 		fandiv.attr("src",fananim[2].src);
-	},120);
+	},60);
 	setTimeout(function(){
 		fandiv.attr("src",fananim[3].src);
-	},180);
+	},90);
 };
 
 function playfoxxyofficeanimation(){
@@ -554,7 +607,9 @@ function playFoxxyRunningAnimation(){
 function mainmenu(){
 	document.getElementById("amduatlogo").style.display="none";
 	document.getElementById("mainmenu").style.display="block";
+	if(typeof localStorage["fnaf-js-savegame"]!="undefined") document.getElementById("continuebutton").style.display="block";
 	playSound("static2.wav");
+	clearInterval(mainmenuanimInterval1);
 	mainmenuanimInterval1 = setInterval(function(){
 		penis=Math.random();
 		if(penis>0.8) {
@@ -577,12 +632,23 @@ function mainmenu(){
 };
 
 function gameoverPowerFailure(){
+	clearInterval(mainThreadID);
 	playSound("powerdown.wav");
 	if(feedopen==true) {
 		OpenCloseFeed();
 	};
+	if(rightdooropen==true) {
+		playdooranimationright(1);
+	};
+	if(leftdooropen==true) {
+		playdooranimationleft(1);
+	};
 	timer.stop();
 	document.getElementById("fan").style.display="none";
+	document.getElementById("timekeeper").style.display="none";
+	document.getElementById("power").style.display="none";
+	document.getElementById("doorbuttonsleft").style.display="none";
+	document.getElementById("doorbuttonsright").style.display="none";
 	document.getElementById("openclosecamera").style.display="none";
 	document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[0].src+")";
 	testpenisdick = 'setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[1].src+")"},(450*5))'
@@ -598,7 +664,6 @@ function gameoverPowerFailure(){
 	setTimeout(function(){
 //		gameover();
 		playfreddygameoveranimation();
-		
 	},470*duration);
 };
 

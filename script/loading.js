@@ -17,6 +17,9 @@ loadroomImages = function(){
 }
 
 function loadEverythingElse(){
+		document.getElementById("mainmenustaticimg").style.display="none";
+		document.getElementById("mainmenu").style.display="none";
+		document.getElementById("loadingicon").style.display="block";
 	for(x=0;x<1;x++){
 		officestates[x] = new Image();
 		officestates[x].src = "graphics/rooms/office/"+x+".png";
@@ -82,7 +85,23 @@ function loadEverythingElse(){
 		freddyanimationgameover[x] = new Image();
 		freddyanimationgameover[x].src = "graphics/gameover/freddy/"+x+".png";
 	};
-}
+	setTimeout(function(){
+		clearInterval(mainmenuanimInterval1);
+		document.getElementById("loadingicon").style.display="none";
+		document.getElementById("timekeeper").style.display="block";
+		document.getElementById("openclosecamera").style.display="block";
+		document.getElementById("power").style.display="block";
+		document.getElementById("body").style.display="block";
+		mainThreadID = setInterval('mainThread()', 1000);
+		var recordanimId = setInterval('recordTick()', 1000);
+		timer = $.timer(function() {
+		   setDivImgFan()
+		}, 91, true);
+		//	foxxytimeout=setTimeout(function(){
+		//		updateAIState(3,1);
+		//	},5000);
+		},3500);
+};
 for(x=0;x<4;x++){
 	mainmenufazbear[x] = new Image();
 	mainmenufazbear[x].src = "graphics/mainmenu/"+x+".png";

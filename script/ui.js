@@ -12,6 +12,14 @@ function staticTick() {
   staticId = setTimeout('staticTick()', 30);
 }
 
+function updateselectedmenuitem(obj) {
+	if(obj.id=="newbutton"){
+		document.getElementById("selectedarrows").style.top="55.5%"
+	} else if(obj.id=="continuebutton") {
+		document.getElementById("selectedarrows").style.top="65.5%"
+	};
+}
+
 function OpenCloseFeed() {
 	if(feedopen==false){
 		setTimeout(function(){camerafeeddiv.toggle();officemaindiv.toggle();},360);
@@ -239,14 +247,22 @@ assertButtons = function(){
 			} else {
 				officemaindiv.css("background-image", "url('"+officelightstates[0][1].src+"')");
 			};
-			doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[2].src+"')");
+			if(leftdooropen==false) {
+				doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[2].src+"')");
+			} else {
+				doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[4].src+"')");
+			};
 			leftlighton=true;
 			currentPowerUsage++;
 			updatePowerUsage();
 		}
 		else if(rightlighton!==true) {
 			officemaindiv.css("background-image", "url('"+officestates[0].src+"')");
-			doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[1].src+"')");
+			if(leftdooropen==false) {
+				doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[1].src+"')");
+			} else {
+				doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[3].src+"')");
+			};
 			leftlighton=false;
 			currentPowerUsage--;
 			updatePowerUsage();
@@ -310,14 +326,22 @@ assertButtons = function(){
 	doorbuttonsright_lightdiv.click(function(){
 		if(leftlighton==false && rightlighton==false) {
 			officemaindiv.css("background-image", "url('"+officelightstates[0][0].src+"')");
-			doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[2].src+"')");
+			if(rightdooropen==false) {
+				doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[2].src+"')");
+			} else {
+				doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[4].src+"')");
+			};
 			rightlighton=true;
 			currentPowerUsage++;
 			updatePowerUsage();
 		}
 		else if(leftlighton!==true) {
 			officemaindiv.css("background-image", "url('"+officestates[0].src+"')");
-			doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[1].src+"')");
+			if(rightdooropen==false) {
+				doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[1].src+"')");
+			} else {
+				doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[3].src+"')");
+			};
 			rightlighton=false;
 			currentPowerUsage--;
 			updatePowerUsage();
