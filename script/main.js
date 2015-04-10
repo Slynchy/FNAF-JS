@@ -6,9 +6,9 @@
 //
 // Ported by Sam 'Slynch' Lynch
 //
-// Last updated - 06/04/2015 @ 01:42am 
+// Last updated - 10/04/2015 @ 01:53am 
 
-var DEBUG_MODE = true;
+var DEBUG_MODE = false;
 
 // set storage
 // localStorage["fnaf-js-savegame"] = "testicles";
@@ -20,10 +20,33 @@ assertButtons();
 foxydifficulty = 19;
 var cachedbody = document.getElementById("alldahtml").innerHTML;
 
-function playSound(src,channelnumber){
+function mainThread() {
+	if(currentPower>0) {
+		updatePowerPercent();
+		updatePowerUsage();
+	}
+    updateTime();
+	if(currentRoom=="1c" && feedopen == true) {
+		foxxytimer=0;
+	};
+	updateBunnyAI();
+//	updateFoxxyAI();
+	if(currentRoom=="2a" && animatronicStates[3].state!==3 && play2aanimation==false && animatronicStates[1].currentRoom!="2a") {
+		play2aanimation=true;
+		setTimeout(function(){
+			play2aanimation=false;
+			},445);
+		playroomanimation("2a",Math.random());
+	};
+};
+
+function playSound(src,volume,channelnumber){
 	if(DEBUG_MODE) return;
 	if((typeof channelnumber)=="undefined") {
 	
+	};
+	if((typeof volume)=="undefined") {
+		volume=0.2;
 	};
 	if((typeof src)=="undefined") {
 		return console.log("playSound() error - no sound specified");
@@ -31,6 +54,7 @@ function playSound(src,channelnumber){
 	for(x=1;x<=4;x++){
 		if(audiochannels[x].paused==true){
 			audiochannels[x].src=("sounds/"+src);
+			audiochannels[x].volume=volume;
 			return console.log("Channel "+x+" now playing "+src);
 		};
 	};
@@ -44,32 +68,13 @@ function stopSound(channelnumber){
 		for(x=1;x<=4;x++){
 			if(audiochannels[x].paused==false){
 				audiochannels[x].pause();
+				audiochannelambient.pause();
 				return console.log("Channel "+x+" is paused/stopped");
 			};
 		};
 		return;
 	};
 	return audiochannels[channelnumber].paused=true;
-};
-
-function mainThread() {
-	if(currentPower>0) {
-		updatePowerPercent();
-		updatePowerUsage();
-	}
-    updateTime();
-	if(currentRoom=="1c" && feedopen == true) {
-		foxxytimer=0;
-	};
-//	updateBunnyAI();
-//	updateFoxxyAI();
-	if(currentRoom=="2a" && animatronicStates[3].state!==3 && play2aanimation==false) {
-		play2aanimation=true;
-		setTimeout(function(){
-			play2aanimation=false;
-			},445);
-		playroomanimation("2a",Math.random());
-	};
 };
 
 function loadgame2() {
@@ -114,12 +119,13 @@ function searchForRoomID(roomname){
     };
 };
 
-function updateAIState(AIID,state,newroom,roomID){
+function updateAIState(AIID,state,updatetimer,newroom,roomID){
 	if(!AIID){
 		console.log("updateAIState:\nAIID - ID of the AI to update\nstate - What state to set it to\nnewroom - What room to change to\nroomID - I don't fucking know, the ID of the room but I don't know what it is used for.");
 		return;
 	};
 	if(state=="") state = 0;//parseInt(state);
+	if((typeof updatetimer)=="undefined") updatetimer = true;//parseInt(state);
 //    console.log(typeof roomID);
 //	if((typeof roomID) != "number") return console.log("Room name not an integer!");
     if(newroom=="") console.log("No new room specified, expect errors if unintended");//animatronicStates[AIID].currentRoom = newroom;
@@ -147,7 +153,7 @@ function updateAIState(AIID,state,newroom,roomID){
                     break;
             }
 			animatronicStates[AIID].state=state;
-			bunnytimer=0;
+			if(updatetimer==true) bunnytimer=0;
             break;
 		case 3: //Foxy
             switch(state) {
@@ -180,9 +186,11 @@ function updateAIState(AIID,state,newroom,roomID){
 };
 
 var updateRoomState = function(roomname,state,timeout){
-    if(timeout=="") timeout=3000;
+    if(timeout=="") timeout=1;
 	if(state=="") state = 0//parseInt(state);
 	if((typeof roomname) != "string") return console.log("Room name not a string!");
+	
+	console.log("Updating room state of "+roomname+" to state "+state);
 	
 	switch(roomname) {
 		case "1a":
@@ -245,13 +253,13 @@ var updateRoomState = function(roomname,state,timeout){
 				case 0: // bonny
 					setTimeout(function(){
 					//	roomdiv.src="graphics/rooms/1b/"+state+".png";
-						roomdiv.attr("src",roomImages[1][0].src);
+//						roomdiv.attr("src",roomImages[1][0].src);
 					}, 1);
 					break;
 				case 1: // bonny
 					setTimeout(function(){
 					//	roomdiv.src="graphics/rooms/1b/"+state+".png";
-						roomdiv.attr("src",roomImages[1][1].src);
+	//					roomdiv.attr("src",roomImages[1][1].src);
 					}, 1);
 					break;
 				default:
@@ -272,23 +280,102 @@ var updateRoomState = function(roomname,state,timeout){
 				roomdiv.css("left","-"+rooms[currentRoomID].leftadjustment+"%");
 			};
 			break;
-		case "5":
-			currRoomStates[5].roomstate=state;
-			if(currentRoom == roomname) updateRoomStateStatic(4000); //document.getElementById('static').style.opacity="1";
+		case "2a":
+			currRoomStates[3].roomstate=state;
+			if(currentRoom == roomname) {
+				updateRoomStateStatic(3000); //document.getElementById('static').style.opacity="1";
+		//		return;
+			};
 			switch(state) {
 				case 0: // empty
-					setTimeout(function(){
-						roomdiv.attr("src","graphics/rooms/5/"+currRoomStates[5].roomstate+".png");
-					}, 3000);
+			//		setTimeout(function(){
+				//		roomdiv.attr("src","graphics/rooms/5/0.png");
+		//		}, 1);
 					break;
-				case 1: // bonny
+				case 2: // bonny
 					setTimeout(function(){
-						roomdiv.attr("src","graphics/rooms/5/"+currRoomStates[5].roomstate+".png");
-					}, 3000);
+			//			roomdiv.attr("src","graphics/rooms/5/2.png");
+					}, 1);
 					break;
 				default:
 					console.log("Not updating room 5; not a valid state!");
 			}
+			if(currentRoom == "2a") {
+				updatecurrentRoom("2a");
+			};
+			if(leftornot==0 && currentRoom==roomname) roomdiv.css("left","0");
+			break;
+		/*	currRoomStates[3].roomstate=state;
+			if(currentRoom == roomname) {
+				updateRoomStateStatic(3000); //document.getElementById('static').style.opacity="1";
+		//		return;
+			};
+			switch(state) {
+				case 0: // normal
+			//		setTimeout(function(){
+					//	roomdiv.src="graphics/rooms/1b/"+state+".png";
+		//				roomdiv.attr("src",roomImages[1][0].src);
+			//		}, 1);
+					break;
+				case 1: // bonny
+					setTimeout(function(){
+					//	roomdiv.src="graphics/rooms/1b/"+state+".png";
+						roomdiv.attr("src",roomImages[3][2].src);
+					}, 1);
+					break;
+				default:
+					console.log("Not updating room 2a; not a valid state!");
+			}
+			if(currentRoom == "2a") {
+				updatecurrentRoom("2a");
+			};
+			if(leftornot==0 && currentRoom==roomname) roomdiv.css("left","0");
+			break;*/
+		case "2b":
+			currRoomStates[4].roomstate=state;
+			if(currentRoom == roomname) {
+				updateRoomStateStatic(3000); //document.getElementById('static').style.opacity="1";
+	//			return;
+			};
+			switch(state) {
+				case 0: // normal
+					break;
+				case 1: // bonny
+					setTimeout(function(){
+			//			roomdiv.attr("src",roomImages[4][1].src);
+					}, 1);
+					break;
+				default:
+					console.log("Not updating room 2b; not a valid state!");
+			}
+			if(currentRoom == "2b") {
+				updatecurrentRoom("2b");
+			};
+			if(leftornot==0 && currentRoom==roomname) roomdiv.css("left","0");
+			break;
+		case "5":
+			currRoomStates[5].roomstate=state;
+			if(currentRoom == roomname) {
+				updateRoomStateStatic(3000); //document.getElementById('static').style.opacity="1";
+		//		return;
+			};
+			switch(state) {
+				case 0: // empty
+					setTimeout(function(){
+			//			roomdiv.attr("src","graphics/rooms/5/"+currRoomStates[5].roomstate+".png");
+					}, 1);
+					break;
+				case 2: // bonny
+					setTimeout(function(){
+		//				roomdiv.attr("src","graphics/rooms/5/"+currRoomStates[5].roomstate+".png");
+					}, 1);
+					break;
+				default:
+					console.log("Not updating room 5; not a valid state!");
+			}
+			if(currentRoom == "5") {
+				updatecurrentRoom("5");
+			};
 			if(leftornot==0 && currentRoom==roomname) roomdiv.css("left","0");
 			break;
 		case "office":
@@ -338,6 +425,7 @@ function updatecurrentRoom(roomparameter) {
 	};
 	// END 
 	
+	playSound("blip3.wav",0.5);
 	currentRoom=roomparameter;
 	currentroomstatetoset = 0
 	currentroomstatetoset = searchForState(roomparameter);
@@ -417,6 +505,15 @@ function updateBunnyAI() {
 		case 0:  // unseen
 		//	if(animatronicStates[1].currentRoom=="1b") return;
 			bunnytimer++;
+			console.log("bunnytimer = "+bunnytimer);
+			if(animatronicStates[1].currentRoomArray==0) {
+				if(leftlighton==true) {
+					updateAIState(1,1,false);
+				} else {
+					updateAIState(1,3,false);
+					return;
+				};
+			};
 			if(bunnytimer>=5){
 			//	updateRoomState(roomname,state,timeout);
 			//	animatronicStates[1].state=2;
@@ -425,29 +522,76 @@ function updateBunnyAI() {
 			break;
 		case 1:  // seen
 			if(currentRoom!=animatronicStates[1].currentRoom || feedopen == false) {
-				updateAIState(1,0);
+				if(animatronicStates[1].currentRoomArray==0 && leftlighton==true) {
+					updateAIState(1,1,false);
+					return;
+				} else {
+					updateAIState(1,0,false);
+					return;
+				};
 			};
 			break;
 		case 2:  // moving
-			if((Math.random()*100)<=50){
+			console.log("bunnytimer = "+bunnytimer);
+			if(animatronicStates[1].currentRoomArray==0) {
+				updateAIState(1,3);
+				return;
+			};
+			if((Math.random()*100)<=60){
 		//		updateAIPosition(1,1,roomClosenessBunny[3].name,1,0)
-				animatronicStates[1].currentRoomArray+=1
-				console.log(roomClosenessBunny[4].name);
-				updateRoomState(roomClosenessBunny[4].name,2);
-				updateRoomState(roomClosenessBunny[5].name,2);
-				animatronicStates[1].currentRoom=roomClosenessBunny[4].name
+				animatronicStates[1].currentRoomArray-=1
+				console.log(roomClosenessBunny[animatronicStates[1].currentRoomArray].name);
+				if((animatronicStates[1].currentRoomArray + 1)==5) {
+					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,2);
+				} else {
+					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,0);
+				};
+				updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
+				animatronicStates[1].currentRoom=roomClosenessBunny[animatronicStates[1].currentRoomArray].name
 				console.log("closer!");
 				if(currentRoom!=animatronicStates[1].currentRoom || feedopen == false) {
 					updateAIState(1,0);
 				} else {
 					updateAIState(1,1);
 				};
+				if(animatronicStates[1].currentRoom=="office") updateAIState(1,3);
 			} else {
 		//		updateAIPosition(1,1,roomClosenessBunny[currentBunnyRoomArray-1].name,1,0)
 		//		updateRoomState(roomClosenessBunny[4].name,0);
 				console.log("further!");
-		//		updateAIState(1,0);
+				if((animatronicStates[1].currentRoomArray)==5 || (animatronicStates[1].currentRoomArray)==4) {
+				//	updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,2);
+				} else {
+					animatronicStates[1].currentRoomArray+=1
+					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray-1].name,0);
+					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
+					animatronicStates[1].currentRoom=roomClosenessBunny[animatronicStates[1].currentRoomArray].name
+				};
+				updateAIState(1,0);
 			};
+			break;
+		case 3:  // at office door
+			bunnytimer++;
+			console.log("bunnytimer = "+bunnytimer);
+			if(bunnytimer<=9 && leftlighton==true){
+				updateAIState(1,1,false);
+			};
+			if(bunnytimer<=9 && leftdooropen==true){
+			//	currentPower-=(0.775);
+			} else if(bunnytimer>=9 && leftdooropen==false){
+				updateAIState(1,4);
+			} else if(bunnytimer>=10 && leftdooropen==true){
+				updateAIState(1,0);
+				updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
+				animatronicStates[1].currentRoomArray=4
+				updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
+				animatronicStates[1].currentRoom=roomClosenessBunny[animatronicStates[1].currentRoomArray].name
+				console.log("returning to room 1b");
+			};
+			break;
+		case 4:  // dead
+			playfreddygameoveranimation("bonny");
+			updateAIState(1,1);
 			break;
 		default:
 	}
@@ -459,18 +603,21 @@ function updateFoxxyAI() {
 			foxxytimer++;
 			if(foxxytimer>=foxydifficultyarray[foxydifficulty]){
 				updateAIState(3,1);
+				playSound("pirate_song2.wav",0.01);
 			}
 			break;
 		case 1: 
 			foxxytimer++;
 			if(foxxytimer>=foxydifficultyarray[foxydifficulty]){
 				updateAIState(3,2);
+				playSound("pirate_song2.wav",0.01);
 			}
 			break;
 		case 2: 
 			foxxytimer++;
 			if(foxxytimer>=foxydifficultyarray[foxydifficulty]){
 				updateAIState(3,3);
+				playSound("pirate_song2.wav",0.01);
 			}
 			break;
 		case 3: 
@@ -547,6 +694,7 @@ function playfoxxyofficeanimation(){
 	document.getElementById("officecameraright").style.display="none";
 	document.getElementById("openclosecamera").style.display="none";
 	document.getElementById("doorleft").style.display="none";
+	playSound("XSCREAM.wav",0.05);
 	for(x=0;x<21;x++){
 	//	eval('foxxyofficeanimtimeout[x] = setTimeout(function(){officemaindiv.css("background-image",foxxyofficeanim['+x+'].src);},(35*'+x+'));');
 		eval('foxxyofficeanimtimeout[x] = setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+foxxyofficeanim['+x+'].src+")";},(35*'+x+'));');
@@ -558,23 +706,41 @@ function playfoxxyofficeanimation(){
 		},(2350));
 };
 
-function playfreddygameoveranimation(){
-	document.getElementById("officemain").style.backgroundImage="none";
-	document.getElementById("doorbuttonsleft").style.display="none";
-	document.getElementById("doorbuttonsright").style.display="none";
-	document.getElementById("doorright").style.display="none";
-	document.getElementById("doorleft").style.display="none";
-	document.getElementById("officecameraleft").style.display="none";
-	document.getElementById("officecameraright").style.display="none";
-	document.getElementById("openclosecamera").style.display="none";
-	for(x=0;x<20;x++){
-		eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+freddyanimationgameover['+x+'].src+")";},(45*'+x+'));');
+function playfreddygameoveranimation(animatronic){
+	if((typeof animatronic)=="undefined") animatronic="freddy";
+	switch(animatronic) {
+		case "freddy":
+			document.getElementById("officemain").style.backgroundImage="none";
+			document.getElementById("doorbuttonsleft").style.display="none";
+			document.getElementById("doorbuttonsright").style.display="none";
+			document.getElementById("doorright").style.display="none";
+			document.getElementById("doorleft").style.display="none";
+			document.getElementById("officecameraleft").style.display="none";
+			document.getElementById("officecameraright").style.display="none";
+			document.getElementById("openclosecamera").style.display="none";
+			playSound("XSCREAM.wav",0.05);
+			for(x=0;x<20;x++){
+				eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+freddyanimationgameover['+x+'].src+")";},(45*'+x+'));');
+			};
+			gameoverstatic();
+			break;
+		case "bonny":
+			document.getElementById("fan").style.display="none";
+			document.getElementById("doorright").style.display="none";
+			document.getElementById("doorleft").style.display="none";
+			for(x=0;x<22;x++){
+				eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+bonnyanimationgameover['+x+'].src+")";},(45*'+x+'));');
+			};
+			setTimeout(function(){gameoverstatic();},275);
+			break;
+		default:
 	};
-	gameoverstatic();
+	clearInterval(mainThreadID);
 };
 
 function gameoverstatic(){
 	setTimeout(function(){
+		stopSound();
 		document.getElementById("gameoverstaticimg").style.display="block";
 		document.getElementById("gameoverstaticimg").play();
 		gameover();
@@ -599,8 +765,8 @@ function playFoxxyRunningAnimation(){
 	};
 	setTimeout(function(){
 		foxxyrunning=false;
-		if(leftdooropen==true) playSound("DOOR_POUNDING_ME_D0291401.wav");
-		animatronicStates[3].state=4;
+		if(leftdooropen==true) playSound("knock2.wav",1);
+			animatronicStates[3].state=4;
 		},(3350));
 };
 
@@ -663,6 +829,7 @@ function gameoverPowerFailure(){
 	};
 	setTimeout(function(){
 //		gameover();
+		stopSound();
 		playfreddygameoveranimation();
 	},470*duration);
 };
@@ -719,5 +886,5 @@ function introduction(){
 	});
 };
 
-//setTimeout(introduction,1650);
-mainmenu();
+setTimeout(introduction,1650);
+//mainmenu();

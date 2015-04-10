@@ -2,7 +2,7 @@
 // ui.js
 // The JS for handling UI changes and functions
 //
-// Last updated - 06/04/2015 @ 01:42am 
+// Last updated - 10/04/2015 @ 01:53am 
 
 function staticTick() {
   randomcheck++
@@ -22,11 +22,12 @@ function updateselectedmenuitem(obj) {
 
 function OpenCloseFeed() {
 	if(feedopen==false){
-		setTimeout(function(){camerafeeddiv.toggle();officemaindiv.toggle();},360);
+		setTimeout(function(){camerafeeddiv.toggle();officemaindiv.toggle();playSound("CAMERA_VIDEO_LOA_60105303.wav");},360);
 	}
 	else {
 		camerafeeddiv.toggle();
 		officemaindiv.toggle();
+		playSound("put_down.wav");
 	};
 	playcamerafeedanimation(feedopen);
 	fandiv.toggle();
@@ -272,6 +273,7 @@ assertButtons = function(){
 	doorbuttonsleft_doordiv.click(function(){
 		if(leftdooropen==false) {
 			playdooranimationleft(0);
+			playSound("SFXBible_12478.wav",0.2);
 			leftdooropen=true;
 			if(leftlighton) {
 				doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[4].src+"')");
@@ -284,6 +286,7 @@ assertButtons = function(){
 		}
 		else {
 			playdooranimationleft(1);
+			playSound("SFXBible_12478.wav",0.2);
 			leftdooropen=false;
 			if(leftlighton) {
 				doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[2].src+"')");
@@ -299,6 +302,7 @@ assertButtons = function(){
 	doorbuttonsright_doordiv.click(function(){
 		if(rightdooropen==false) {
 			playdooranimationright(0);
+			playSound("SFXBible_12478.wav",0.2);
 			rightdooropen=true;
 			if(rightlighton) {
 				doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[4].src+"')");
@@ -311,6 +315,7 @@ assertButtons = function(){
 		}
 		else {
 			playdooranimationright(1);
+			playSound("SFXBible_12478.wav",0.2);
 			rightdooropen=false;
 			if(rightlighton) {
 				doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[2].src+"')");

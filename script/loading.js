@@ -2,7 +2,7 @@
 // loading.js
 // The JS for loading the game (purely to reduce clutter)
 //
-// Last updated - 06/04/2015 @ 01:42am 
+// Last updated - 10/04/2015 @ 01:53am 
 
 loadroomImages = function(){
 	for(x=0;x<roomImagesIndex.length;x++){
@@ -85,6 +85,10 @@ function loadEverythingElse(){
 		freddyanimationgameover[x] = new Image();
 		freddyanimationgameover[x].src = "graphics/gameover/freddy/"+x+".png";
 	};
+	for(x=0;x<22;x++){
+		bonnyanimationgameover[x] = new Image();
+		bonnyanimationgameover[x].src = "graphics/gameover/bonny/"+x+".png";
+	};
 	setTimeout(function(){
 		clearInterval(mainmenuanimInterval1);
 		document.getElementById("loadingicon").style.display="none";
@@ -94,6 +98,12 @@ function loadEverythingElse(){
 		document.getElementById("body").style.display="block";
 		mainThreadID = setInterval('mainThread()', 1000);
 		var recordanimId = setInterval('recordTick()', 1000);
+		if(!DEBUG_MODE){
+			audiochannelambient.src=("sounds/Buzz_Fan_Florescent2.wav");
+			audiochannelambient.volume=0.1;
+			audiochannelambient2.src=("sounds/ambience2.wav");
+			audiochannelambient2.volume=0.3;
+		};
 		timer = $.timer(function() {
 		   setDivImgFan()
 		}, 91, true);

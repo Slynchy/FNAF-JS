@@ -2,11 +2,13 @@
 // variables.js
 // The JS for setting all variables prior to launch
 //
-// Last updated - 06/04/2015 @ 01:42am 
+// Last updated - 10/04/2015 @ 01:53am 
 
 var mainmenuanimInterval1;
 var mainmenuanimInterval2;
 var timer;
+
+var sounds=[];
 
 // this array defines how close each room is to the office
 // lower = closer
@@ -19,12 +21,15 @@ var roomClosenessBunny=[{name:"office"},
 					];
 var bunnytimer = 0;
 var freddyanimationgameover = [];
+var bonnyanimationgameover = [];
 var currentBunnyRoomArray = 4;
 var audiochannels = [];
 for(x=1;x<=4;x++){
 	audiochannels[x] = document.getElementById("channel"+x);
 	audiochannels[x].volume=0.3;
 };
+var audiochannelambient = document.getElementById("channelambient");
+var audiochannelambient2 = document.getElementById("channelambient2");
 
 var baseFoxyTime = 6;
 var foxydifficulty;
@@ -46,13 +51,13 @@ var storedselectedroom;
 var roomImagesIndex = [{name: "1a",amountofImages: 5},
 {name: "1b",amountofImages: 3},
 {name: "1c",amountofImages: 4},
-{name: "2a",amountofImages: 2},
-{name: "2b",amountofImages: 1},
+{name: "2a",amountofImages: 3},
+{name: "2b",amountofImages: 3},
 {name: "5",amountofImages: 3},
 {name: "7",amountofImages: 1}]
 
 var animatronicStates = [{name:"Chica",currentRoom:"1a",state:0,currentRoomArray:0},
-                         {name:"Bonnie",currentRoom:"1a",state:0,currentRoomArray:0},
+                         {name:"Bonnie",currentRoom:"1a",state:0,currentRoomArray:5},
                          {name:"Freddy",currentRoom:"1a",state:0,currentRoomArray:0},
                          {name:"Foxxy",currentRoom:"1c",state:0,currentRoomArray:2}
 						];
@@ -189,6 +194,7 @@ setVariables = function(){
 	foxxytimer=0;
 	bunnytimer = 0;
 	playedfoxxyrunninganimation=false;
+	animatronicStates[1].currentRoomArray=5;
 	
 	officeX=0
 	document.getElementById("office").style.webkitTransform="none";
