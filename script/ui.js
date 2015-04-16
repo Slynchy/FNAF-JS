@@ -43,6 +43,9 @@ function OpenCloseFeed() {
         currentPowerUsage--;
         updatePowerUsage();
     };
+	if(currentRoom==animatronicStates[1].currentRoom) {
+		updateAIState(1,1,false);
+	};
 }
 
 function updateRoomStateStatic(duration){
@@ -208,6 +211,82 @@ assertButtons = function(){
 		if(currentRoom!=="7" && animatestatic<1){
 			this.style.backgroundColor='#107010';
 			updatecurrentRoom("7");
+			resetCameraButtons(currentRoom);
+		}
+	});
+
+	button3div.mouseenter(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#505050';
+		}
+		else this.style.backgroundColor='#107010';
+	});
+	button3div.mouseleave(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#101010';
+		}
+	});
+	button3div.click(function(){
+		if(currentRoom!=="3" && animatestatic<1){
+			this.style.backgroundColor='#107010';
+			updatecurrentRoom("3");
+			resetCameraButtons(currentRoom);
+		}
+	});
+
+	button4adiv.mouseenter(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#505050';
+		}
+		else this.style.backgroundColor='#107010';
+	});
+	button4adiv.mouseleave(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#101010';
+		}
+	});
+	button4adiv.click(function(){
+		if(currentRoom!=="4a" && animatestatic<1){
+			this.style.backgroundColor='#107010';
+			updatecurrentRoom("4a");
+			resetCameraButtons(currentRoom);
+		}
+	});
+
+	button4bdiv.mouseenter(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#505050';
+		}
+		else this.style.backgroundColor='#107010';
+	});
+	button4bdiv.mouseleave(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#101010';
+		}
+	});
+	button4bdiv.click(function(){
+		if(currentRoom!=="4b" && animatestatic<1){
+			this.style.backgroundColor='#107010';
+			updatecurrentRoom("4b");
+			resetCameraButtons(currentRoom);
+		}
+	});
+
+	button6div.mouseenter(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#505050';
+		}
+		else this.style.backgroundColor='#107010';
+	});
+	button6div.mouseleave(function(){
+		if(this.id!==("button-"+currentRoom)){
+			this.style.backgroundColor='#101010';
+		}
+	});
+	button6div.click(function(){
+		if(currentRoom!=="6" && animatestatic<1){
+			this.style.backgroundColor='#107010';
+			updatecurrentRoom("6");
 			resetCameraButtons(currentRoom);
 		}
 	});

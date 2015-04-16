@@ -150,6 +150,46 @@ background-color:#101010;
     border: 3px solid white;
 }
 
+#button-3{
+position: absolute;
+width:45px;
+bottom:102px;
+left:16px;
+background-color:#101010;
+    padding:6px;
+    border: 3px solid white;
+}
+
+#button-4a{
+position: absolute;
+width:41px;
+bottom:97px;
+left:214px;
+background-color:#101010;
+    padding:6px;
+    border: 3px solid white;
+}
+
+#button-4b{
+position: absolute;
+width:41px;
+bottom:47px;
+left:214px;
+background-color:#101010;
+    padding:6px;
+    border: 3px solid white;
+}
+
+#button-6{
+position: absolute;
+width:45px;
+bottom:121px;
+left:307px;
+background-color:#101010;
+    padding:6px;
+    border: 3px solid white;
+}
+
 #room {
   position: fixed;
   left:0;
