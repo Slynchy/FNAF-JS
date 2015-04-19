@@ -46,6 +46,9 @@ function OpenCloseFeed() {
 	if(currentRoom==animatronicStates[1].currentRoom) {
 		updateAIState(1,1,false);
 	};
+	if(currentRoom==animatronicStates[0].currentRoom) {
+		updateAIState(0,1,false);
+	};
 }
 
 function updateRoomStateStatic(duration){
@@ -409,7 +412,11 @@ assertButtons = function(){
 
 	doorbuttonsright_lightdiv.click(function(){
 		if(leftlighton==false && rightlighton==false) {
-			officemaindiv.css("background-image", "url('"+officelightstates[0][0].src+"')");
+			if(animatronicStates[0].currentRoom=="office"){
+				officemaindiv.css("background-image","url("+officelightstates[2][0].src+")");
+			} else {
+				officemaindiv.css("background-image", "url('"+officelightstates[0][0].src+"')");
+			};
 			if(rightdooropen==false) {
 				doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[2].src+"')");
 			} else {

@@ -20,10 +20,12 @@ if(DEBUG_MODE==true) debugdiv.style.display="block";
 assertButtons();
 foxydifficulty = 19;
 bunnydifficulty = 20;
+chicadifficulty = 20;
 var cachedbody = document.getElementById("alldahtml").innerHTML;
 
 function debugShit(){
 	debugdiv.innerHTML = "Bonnie location: CAM-"+animatronicStates[1].currentRoom+"<br>";
+	debugdiv.innerHTML += "Chica location: CAM-"+animatronicStates[0].currentRoom+"<br>";
 	debugdiv.innerHTML += "Foxxy state: "+animatronicStates[3].state;
 //	debugdiv.innerHTML += "Foxxy state: "+animatronicStates[3].state+"<br>";
 };
@@ -37,7 +39,8 @@ function mainThread() {
 	if(currentRoom=="1c" && feedopen == true) {
 		foxxytimer=0;
 	};
-	updateBunnyAI();
+//	updateBunnyAI();
+	updateChicaAI();
 //	updateFoxxyAI();
 	if(DEBUG_MODE==true) debugShit();
 	if(currentRoom=="2a" && animatronicStates[3].state!==3 && play2aanimation==false && animatronicStates[1].currentRoom!="2a") {
@@ -131,7 +134,7 @@ function searchForRoomID(roomname){
 };
 
 function updateAIState(AIID,state,updatetimer,newroom,roomID){
-	if(!AIID){
+	if((typeof AIID)=="undefined"){
 		console.log("updateAIState:\nAIID - ID of the AI to update\nstate - What state to set it to\nnewroom - What room to change to\nroomID - I don't fucking know, the ID of the room but I don't know what it is used for.");
 		return;
 	};
@@ -144,12 +147,8 @@ function updateAIState(AIID,state,updatetimer,newroom,roomID){
 	
 	switch(AIID) {
 		case 0:// chica
-            switch(state) {
-                case 0: //unseen
-                    break;   
-                case 1: //seen
-                    break;
-            }
+			animatronicStates[0].state=state;
+			if(updatetimer==true) chicatimer=0;
             break;
 		case 1: //Bunny
             switch(state) {
@@ -196,222 +195,99 @@ function updateAIState(AIID,state,updatetimer,newroom,roomID){
 	return console.log("AI "+animatronicStates[AIID].name+" state updated to "+state);
 };
 
-var updateRoomState = function(roomname,state,timeout){
-    if(timeout=="") timeout=1;
+var updateRoomState = function(roomname,state){
 	if(state=="") state = 0//parseInt(state);
 	if((typeof roomname) != "string") return console.log("Room name not a string!");
-	
-	console.log("Updating room state of "+roomname+" to state "+state);
 	
 	switch(roomname) {
 		case "1a":
 			currRoomStates[0].roomstate=state;
-			if(currentRoom == roomname && state == currRoomStates[0].roomstate) updateRoomStateStatic(); //document.getElementById('static').style.opacity="1";
-			switch(state) {
-				case 0: // normal
-                    if(currentRoom == roomname){
-                        setTimeout(function(){
-                            roomdiv.attr("src","graphics/rooms/1a/"+state+".png");
-                        }, timeout);
-                    };
-					break;
-				case 1: // just freddy
-                    if(currentRoom == roomname){
-                        setTimeout(function(){
-                            roomdiv.attr("src","graphics/rooms/1a/"+state+".png");
-                        }, timeout);
-                    }
-					break;
-				case 2: // missing bunny
-                    if(currentRoom == roomname){
-                        setTimeout(function(){
-                            roomdiv.attr("src","graphics/rooms/1a/"+state+".png");
-                        }, timeout);
-                    };
-					break;
-				case 3: // missing chica
-                    if(currentRoom == roomname){
-                        setTimeout(function(){
-                            roomdiv.attr("src","graphics/rooms/1a/"+state+".png");
-                        }, timeout);
-                    };
-					break;
-				case 4: // just freddy looking at camera
-                    if(currentRoom == roomname){
-                        setTimeout(function(){
-                            roomdiv.attr("src","graphics/rooms/1a/"+state+".png");
-                        }, timeout);
-                    }
-					break;
-				case 5: // empty
-                    if(currentRoom == roomname){
-                        setTimeout(function(){
-                            roomdiv.attr("src","graphics/rooms/1a/"+state+".png");
-                        }, timeout);
-                    }
-					break;
-				default:
-					console.log("Not updating room 1a; not a valid state!");
-			}
-			if(leftornot==0) roomdiv.css("left","0");
+			if(currentRoom == roomname) {
+				updateRoomStateStatic(2500);
+				updatecurrentRoom("1a");
+			};
 			break;
 		case "1b":
 			currRoomStates[1].roomstate=state;
 			if(currentRoom == roomname) {
-				updateRoomStateStatic(2500) //document.getElementById('static').style.opacity="1";
-			};
-			switch(state) {
-				case 0: // bonny
-					setTimeout(function(){
-					//	roomdiv.src="graphics/rooms/1b/"+state+".png";
-//						roomdiv.attr("src",roomImages[1][0].src);
-					}, 1);
-					break;
-				case 1: // bonny
-					setTimeout(function(){
-					//	roomdiv.src="graphics/rooms/1b/"+state+".png";
-	//					roomdiv.attr("src",roomImages[1][1].src);
-					}, 1);
-					break;
-				default:
-					console.log("Not updating room 1b; not a valid state!");
-			}
-			if(currentRoom == roomname) {
+				updateRoomStateStatic(2500);
 				updatecurrentRoom("1b");
 			};
-			if(leftornot==0 && currentRoom==roomname) roomdiv.css("left","0");
 			break;
 		case "1c":
 			currRoomStates[2].roomstate=state;
-			if(currentRoom == roomname) updateRoomStateStatic() //document.getElementById('static').style.opacity="1";
-			if(currentRoom == roomname) roomdiv.attr("src","graphics/rooms/1c/"+currRoomStates[2].roomstate+".png");
-			if(leftornot==0 && currentRoom==roomname) roomdiv.css("left","0");
-			if(rooms[currentRoomID].leftadjustment!==0){
-				roomdiv.css("left","0%");
-				roomdiv.css("left","-"+rooms[currentRoomID].leftadjustment+"%");
+			if(currentRoom == roomname) {
+				updateRoomStateStatic(2500);
+				updatecurrentRoom("1c");
 			};
+			
 			break;
 		case "2a":
 			currRoomStates[3].roomstate=state;
 			if(currentRoom == roomname) {
-				updateRoomStateStatic(3000); //document.getElementById('static').style.opacity="1";
-		//		return;
-			};
-			switch(state) {
-				case 0: // empty
-			//		setTimeout(function(){
-				//		roomdiv.attr("src","graphics/rooms/5/0.png");
-		//		}, 1);
-					break;
-				case 2: // bonny
-					setTimeout(function(){
-			//			roomdiv.attr("src","graphics/rooms/5/2.png");
-					}, 1);
-					break;
-				default:
-					console.log("Not updating room 5; not a valid state!");
-			}
-			if(currentRoom == "2a") {
+				updateRoomStateStatic(2500); 
 				updatecurrentRoom("2a");
 			};
-			if(leftornot==0 && currentRoom==roomname) roomdiv.css("left","0");
 			break;
 		case "2b":
 			currRoomStates[4].roomstate=state;
 			if(currentRoom == roomname) {
-				updateRoomStateStatic(3000); //document.getElementById('static').style.opacity="1";
-	//			return;
-			};
-			switch(state) {
-				case 0: // normal
-					break;
-				case 1: // bonny
-					setTimeout(function(){
-			//			roomdiv.attr("src",roomImages[4][1].src);
-					}, 1);
-					break;
-				default:
-					console.log("Not updating room 2b; not a valid state!");
-			}
-			if(currentRoom == "2b") {
+				updateRoomStateStatic(2500); 
 				updatecurrentRoom("2b");
 			};
-			if(leftornot==0 && currentRoom==roomname) roomdiv.css("left","0");
 			break;
 		case "5":
 			currRoomStates[5].roomstate=state;
 			if(currentRoom == roomname) {
-				updateRoomStateStatic(3000); //document.getElementById('static').style.opacity="1";
-		//		return;
-			};
-			switch(state) {
-				case 0: // empty
-					setTimeout(function(){
-			//			roomdiv.attr("src","graphics/rooms/5/"+currRoomStates[5].roomstate+".png");
-					}, 1);
-					break;
-				case 2: // bonny
-					setTimeout(function(){
-		//				roomdiv.attr("src","graphics/rooms/5/"+currRoomStates[5].roomstate+".png");
-					}, 1);
-					break;
-				default:
-					console.log("Not updating room 5; not a valid state!");
-			}
-			if(currentRoom == "5") {
+				updateRoomStateStatic(2500); 
 				updatecurrentRoom("5");
 			};
-			if(leftornot==0 && currentRoom==roomname) roomdiv.css("left","0");
 			break;
 		case "3":
 			currRoomStates[7].roomstate=state;
 			if(currentRoom == roomname) {
-				updateRoomStateStatic(2500); //document.getElementById('static').style.opacity="1";
-	//			return;
-			};
-			switch(state) {
-				case 0: // normal
-					break;
-				case 1: // bonny
-					setTimeout(function(){
-			//			roomdiv.attr("src",roomImages[4][1].src);
-					}, 1);
-					break;
-				default:
-					console.log("Not updating room 3; not a valid state!");
-			}
-			if(currentRoom == "3") {
+				updateRoomStateStatic(2500); 
 				updatecurrentRoom("3");
+			};
+			break;
+		case "7":
+			currRoomStates[6].roomstate=state;
+			if(currentRoom == roomname) {
+				updateRoomStateStatic(2500); 
+				updatecurrentRoom("7");
+			};
+			break;
+		case "4a":
+			currRoomStates[8].roomstate=state;
+			if(currentRoom == roomname) {
+				updateRoomStateStatic(2500); 
+				updatecurrentRoom("4a");
+			};
+			break;
+		case "4b":
+			currRoomStates[9].roomstate=state;
+			if(currentRoom == roomname) {
+				updateRoomStateStatic(2500); 
+				updatecurrentRoom("4b");
+			};
+			break;
+		case "6":
+			currRoomStates[10].roomstate=state;
+			if(currentRoom == roomname) {
+				updateRoomStateStatic(2500); 
+				updatecurrentRoom("6");
 			};
 			break;
 		case "office":
 			currRoomStates[7].roomstate=state;
-//			if(currentRoom == roomname) updateRoomStateStatic(4000); //document.getElementById('static').style.opacity="1";
-			switch(state) {
-				case 0: // normal
-					setTimeout(function(){
-		//				officemaindiv.css("background-image","url("+officestates[0].src+")");
-					}, timeout);
-					break;
-				case 1: // bonny
-					setTimeout(function(){
-			//			officemaindiv.css("background-image","url("+officelightstates[1][0].src+")");
-					}, timeout);
-					break;
-				case 2: // chica
-					setTimeout(function(){
-			//			officemaindiv.css("background-image","url("+officelightstates[2][1].src+")");
-					}, timeout);
-					break;
-				default:
-					console.log("Not updating room office; not a valid state!");
-			}
 			break;
 		default:
-			alert("Invalid or no room name given!");
+			console.log("Invalid or no room name given!");
+			return;
 	}
 	
-	return console.log("Camera "+roomname+" updated");
+	console.log("Camera "+roomname+" updated");
+	return ;
 };
 
 var leftornot = 0
@@ -612,6 +488,111 @@ function updateBunnyAI() {
 		case 4:  // dead
 			playfreddygameoveranimation("bonny");
 			updateAIState(1,1);
+			break;
+		default:
+	}
+};
+
+function updateChicaAI() {
+	switch(animatronicStates[0].state) {
+		case 0:  // unseen
+		//	if(animatronicStates[1].currentRoom=="1b") return;
+			chicatimer++;
+			console.log("chicatimer = "+chicatimer);
+			if(animatronicStates[0].currentRoomArray==0) {
+				if(leftlighton==true) {
+					updateAIState(0,1,false);
+				} else {
+					updateAIState(0,3,false);
+					return;
+				};
+			};
+			if(chicatimer>=chicadifficultyarray[chicadifficulty]){
+			//	updateRoomState(roomname,state,timeout);
+			//	animatronicStates[1].state=2;
+				updateAIState(0,2);
+			}
+			break;
+		case 1:  // seen
+			if(currentRoom!=animatronicStates[0].currentRoom || feedopen == false) {
+				if(animatronicStates[0].currentRoomArray==0 && rightlighton==true) {
+					updateAIState(0,1,false);
+					return;
+				} else {
+					updateAIState(0,0,false);
+					return;
+				};
+			};
+			break;
+		case 2:  // moving
+			console.log("chicatimer = "+chicatimer);
+			if(animatronicStates[0].currentRoomArray==0) {
+				updateAIState(0,3);
+				return;
+			};
+			if((Math.random()*100)<=chicaChanceToMoveCloser[chicadifficulty]){
+		//		updateAIPosition(1,1,roomClosenessBunny[3].name,1,0)
+				animatronicStates[0].currentRoomArray-=1
+				console.log(roomClosenessChica[animatronicStates[0].currentRoomArray].name);
+				if((animatronicStates[0].currentRoomArray + 1)==6) {
+					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray+1].name,2);
+				} else {
+					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray+1].name,0);
+				};
+				if(animatronicStates[0].currentRoomArray==4 || animatronicStates[0].currentRoomArray==5){
+					if((Math.random()*100)<=20){
+						updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
+					} else {
+						updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,1);
+					};
+				} else {
+					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
+				};
+				animatronicStates[0].currentRoom=roomClosenessChica[animatronicStates[0].currentRoomArray].name
+				console.log("closer!");
+				if(currentRoom!=animatronicStates[0].currentRoom || feedopen == false) {
+					updateAIState(0,0);
+				} else {
+					updateAIState(0,1);
+				};
+				if(animatronicStates[0].currentRoom=="office") updateAIState(0,3);
+			} else {
+		//		updateAIPosition(1,1,roomClosenessBunny[currentBunnyRoomArray-1].name,1,0)
+		//		updateRoomState(roomClosenessBunny[4].name,0);
+				console.log("further!");
+				if((animatronicStates[0].currentRoomArray)==6 || (animatronicStates[0].currentRoomArray)==5) {
+				//	updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,2);
+				} else {
+					animatronicStates[0].currentRoomArray+=1
+					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray-1].name,0);
+					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
+					animatronicStates[0].currentRoom=roomClosenessChica[animatronicStates[0].currentRoomArray].name
+				};
+				updateAIState(1,0);
+			};
+			break;
+		case 3:  // at office door
+			chicatimer++;
+			console.log("chicatimer = "+chicatimer);
+			if(chicatimer<=9 && leftlighton==true){
+				updateAIState(1,1,false);
+			};
+			if(chicatimer<=9 && rightdooropen==true){
+			//	currentPower-=(0.775);
+			} else if(chicatimer>=9 && rightdooropen==false){
+				updateAIState(0,4);
+			} else if(chicatimer>=10 && rightdooropen==true){
+				updateAIState(0,0);
+				updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
+				animatronicStates[0].currentRoomArray=4
+				updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
+				animatronicStates[0].currentRoom=roomClosenessChica[animatronicStates[0].currentRoomArray].name
+				console.log("returning to room 1b");
+			};
+			break;
+		case 4:  // dead
+			playfreddygameoveranimation("bonny");
+			updateAIState(0,1);
 			break;
 		default:
 	}

@@ -21,10 +21,10 @@ var roomClosenessBunny=[{name:"office"},
 					{name:"1a"}
 					];
 var roomClosenessChica=[{name:"office"},
-                    {name:"7"},
-                    {name:"6"},
-					{name:"4a"},
-					{name:"4b"},
+                    {name:"4b"},
+                    {name:"4a"},
+					{name:"6"},
+					{name:"7"},
 					{name:"1a"}
 					];
 var bunnytimer = 0;
@@ -52,7 +52,10 @@ var chicadifficultyarray = [];
 
 var bunnyChanceToMoveCloser = [];
 var baseBunnyChanceToMoveCloser = 10;
+var chicaChanceToMoveCloser = [];
+var baseChicaChanceToMoveCloser = 10;
 bunnyChanceToMoveCloser[1] = baseBunnyChanceToMoveCloser;
+chicaChanceToMoveCloser[1] = baseChicaChanceToMoveCloser;
 
 for(x=20;x>=1;x--){
 	foxydifficultyarray[x] = (baseFoxyTime += 2)
@@ -66,12 +69,15 @@ for(x=20;x>=1;x--){
 for(x=2;x<=20;x++){
 	bunnyChanceToMoveCloser[x] = (baseBunnyChanceToMoveCloser += 4.5)
 };
+for(x=2;x<=20;x++){
+	chicaChanceToMoveCloser[x] = (baseChicaChanceToMoveCloser += 4.5)
+};
 
 var mainThreadID;
 var play2aanimation=false;
 var storedselectedroom;
 
-var animatronicStates = [{name:"Chica",currentRoom:"1a",state:0,currentRoomArray:0},
+var animatronicStates = [{name:"Chica",currentRoom:"1a",state:0,currentRoomArray:5},
                          {name:"Bonnie",currentRoom:"1a",state:0,currentRoomArray:6},
                          {name:"Freddy",currentRoom:"1a",state:0,currentRoomArray:0},
                          {name:"Foxxy",currentRoom:"1c",state:0,currentRoomArray:2}
@@ -210,7 +216,7 @@ var roomImagesIndex = [{name: "1a",amountofImages: 7},
 {name: "2a",amountofImages: 3},
 {name: "2b",amountofImages: 3},
 {name: "5",amountofImages: 3},
-{name: "7",amountofImages: 1},
+{name: "7",amountofImages: 3},
 {name: "3",amountofImages: 3},
 {name: "4a",amountofImages: 3},
 {name: "4b",amountofImages: 4}]
@@ -234,7 +240,8 @@ setVariables = function(){
 	foxxytimer=0;
 	bunnytimer = 0;
 	playedfoxxyrunninganimation=false;
-	animatronicStates[1].currentRoomArray=5;
+	animatronicStates[1].currentRoomArray=6;
+	animatronicStates[0].currentRoomArray=5;
 	
 	officeX=0
 	document.getElementById("office").style.webkitTransform="none";
