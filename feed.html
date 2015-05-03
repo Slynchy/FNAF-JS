@@ -16,7 +16,7 @@
 </head>
 
 <body id="mainbody">
-	<video id="gameoverstaticimg" style="position:absolute;opacity:2;zoom:2.0;display:none;z-index:999;" src="graphics/camera/static_test5.webm" loop hidecontrols preload ></video>
+	<video id="gameoverstaticimg" style="position:absolute;opacity:2;zoom:2.0;display:none;z-index:999;" src="graphics/camera/static_test5.webm" loop hidecontrols preload></video>
 	<div id="amduatlogo" style="position:absolute;opacity:0;width:34.94%;height:42.22%;background-image:url('graphics/logo.png');background-size: 100% 100%;left:31.5%;top:32%" ></div>
 	<div id="gameover" style="position:absolute;width:100%;height:100%;display:none;">
 		<img src="graphics/gameover/gameoverimg.png" style="position:absolute;width:100%;height:100%;" />
@@ -26,18 +26,18 @@
 		<img src="graphics/fnaflogo.png" style="position:absolute;left:10%;top:10%;width:19.5%;height:31%;image-rendering: pixelated;" />
 		<img src="graphics/copyright.png" style="position:absolute;right:40px;bottom:10px;" />
 		<!--<img src="graphics/mainmenu/continue.png" style="position:absolute;left:10%;top:45%;" />-->
-		<img id="newbutton" src="graphics/mainmenu/newgame.png" onclick="loadgame()" onmouseover="updateselectedmenuitem(this)" style="position:absolute;left:10%;top:55%;width:12.572916%;height:4.5%;" />
+		<img id="newbutton" src="graphics/mainmenu/newgame.png" onclick="newgame()" onmouseover="updateselectedmenuitem(this)" style="position:absolute;left:10%;top:55%;width:12.572916%;height:4.5%;" />
 		<img id="continuebutton" src="graphics/mainmenu/continue.png" onmouseover="updateselectedmenuitem(this)" onclick="loadgame2()" style="position:absolute;left:10%;top:65%;width:12.572916%;height:4.5%;display:none;" />
 		<img id="selectedarrows" src="graphics/mainmenu/selected.png" style="position:absolute;left:6%;top:55.5%;width:3.24%;height:3.407%;image-rendering: pixelated;" />
 		<img id="mainmenufazbearanim" src="graphics/mainmenu/0.png" style="position:absolute;width:100%;height:100%;width:100%;height:100%;z-index:-5;" />
-		<video id="mainmenustaticimg" style="position:absolute;opacity:0.3;z-index:-5;zoom:2.0;" src="graphics/camera/static_test5.webm" autoplay loop hidecontrols preload />
+		<video id="mainmenustaticimg" style="position:absolute;opacity:0.3;z-index:-5;zoom:2.0;" src="graphics/camera/static_test5.webm" autoplay loop hidecontrols preload></video>
 	</div>
 	<div id="body" style="display:none;">
 	<img id="camerafeedanimation" style="width:100%;height:100%;position:fixed;z-index:200;display:none;" src="graphics/camera/camerafeedanimation/0.png"></img>
 	<div id="camerafeed" class="main" style="display:none;">
 		<img id="room" style="width:129%;height:129%;position: fixed;top:-16%;" class="roomtest" src="graphics/rooms/1a/0.png"></img>
 		<img id="record" src="graphics/camera/record.png" style="position:absolute;left:70px;top:45px;z-index:210" />
-		<div id="static" class="static"><video id="staticimg" src="graphics/camera/static_test5.webm" autoplay loop hidecontrols preload /></div>
+		<div id="static" class="static"><video id="staticimg" src="graphics/camera/static_test5.webm" autoplay loop hidecontrols preload ></video></div>
 		<div id="camera" class="camera"></div>
 		<!--<img class="main" src="images/feed.png" alt="Live Feed" />-->
 		<img id="cameradisabled" src="graphics/camera/ui/cameradisabled.png" style="position:absolute;left:40.6%;top:10%;display:none;width:19.32%;height:5%;z-index:210;"/>
@@ -84,7 +84,7 @@
 			<img id="timenightnumber" src="graphics/camera/ui/1.png" style="position:absolute;left:20px;top:44px"/>
 		</img>
 	</div>
-	<div id="power" style="position:absolute;left:9%;bottom:-6%;display:none;width:45%;height:25%;">
+	<div id="power" style="position:absolute;left:9%;top:77%;display:none;width:45%;height:25%;">
 		<img id="powerleft" src="graphics/camera/powerleft.png" style="vertical-align: middle;" />	<img id="numberone" src="graphics/camera/ui/powernumbers/1.png" style="vertical-align: middle;zoom:0.7;" /><img id="numbertwo" src="graphics/camera/ui/powernumbers/0.png" style="vertical-align: middle;zoom:0.7;" /><img id="numberthree" src="graphics/camera/ui/powernumbers/0.png" style="vertical-align: middle;zoom:0.7;" /> <img id="numberpercent" src="graphics/camera/ui/powernumbers/percent.png" style="vertical-align: text-bottom;zoom:0.7;" /><br><br>
 		<img id="powerword" src="graphics/camera/powerusage.png" style="vertical-align: middle;" />
 		<img id="powerusage" src="graphics/camera/power1.png" style="vertical-align: middle;" />

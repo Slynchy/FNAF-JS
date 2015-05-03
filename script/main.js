@@ -18,9 +18,9 @@ var DEBUG_MODE = true;
 var debugdiv = document.getElementById("debuginfo");
 if(DEBUG_MODE==true) debugdiv.style.display="block";
 assertButtons();
-foxydifficulty = 19;
-bunnydifficulty = 20;
-chicadifficulty = 20;
+//foxydifficulty = 19;
+//bunnydifficulty = 20;
+//chicadifficulty = 20;
 var cachedbody = document.getElementById("alldahtml").innerHTML;
 
 function debugShit(){
@@ -39,9 +39,9 @@ function mainThread() {
 	if(currentRoom=="1c" && feedopen == true) {
 		foxxytimer=0;
 	};
-//	updateBunnyAI();
+	updateBunnyAI();
 	updateChicaAI();
-//	updateFoxxyAI();
+	updateFoxxyAI();
 	if(DEBUG_MODE==true) debugShit();
 	if(currentRoom=="2a" && animatronicStates[3].state!==3 && play2aanimation==false && animatronicStates[1].currentRoom!="2a") {
 		play2aanimation=true;
@@ -54,8 +54,11 @@ function mainThread() {
 
 ShowAudioChannels=function(){for(x=1;x<=4;x++){if(audiochannels[x].paused==false){console.log("Audio channel "+x+" is playing: "+audiochannels[x].src);} else {console.log("Audio channel "+x+" is not playing.");}};return;};
 
-function playSound(src,volume,channelnumber){
+function playSound(src,volume,loop,channelnumber){
 	if(DEBUG_MODE) return;
+	if((typeof loop)=="undefined" || loop==false) {
+		loop=false;
+	};
 	if((typeof channelnumber)=="undefined") {
 	
 	};
@@ -67,12 +70,23 @@ function playSound(src,volume,channelnumber){
 	};
 	for(x=1;x<=4;x++){
 		if(audiochannels[x].paused==true){
+			audiochannels[x].removeEventListener("ended", loopSound);
 			audiochannels[x].src=("sounds/"+src);
 			audiochannels[x].volume=volume;
+            audiochannels[x].loop=loop; // Doesn't fcking work on anything except Firefox...
+            if(loop==true) {
+				audiochannels[x].addEventListener('ended', loopSound, false);
+            };
+			audiochannels[x].play();
 			return console.log("Channel "+x+" now playing "+src);
 		};
 	};
 	console.log("No channels available!");
+};
+
+function loopSound(){
+    this.currentTime = 0;
+	this.play();
 };
 
 function stopSound(channelnumber){
@@ -91,11 +105,31 @@ function stopSound(channelnumber){
 	return audiochannels[channelnumber].paused=true;
 };
 
+function stopAmbientSound(){
+	document.getElementById("channelambient").pause();
+	document.getElementById("channelambient2").pause();
+};
+
 function loadgame2() {
 	loadgame();
 };
 
+function newgame() {
+	foxydifficulty = 9;
+	bunnydifficulty = 9;
+	chicadifficulty = 5;
+	stopSound();
+	loadroomImages();
+	loadEverythingElse();
+};
+
 function loadgame() {
+	switch(night){
+		case 1:
+		break;
+		case 2:
+		break;
+	};
 	stopSound();
 	loadroomImages();
 	loadEverythingElse();
@@ -111,7 +145,7 @@ function updateAIPosition(AIID,AIstate,newroom,roomstate,oldroomstate){
 		console.log("updateAIPosition(AI ID, AI new state, AI new room, new room state, old room state");
 		return;
 	};
-	console.log("updateRoomState("+animatronicStates[AIID].currentRoom+","+oldroomstate+")");
+	if(DEBUG_MODE) console.log("updateRoomState("+animatronicStates[AIID].currentRoom+","+oldroomstate+")");
     updateRoomState(animatronicStates[AIID].currentRoom,oldroomstate,1); //old room
 	updateAIState(AIID,AIstate,newroom);
     updateRoomState(newroom,roomstate); //new room
@@ -139,11 +173,8 @@ function updateAIState(AIID,state,updatetimer,newroom,roomID){
 		return;
 	};
 	if(state=="") state = 0;//parseInt(state);
-	if((typeof updatetimer)=="undefined") updatetimer = true;//parseInt(state);
-//    console.log(typeof roomID);
-//	if((typeof roomID) != "number") return console.log("Room name not an integer!");
-    if(newroom=="") console.log("No new room specified, expect errors if unintended");//animatronicStates[AIID].currentRoom = newroom;
-   //  if(newroom!=="") animatronicStates[AIID].state = state;
+	if((typeof updatetimer)=="undefined") updatetimer = true;
+    if(newroom=="") console.log("No new room specified, expect errors if unintended");
 	
 	switch(AIID) {
 		case 0:// chica
@@ -151,17 +182,6 @@ function updateAIState(AIID,state,updatetimer,newroom,roomID){
 			if(updatetimer==true) chicatimer=0;
             break;
 		case 1: //Bunny
-            switch(state) {
-                case 0: //unseen
-			//		animatronicStates[1].state = 0;
-                    break;   
-                case 1: //seen
-			//		animatronicStates[1].state = 1;
-                    break;
-                case 2: //moving
-			//		animatronicStates[1].state = 2;
-                    break;
-            }
 			animatronicStates[AIID].state=state;
 			if(updatetimer==true) bunnytimer=0;
             break;
@@ -192,7 +212,8 @@ function updateAIState(AIID,state,updatetimer,newroom,roomID){
 			alert("Invalid or no room name given!");
 	}
 	
-	return console.log("AI "+animatronicStates[AIID].name+" state updated to "+state);
+	if(DEBUG_MODE) console.log("AI "+animatronicStates[AIID].name+" state updated to "+state);
+	return; 
 };
 
 var updateRoomState = function(roomname,state){
@@ -286,7 +307,7 @@ var updateRoomState = function(roomname,state){
 			return;
 	}
 	
-	console.log("Camera "+roomname+" updated");
+	console.log("Camera "+roomname+" updated to state "+state);
 	return ;
 };
 
@@ -343,6 +364,9 @@ function updatecurrentRoom(roomparameter) {
 	if(currentRoom==animatronicStates[1].currentRoom && feedopen == true) {
 		updateAIState(1,1,false);
 	};
+	if(currentRoom==animatronicStates[0].currentRoom && feedopen == true) {
+		updateAIState(0,1,false);
+	};
 }
 
 function updatePowerPercent() {
@@ -381,7 +405,7 @@ function updatePowerPercent() {
 		numbertwodiv.attr("src",powerusagenumbersimage[digit2].src);
     	numberthreediv.attr("src","graphics/rooms/office/cameraposition.png");
     };
-}
+};
 
 function updatePowerUsage() {
 	powerusagediv.attr("src","graphics/camera/power"+(currentPowerUsage+1)+".png");
@@ -421,16 +445,20 @@ function updateBunnyAI() {
 			break;
 		case 2:  // moving
 			console.log("bunnytimer = "+bunnytimer);
+			if((animatronicStates[0].currentRoomArray)==5) return;
 			if(animatronicStates[1].currentRoomArray==0) {
 				updateAIState(1,3);
 				return;
 			};
 			if((Math.random()*100)<=bunnyChanceToMoveCloser[bunnydifficulty]){
-		//		updateAIPosition(1,1,roomClosenessBunny[3].name,1,0)
 				animatronicStates[1].currentRoomArray-=1
 				console.log(roomClosenessBunny[animatronicStates[1].currentRoomArray].name);
 				if((animatronicStates[1].currentRoomArray + 1)==6) {
-					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,2);
+                    if((animatronicStates[0].currentRoomArray)!=6){
+						updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,1);
+                    } else {
+						updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,2);
+                    };
 				} else {
 					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,0);
 				};
@@ -526,6 +554,7 @@ function updateChicaAI() {
 			break;
 		case 2:  // moving
 			console.log("chicatimer = "+chicatimer);
+			if((animatronicStates[1].currentRoomArray)==5) return;
 			if(animatronicStates[0].currentRoomArray==0) {
 				updateAIState(0,3);
 				return;
@@ -535,17 +564,27 @@ function updateChicaAI() {
 				animatronicStates[0].currentRoomArray-=1
 				console.log(roomClosenessChica[animatronicStates[0].currentRoomArray].name);
 				if((animatronicStates[0].currentRoomArray + 1)==6) {
-					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray+1].name,2);
+                    if((animatronicStates[1].currentRoomArray + 1)==6){
+						updateRoomState(roomClosenessChica[animatronicStates[1].currentRoomArray+1].name,1);
+                    } else {
+						updateRoomState(roomClosenessChica[animatronicStates[1].currentRoomArray+1].name,3);
+                    };
 				} else {
-					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray+1].name,0);
+					updateRoomState(roomClosenessChica[animatronicStates[1].currentRoomArray+1].name,0);
 				};
-				if(animatronicStates[0].currentRoomArray==4 || animatronicStates[0].currentRoomArray==5){
+				if(animatronicStates[0].currentRoomArray==5){
+					if((Math.random()*100)<=20){
+						updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,4);
+                    } else {
+						updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,3);
+					};
+				} else if(animatronicStates[0].currentRoomArray==4){
 					if((Math.random()*100)<=20){
 						updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
-					} else {
+                    } else {
 						updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,1);
-					};
-				} else {
+                    };   
+                } else {
 					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
 				};
 				animatronicStates[0].currentRoom=roomClosenessChica[animatronicStates[0].currentRoomArray].name
@@ -775,7 +814,7 @@ function mainmenu(){
 	document.getElementById("amduatlogo").style.display="none";
 	document.getElementById("mainmenu").style.display="block";
 	if(typeof localStorage["fnaf-js-savegame"]!="undefined") document.getElementById("continuebutton").style.display="block";
-	playSound("static2.wav");
+	playSound("static2.wav",0.3,true);
 	clearInterval(mainmenuanimInterval1);
 	mainmenuanimInterval1 = setInterval(function(){
 		penis=Math.random();
@@ -801,6 +840,7 @@ function mainmenu(){
 function gameoverPowerFailure(){
 	clearInterval(mainThreadID);
 	playSound("powerdown.wav");
+    stopAmbientSound();
 	if(feedopen==true) {
 		OpenCloseFeed();
 	};
@@ -824,12 +864,15 @@ function gameoverPowerFailure(){
 	testpenisdick3 = '))';
 	console.log(testpenisdick1+testpenisdick2+testpenisdick3);
 	duration = ((Math.random()*100)*0.66);
+	delay = (Math.random()*13);
 	console.log(duration);
-	for(x=1;x<duration;x++){
-		eval(testpenisdick1+(x & 1)+testpenisdick2+x+testpenisdick3);
-	};
 	setTimeout(function(){
-//		gameover();
+        playSound("freddy/poweroutmusic.ogg");
+		for(x=1;x<duration;x++){ // The most stupid solution to a simple issue.
+			eval(testpenisdick1+(x & 1)+testpenisdick2+x+testpenisdick3); 
+		};						 // Sadly the only one that worked.
+    },1000*delay);
+	setTimeout(function(){
 		stopSound();
 		playfreddygameoveranimation();
 	},470*duration);

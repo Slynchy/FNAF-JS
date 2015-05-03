@@ -25,6 +25,7 @@ var roomClosenessChica=[{name:"office"},
                     {name:"4a"},
 					{name:"6"},
 					{name:"7"},
+					{name:"1b"},
 					{name:"1a"}
 					];
 var bunnytimer = 0;
@@ -34,8 +35,10 @@ var bonnyanimationgameover = [];
 var currentBunnyRoomArray = 4;
 var audiochannels = [];
 for(x=1;x<=4;x++){
-	audiochannels[x] = document.getElementById("channel"+x);
-	audiochannels[x].volume=0.3;
+/*	audiochannels[x] = document.getElementById("channel"+x);
+	audiochannels[x].volume=0.3;*/
+    audiochannels[x] = new Audio();
+    audiochannels[x].volume=0.3;
 };
 var audiochannelambient = document.getElementById("channelambient");
 var audiochannelambient2 = document.getElementById("channelambient2");
@@ -64,7 +67,7 @@ for(x=20;x>=1;x--){
 	bunnydifficultyarray[x] = (baseBonnyTime += 3)
 };
 for(x=20;x>=1;x--){
-	chicadifficultyarray[x] = (baseChicaTime += 3)
+	chicadifficultyarray[x] = (baseChicaTime += 4)
 };
 for(x=2;x<=20;x++){
 	bunnyChanceToMoveCloser[x] = (baseBunnyChanceToMoveCloser += 4.5)
@@ -77,7 +80,7 @@ var mainThreadID;
 var play2aanimation=false;
 var storedselectedroom;
 
-var animatronicStates = [{name:"Chica",currentRoom:"1a",state:0,currentRoomArray:5},
+var animatronicStates = [{name:"Chica",currentRoom:"1a",state:0,currentRoomArray:6},
                          {name:"Bonnie",currentRoom:"1a",state:0,currentRoomArray:6},
                          {name:"Freddy",currentRoom:"1a",state:0,currentRoomArray:0},
                          {name:"Foxxy",currentRoom:"1c",state:0,currentRoomArray:2}
@@ -241,7 +244,9 @@ setVariables = function(){
 	bunnytimer = 0;
 	playedfoxxyrunninganimation=false;
 	animatronicStates[1].currentRoomArray=6;
-	animatronicStates[0].currentRoomArray=5;
+	animatronicStates[0].currentRoomArray=6;
+	animatronicStates[1].currentRoom="1a";
+	animatronicStates[0].currentRoom="1a";
 	
 	officeX=0
 	document.getElementById("office").style.webkitTransform="none";
