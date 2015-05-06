@@ -33,15 +33,6 @@ var chicatimer = 0;
 var freddyanimationgameover = [];
 var bonnyanimationgameover = [];
 var currentBunnyRoomArray = 4;
-var audiochannels = [];
-for(x=1;x<=4;x++){
-/*	audiochannels[x] = document.getElementById("channel"+x);
-	audiochannels[x].volume=0.3;*/
-    audiochannels[x] = new Audio();
-    audiochannels[x].volume=0.3;
-};
-var audiochannelambient = document.getElementById("channelambient");
-var audiochannelambient2 = document.getElementById("channelambient2");
 
 var baseFoxyTime = 6;
 var baseBonnyTime = 5;
@@ -105,6 +96,8 @@ var doorbuttonsleft_doordiv = $("#doorbuttonsleft_door");
 var doorbuttonsright_doordiv = $("#doorbuttonsright_door");
 var doorbuttonsright_lightdiv = $("#doorbuttonsright_light");
 var camerafeeddiv = $("#camerafeed");
+var nightover5div = $("#nightover5");
+var nightover6div = $("#nightover6");
 //var officediv = $("#office");
 var officemaindiv = $("#officemain");
 

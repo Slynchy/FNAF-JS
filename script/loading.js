@@ -11,7 +11,7 @@ loadroomImages = function(){
 	for(x=0;x<roomImagesIndex.length;x++){
 		for(y=0;y<roomImagesIndex[x].amountofImages;y++){
 			roomImages[x][y] = new Image();
-			roomImages[x][y].src = "graphics/rooms/"+roomImagesIndex[x].name+"/"+y+".png"
+			roomImages[x][y].src = "graphics/rooms/"+roomImagesIndex[x].name+"/"+y+".webp"
 		}
 	}
 }
@@ -22,28 +22,28 @@ function loadEverythingElse(){
 		document.getElementById("loadingicon").style.display="block";
 	for(x=0;x<1;x++){
 		officestates[x] = new Image();
-		officestates[x].src = "graphics/rooms/office/"+x+".png";
+		officestates[x].src = "graphics/rooms/office/"+x+".webp";
 	};
 	for(x=0;x<(3);x++){
 		for(y=0;y<2;y++){
 			if(!officelightstates[x]) officelightstates[x] = [];
 			officelightstates[x][y] = new Image();
-			officelightstates[x][y].src = "graphics/rooms/office/"+x+"_light"+yArray[y]+".png";
+			officelightstates[x][y].src = "graphics/rooms/office/"+x+"_light"+yArray[y]+".webp";
 		};
 	};
 	for(x=1;x<5;x++){
 		buttonleftstates[x] = new Image();
-		buttonleftstates[x].src = "graphics/rooms/office/buttons/buttonleft_"+x+".png";
+		buttonleftstates[x].src = "graphics/rooms/office/buttons/buttonleft_"+x+".webp";
 	};
 	for(x=1;x<5;x++){
 		buttonrightstates[x] = new Image();
-		buttonrightstates[x].src = "graphics/rooms/office/buttons/buttonright_"+x+".png";
+		buttonrightstates[x].src = "graphics/rooms/office/buttons/buttonright_"+x+".webp";
 	};
 	for(x=0;x<14;x++){
 		doorrightanim[x] = new Image();
-		doorrightanim[x].src = "graphics/rooms/office/doors/right/"+x+".png";
+		doorrightanim[x].src = "graphics/rooms/office/doors/right/"+x+".webp";
 		doorleftanim[x] = new Image();
-		doorleftanim[x].src = "graphics/rooms/office/doors/left/"+x+".png";
+		doorleftanim[x].src = "graphics/rooms/office/doors/left/"+x+".webp";
 	};
 	for(x=1;x<6;x++){
 		powerusageimage[x] = new Image();
@@ -59,35 +59,35 @@ function loadEverythingElse(){
 	};
 	for(x=0;x<10;x++){
 		camerafeedanimationimage[x] = new Image();
-		camerafeedanimationimage[x].src = "graphics/camera/camerafeedanimation/"+x+".png";
+		camerafeedanimationimage[x].src = "graphics/camera/camerafeedanimation/"+x+".webp";
 	};
 	for(x=0;x<2;x++){
 		room2aimage[x] = new Image();
-		room2aimage[x].src = "graphics/rooms/2a/"+x+".png";
+		room2aimage[x].src = "graphics/rooms/2a/"+x+".webp";
 	};
 	for(x=0;x<31;x++){
 		room2afoxxyanim[x] = new Image();
-		room2afoxxyanim[x].src = "graphics/rooms/2a/foxxy/"+x+".png";
+		room2afoxxyanim[x].src = "graphics/rooms/2a/foxxy/"+x+".webp";
 	};
 	for(x=1;x<4;x++){
 		fananim[0+x] = new Image();
-		fananim[0+x].src = "graphics/rooms/office/fan_"+x+".png";
+		fananim[0+x].src = "graphics/rooms/office/fan_"+x+".webp";
 	};
 	for(x=0;x<21;x++){
 		foxxyofficeanim[x] = new Image();
-		foxxyofficeanim[x].src = "graphics/rooms/office/foxxy/"+x+".png";
+		foxxyofficeanim[x].src = "graphics/rooms/office/foxxy/"+x+".webp";
 	};
 	for(x=0;x<2;x++){
 		poweroutimg[x] = new Image();
-		poweroutimg[x].src = "graphics/rooms/office/powerout"+x+".png";
+		poweroutimg[x].src = "graphics/rooms/office/powerout"+x+".webp";
 	};
 	for(x=0;x<20;x++){
 		freddyanimationgameover[x] = new Image();
-		freddyanimationgameover[x].src = "graphics/gameover/freddy/"+x+".png";
+		freddyanimationgameover[x].src = "graphics/gameover/freddy/"+x+".webp";
 	};
 	for(x=0;x<22;x++){
 		bonnyanimationgameover[x] = new Image();
-		bonnyanimationgameover[x].src = "graphics/gameover/bonny/"+x+".png";
+		bonnyanimationgameover[x].src = "graphics/gameover/bonny/"+x+".webp";
 	};
 	setTimeout(function(){
 		clearInterval(mainmenuanimInterval1);

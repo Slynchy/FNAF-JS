@@ -10,25 +10,8 @@
 
 var DEBUG_MODE = true;
 
-// set storage
-// localStorage["fnaf-js-savegame"] = "testicles";
-
-//get storage
-//console.log(localStorage["fnaf-js-savegame"]);;
-var debugdiv = document.getElementById("debuginfo");
-if(DEBUG_MODE==true) debugdiv.style.display="block";
 assertButtons();
-//foxydifficulty = 19;
-//bunnydifficulty = 20;
-//chicadifficulty = 20;
 var cachedbody = document.getElementById("alldahtml").innerHTML;
-
-function debugShit(){
-	debugdiv.innerHTML = "Bonnie location: CAM-"+animatronicStates[1].currentRoom+"<br>";
-	debugdiv.innerHTML += "Chica location: CAM-"+animatronicStates[0].currentRoom+"<br>";
-	debugdiv.innerHTML += "Foxxy state: "+animatronicStates[3].state;
-//	debugdiv.innerHTML += "Foxxy state: "+animatronicStates[3].state+"<br>";
-};
 
 function mainThread() {
 	if(currentPower>0) {
@@ -36,13 +19,13 @@ function mainThread() {
 		updatePowerUsage();
 	}
     updateTime();
-	if(currentRoom=="1c" && feedopen == true) {
+	if(currentRoom=="1c" && feedopen == true && animatronicStates[3].state<3) {
 		foxxytimer=0;
 	};
 	updateBunnyAI();
 	updateChicaAI();
 	updateFoxxyAI();
-	if(DEBUG_MODE==true) debugShit();
+	if(DEBUG_MODE==true) debugInfo();
 	if(currentRoom=="2a" && animatronicStates[3].state!==3 && play2aanimation==false && animatronicStates[1].currentRoom!="2a") {
 		play2aanimation=true;
 		setTimeout(function(){
@@ -52,70 +35,12 @@ function mainThread() {
 	};
 };
 
-ShowAudioChannels=function(){for(x=1;x<=4;x++){if(audiochannels[x].paused==false){console.log("Audio channel "+x+" is playing: "+audiochannels[x].src);} else {console.log("Audio channel "+x+" is not playing.");}};return;};
-
-function playSound(src,volume,loop,channelnumber){
-	if(DEBUG_MODE) return;
-	if((typeof loop)=="undefined" || loop==false) {
-		loop=false;
-	};
-	if((typeof channelnumber)=="undefined") {
-	
-	};
-	if((typeof volume)=="undefined") {
-		volume=0.2;
-	};
-	if((typeof src)=="undefined") {
-		return console.log("playSound() error - no sound specified");
-	};
-	for(x=1;x<=4;x++){
-		if(audiochannels[x].paused==true){
-			audiochannels[x].removeEventListener("ended", loopSound);
-			audiochannels[x].src=("sounds/"+src);
-			audiochannels[x].volume=volume;
-            audiochannels[x].loop=loop; // Doesn't fcking work on anything except Firefox...
-            if(loop==true) {
-				audiochannels[x].addEventListener('ended', loopSound, false);
-            };
-			audiochannels[x].play();
-			return console.log("Channel "+x+" now playing "+src);
-		};
-	};
-	console.log("No channels available!");
-};
-
-function loopSound(){
-    this.currentTime = 0;
-	this.play();
-};
-
-function stopSound(channelnumber){
-	if((typeof channelnumber)=="undefined") {
-		console.log("stopSound() error - no channel number specified");
-		console.log("Proceeding to stop all sound...");
-		for(x=1;x<=4;x++){
-			if(audiochannels[x].paused==false){
-				audiochannels[x].pause();
-				audiochannelambient.pause();
-				return console.log("Channel "+x+" is paused/stopped");
-			};
-		};
-		return;
-	};
-	return audiochannels[channelnumber].paused=true;
-};
-
-function stopAmbientSound(){
-	document.getElementById("channelambient").pause();
-	document.getElementById("channelambient2").pause();
-};
-
 function loadgame2() {
 	loadgame();
 };
 
 function newgame() {
-	foxydifficulty = 9;
+	foxydifficulty = 6;
 	bunnydifficulty = 9;
 	chicadifficulty = 5;
 	stopSound();
@@ -124,15 +49,23 @@ function newgame() {
 };
 
 function loadgame() {
+	night = localStorage["fnaf-js-savegame.night"];
 	switch(night){
-		case 1:
+		case "1":
+			foxydifficulty = 9;
+			bunnydifficulty = 9;
+			chicadifficulty = 5;
 		break;
-		case 2:
+		case "2":
+			foxydifficulty = 13;
+			bunnydifficulty = 13;
+			chicadifficulty = 8;
 		break;
 	};
 	stopSound();
 	loadroomImages();
 	loadEverythingElse();
+	if(DEBUG_MODE==true) debugdiv.style.display="block";
 };
 
 hours[0] = 12;
@@ -365,7 +298,11 @@ function updatecurrentRoom(roomparameter) {
 		updateAIState(1,1,false);
 	};
 	if(currentRoom==animatronicStates[0].currentRoom && feedopen == true) {
-		updateAIState(0,1,false);
+		if(animatronicStates[0].state==2){
+			return;
+		} else {
+			updateAIState(0,1,false);
+		};
 	};
 }
 
@@ -395,15 +332,15 @@ function updatePowerPercent() {
     digit2 = parseInt(digit2);
     digit3 = parseInt(digit3);
 	if (currentPower<=0){
-    	numberonediv.attr("src","graphics/rooms/office/cameraposition.png");
-    	numbertwodiv.attr("src","graphics/rooms/office/cameraposition.png");
+    	numberonediv.attr("src","graphics/rooms/office/cameraposition.webp");
+    	numbertwodiv.attr("src","graphics/rooms/office/cameraposition.webp");
 	} else if(currentPower<10) {
         numberonediv.attr("src",powerusagenumbersimage[digit1].src);
-    	numbertwodiv.attr("src","graphics/rooms/office/cameraposition.png");
+    	numbertwodiv.attr("src","graphics/rooms/office/cameraposition.webp");
 	} else if (currentPower<100) {
         numberonediv.attr("src",powerusagenumbersimage[digit1].src);
 		numbertwodiv.attr("src",powerusagenumbersimage[digit2].src);
-    	numberthreediv.attr("src","graphics/rooms/office/cameraposition.png");
+    	numberthreediv.attr("src","graphics/rooms/office/cameraposition.webp");
     };
 };
 
@@ -411,279 +348,6 @@ function updatePowerUsage() {
 	powerusagediv.attr("src","graphics/camera/power"+(currentPowerUsage+1)+".png");
 	if(currentPower<=0) gameoverPowerFailure();
 }
-
-function updateBunnyAI() {
-	switch(animatronicStates[1].state) {
-		case 0:  // unseen
-		//	if(animatronicStates[1].currentRoom=="1b") return;
-			bunnytimer++;
-			console.log("bunnytimer = "+bunnytimer);
-			if(animatronicStates[1].currentRoomArray==0) {
-				if(leftlighton==true) {
-					updateAIState(1,1,false);
-				} else {
-					updateAIState(1,3,false);
-					return;
-				};
-			};
-			if(bunnytimer>=bunnydifficultyarray[bunnydifficulty]){
-			//	updateRoomState(roomname,state,timeout);
-			//	animatronicStates[1].state=2;
-				updateAIState(1,2);
-			}
-			break;
-		case 1:  // seen
-			if(currentRoom!=animatronicStates[1].currentRoom || feedopen == false) {
-				if(animatronicStates[1].currentRoomArray==0 && leftlighton==true) {
-					updateAIState(1,1,false);
-					return;
-				} else {
-					updateAIState(1,0,false);
-					return;
-				};
-			};
-			break;
-		case 2:  // moving
-			console.log("bunnytimer = "+bunnytimer);
-			if((animatronicStates[0].currentRoomArray)==5) return;
-			if(animatronicStates[1].currentRoomArray==0) {
-				updateAIState(1,3);
-				return;
-			};
-			if((Math.random()*100)<=bunnyChanceToMoveCloser[bunnydifficulty]){
-				animatronicStates[1].currentRoomArray-=1
-				console.log(roomClosenessBunny[animatronicStates[1].currentRoomArray].name);
-				if((animatronicStates[1].currentRoomArray + 1)==6) {
-                    if((animatronicStates[0].currentRoomArray)!=6){
-						updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,1);
-                    } else {
-						updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,2);
-                    };
-				} else {
-					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,0);
-				};
-				if(animatronicStates[1].currentRoomArray==4 || animatronicStates[1].currentRoomArray==5){
-					if((Math.random()*100)<=20){
-						updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
-					} else {
-						updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,1);
-					};
-				} else {
-					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
-				};
-				animatronicStates[1].currentRoom=roomClosenessBunny[animatronicStates[1].currentRoomArray].name
-				console.log("closer!");
-				if(currentRoom!=animatronicStates[1].currentRoom || feedopen == false) {
-					updateAIState(1,0);
-				} else {
-					updateAIState(1,1);
-				};
-				if(animatronicStates[1].currentRoom=="office") updateAIState(1,3);
-			} else {
-		//		updateAIPosition(1,1,roomClosenessBunny[currentBunnyRoomArray-1].name,1,0)
-		//		updateRoomState(roomClosenessBunny[4].name,0);
-				console.log("further!");
-				if((animatronicStates[1].currentRoomArray)==6 || (animatronicStates[1].currentRoomArray)==5) {
-				//	updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,2);
-				} else {
-					animatronicStates[1].currentRoomArray+=1
-					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray-1].name,0);
-					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
-					animatronicStates[1].currentRoom=roomClosenessBunny[animatronicStates[1].currentRoomArray].name
-				};
-				updateAIState(1,0);
-			};
-			break;
-		case 3:  // at office door
-			bunnytimer++;
-			console.log("bunnytimer = "+bunnytimer);
-			if(bunnytimer<=9 && leftlighton==true){
-				updateAIState(1,1,false);
-			};
-			if(bunnytimer<=9 && leftdooropen==true){
-			//	currentPower-=(0.775);
-			} else if(bunnytimer>=9 && leftdooropen==false){
-				updateAIState(1,4);
-			} else if(bunnytimer>=10 && leftdooropen==true){
-				updateAIState(1,0);
-				updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
-				animatronicStates[1].currentRoomArray=4
-				updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
-				animatronicStates[1].currentRoom=roomClosenessBunny[animatronicStates[1].currentRoomArray].name
-				console.log("returning to room 1b");
-			};
-			break;
-		case 4:  // dead
-			playfreddygameoveranimation("bonny");
-			updateAIState(1,1);
-			break;
-		default:
-	}
-};
-
-function updateChicaAI() {
-	switch(animatronicStates[0].state) {
-		case 0:  // unseen
-		//	if(animatronicStates[1].currentRoom=="1b") return;
-			chicatimer++;
-			console.log("chicatimer = "+chicatimer);
-			if(animatronicStates[0].currentRoomArray==0) {
-				if(leftlighton==true) {
-					updateAIState(0,1,false);
-				} else {
-					updateAIState(0,3,false);
-					return;
-				};
-			};
-			if(chicatimer>=chicadifficultyarray[chicadifficulty]){
-			//	updateRoomState(roomname,state,timeout);
-			//	animatronicStates[1].state=2;
-				updateAIState(0,2);
-			}
-			break;
-		case 1:  // seen
-			if(currentRoom!=animatronicStates[0].currentRoom || feedopen == false) {
-				if(animatronicStates[0].currentRoomArray==0 && rightlighton==true) {
-					updateAIState(0,1,false);
-					return;
-				} else {
-					updateAIState(0,0,false);
-					return;
-				};
-			};
-			break;
-		case 2:  // moving
-			console.log("chicatimer = "+chicatimer);
-			if((animatronicStates[1].currentRoomArray)==5) return;
-			if(animatronicStates[0].currentRoomArray==0) {
-				updateAIState(0,3);
-				return;
-			};
-			if((Math.random()*100)<=chicaChanceToMoveCloser[chicadifficulty]){
-		//		updateAIPosition(1,1,roomClosenessBunny[3].name,1,0)
-				animatronicStates[0].currentRoomArray-=1
-				console.log(roomClosenessChica[animatronicStates[0].currentRoomArray].name);
-				if((animatronicStates[0].currentRoomArray + 1)==6) {
-                    if((animatronicStates[1].currentRoomArray + 1)==6){
-						updateRoomState(roomClosenessChica[animatronicStates[1].currentRoomArray+1].name,1);
-                    } else {
-						updateRoomState(roomClosenessChica[animatronicStates[1].currentRoomArray+1].name,3);
-                    };
-				} else {
-					updateRoomState(roomClosenessChica[animatronicStates[1].currentRoomArray+1].name,0);
-				};
-				if(animatronicStates[0].currentRoomArray==5){
-					if((Math.random()*100)<=20){
-						updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,4);
-                    } else {
-						updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,3);
-					};
-				} else if(animatronicStates[0].currentRoomArray==4){
-					if((Math.random()*100)<=20){
-						updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
-                    } else {
-						updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,1);
-                    };   
-                } else {
-					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
-				};
-				animatronicStates[0].currentRoom=roomClosenessChica[animatronicStates[0].currentRoomArray].name
-				console.log("closer!");
-				if(currentRoom!=animatronicStates[0].currentRoom || feedopen == false) {
-					updateAIState(0,0);
-				} else {
-					updateAIState(0,1);
-				};
-				if(animatronicStates[0].currentRoom=="office") updateAIState(0,3);
-			} else {
-		//		updateAIPosition(1,1,roomClosenessBunny[currentBunnyRoomArray-1].name,1,0)
-		//		updateRoomState(roomClosenessBunny[4].name,0);
-				console.log("further!");
-				if((animatronicStates[0].currentRoomArray)==6 || (animatronicStates[0].currentRoomArray)==5) {
-				//	updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,2);
-				} else {
-					animatronicStates[0].currentRoomArray+=1
-					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray-1].name,0);
-					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
-					animatronicStates[0].currentRoom=roomClosenessChica[animatronicStates[0].currentRoomArray].name
-				};
-				updateAIState(1,0);
-			};
-			break;
-		case 3:  // at office door
-			chicatimer++;
-			console.log("chicatimer = "+chicatimer);
-			if(chicatimer<=9 && leftlighton==true){
-				updateAIState(1,1,false);
-			};
-			if(chicatimer<=9 && rightdooropen==true){
-			//	currentPower-=(0.775);
-			} else if(chicatimer>=9 && rightdooropen==false){
-				updateAIState(0,4);
-			} else if(chicatimer>=10 && rightdooropen==true){
-				updateAIState(0,0);
-				updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
-				animatronicStates[0].currentRoomArray=4
-				updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
-				animatronicStates[0].currentRoom=roomClosenessChica[animatronicStates[0].currentRoomArray].name
-				console.log("returning to room 1b");
-			};
-			break;
-		case 4:  // dead
-			playfreddygameoveranimation("bonny");
-			updateAIState(0,1);
-			break;
-		default:
-	}
-};
-
-function updateFoxxyAI() {
-	switch(animatronicStates[3].state) {
-		case 0: 
-			foxxytimer++;
-			if(foxxytimer>=foxydifficultyarray[foxydifficulty]){
-				updateAIState(3,1);
-				playSound("pirate_song2.wav",0.01);
-			}
-			break;
-		case 1: 
-			foxxytimer++;
-			if(foxxytimer>=foxydifficultyarray[foxydifficulty]){
-				updateAIState(3,2);
-				playSound("pirate_song2.wav",0.01);
-			}
-			break;
-		case 2: 
-			foxxytimer++;
-			if(foxxytimer>=foxydifficultyarray[foxydifficulty]){
-				updateAIState(3,3);
-				playSound("pirate_song2.wav",0.01);
-			}
-			break;
-		case 3: 
-			foxxytimer++;
-			if(foxxytimer>=5 && leftdooropen==false){
-				if(feedopen=false){
-					OpenCloseFeed();
-				};
-				playfoxxyofficeanimation();
-			} else if(foxxytimer<5 && leftdooropen==true){
-				updateAIState(3,4);
-			};
-			break;
-		case 4: 
-			foxxytimer++;
-			if(foxxytimer<=9 && leftdooropen==true){
-				currentPower-=(0.775);
-			} else if(foxxytimer<=9 && leftdooropen==false){
-				playfoxxyofficeanimation();
-			} else if(foxxytimer>=10 && leftdooropen==true){
-				updateAIState(3,0);
-			};
-			break;
-		default:
-	}
-};
 
 function updateTime() {
     timeCounter++;
@@ -696,19 +360,54 @@ function updateTime() {
         document.getElementById("timehour").style.display="none"
     }
     else if(currenthour==6){
-		
+		endnight();
     };
-}
+};
+
+function endnight() {
+	clearInterval(mainThreadID);
+	timer.stop();
+	document.getElementById("mainmenu").style.display="none";
+	document.getElementById("timekeeper").style.display="none";
+	document.getElementById("openclosecamera").style.display="none";
+	document.getElementById("power").style.display="none";
+	document.getElementById("body").style.display="none";
+	document.getElementById("nightover").style.display="block";
+	document.getElementById("nightover5").style.top="-60px";
+	document.getElementById("nightover6").style.top="0px";
+	
+    // Update savegame-------------------------------------------------
+	parsednight = parseInt(localStorage["fnaf-js-savegame.night"]); // To int so I can add 1
+	parsednight+=1;													// Add 1
+	parsednight = parsednight.toString();							// Back to a string (not actually needed but meh)
+	localStorage["fnaf-js-savegame.night"]=parsednight;				// Set savegame
+	console.log("Night won! Set night in saved game to: "+localStorage["fnaf-js-savegame.night"]);
+    // Update savegame-------------------------------------------------
+    
+	playSound("chimes 2.wav");
+	
+	setTimeout(function(){
+		nightover5div.animate({top: "0px"}, 6000, "linear",function() {
+		// Animation complete.
+		});
+		nightover6div.animate({top: "60px"}, 6000, "linear",function() {
+			playSound("CROWD_SMALL_CHIL_EC049202.wav");
+		});
+	},1500);
+	setTimeout(function(){
+		document.getElementById("nightover").style.display="none";
+		document.getElementById("gameoverstaticimg").play();
+		document.getElementById("mainmenustaticimg").style.display="block";
+		mainmenu();
+	},10000);
+};
 
 function recordTick() {
-//	if($("#record").css("display")=="block") {9px');
 		recorddiv.toggle();
 	if(showrecord==true) {
-//		recorddiv.css("left", '-=999
 		showrecord=false;
 	}
 	else {
-//		recorddiv.css("left", '+=9999px');
 		showrecord=true;
 	};
 }
@@ -812,22 +511,23 @@ function playFoxxyRunningAnimation(){
 
 function mainmenu(){
 	document.getElementById("amduatlogo").style.display="none";
+    debugdiv.style.display="none";
 	document.getElementById("mainmenu").style.display="block";
-	if(typeof localStorage["fnaf-js-savegame"]!="undefined") document.getElementById("continuebutton").style.display="block";
+	if(localStorage["fnaf-js-savegame.night"]!="1") document.getElementById("continuebutton").style.display="block";
 	playSound("static2.wav",0.3,true);
 	clearInterval(mainmenuanimInterval1);
 	mainmenuanimInterval1 = setInterval(function(){
-		penis=Math.random();
-		if(penis>0.8) {
+		rand=Math.random();
+		if(rand>0.8) {
 			for(x=0;x<(6);x++){
 				eval('setTimeout(function(){mainmenufazbearanimdiv.attr("src",mainmenufazbear['+(x & 3)+'].src);},(65*(Math.abs('+x+'+1))));');
 			};
 		}
-		else if(penis<0.8 && penis>0.6) {
+		else if(rand<0.8 && rand>0.6) {
 			for(x=0;x<(7);x++){
 				eval('setTimeout(function(){mainmenufazbearanimdiv.attr("src",mainmenufazbear['+(x & 2)+'].src);},(45*(Math.abs('+x+'+1))));');
 			};
-		} else if(penis<0.6 && penis>0.4) {
+		} else if(rand<0.6 && rand>0.4) {
 			for(x=0;x<(7);x++){
 				eval('setTimeout(function(){mainmenufazbearanimdiv.attr("src",mainmenufazbear['+(x & 1)+'].src);},(25*(Math.abs('+x+'+1))));');
 			};
@@ -858,18 +558,17 @@ function gameoverPowerFailure(){
 	document.getElementById("doorbuttonsright").style.display="none";
 	document.getElementById("openclosecamera").style.display="none";
 	document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[0].src+")";
-	testpenisdick = 'setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[1].src+")"},(450*5))'
-	testpenisdick1 = 'setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[';
-	testpenisdick2 = '].src+")"},(450*';
-	testpenisdick3 = '))';
-	console.log(testpenisdick1+testpenisdick2+testpenisdick3);
+	original = 'setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[1].src+")"},(450*5))'
+	part1 = 'setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[';
+	part2 = '].src+")"},(450*';
+	part3 = '))';
 	duration = ((Math.random()*100)*0.66);
 	delay = (Math.random()*13);
 	console.log(duration);
 	setTimeout(function(){
         playSound("freddy/poweroutmusic.ogg");
 		for(x=1;x<duration;x++){ // The most stupid solution to a simple issue.
-			eval(testpenisdick1+(x & 1)+testpenisdick2+x+testpenisdick3); 
+			eval(part1+(x & 1)+part2+x+part3); 
 		};						 // Sadly the only one that worked.
     },1000*delay);
 	setTimeout(function(){
@@ -906,7 +605,7 @@ function resetgame(){
 	document.getElementById("gameoverstaticimg").style.opacity="2";
 	document.getElementById("gameover").style.display="none";
 	document.getElementById("mainmenu").style.display="none";
-	document.getElementById("officemain").style.backgroundImage="url('graphics/rooms/office/0.png')";
+	document.getElementById("officemain").style.backgroundImage="url('graphics/rooms/office/0.webp')";
 	document.getElementById("doorbuttonsleft").style.display="block";
 	document.getElementById("doorbuttonsright").style.display="block";
 	document.getElementById("doorright").style.display="block";
@@ -914,9 +613,6 @@ function resetgame(){
 	document.getElementById("officecameraleft").style.display="block";
 	document.getElementById("officecameraright").style.display="block";
 	document.getElementById("mainmenustaticimg").style.display="block";
-/*	currentPower = 100;
-	currentPowerUsage = 0;
-	currenthour = 0;*/
 	setVariables();
 };
 
@@ -926,7 +622,7 @@ function introduction(){
 	},1000,function(){
 		setTimeout(function(){
 			eval('$("#amduatlogo").animate({opacity: 0},1000,function(){setTimeout(mainmenu,2000);});')
-		}, 2000);
+		}, 3000);
 	});
 };
 

@@ -18,6 +18,12 @@
 <body id="mainbody">
 	<video id="gameoverstaticimg" style="position:absolute;opacity:2;zoom:2.0;display:none;z-index:999;" src="graphics/camera/static_test5.webm" loop hidecontrols preload></video>
 	<div id="amduatlogo" style="position:absolute;opacity:0;width:34.94%;height:42.22%;background-image:url('graphics/logo.png');background-size: 100% 100%;left:31.5%;top:32%" ></div>
+	<div id="nightover" style="position:absolute;display:none;top:50%;left:50%;z-index:211;width:125px;height:145px;">
+		<img id="nightoverbg" src="graphics/nightover.png" style="position:absolute;z-index:5;" />
+		<img id="nightover5" src="graphics/camera/ui/time5.png" style="position:absolute;z-index:-5;left:5%;top:60px;" />
+		<img id="nightover6" src="graphics/camera/ui/time6.png" style="position:absolute;z-index:-5;left:5%;top:108px;" />
+		<img id="nightoveram" src="graphics/camera/ui/timeAM.png" style="position:absolute;right:5%;top:60px;" />
+	</div>
 	<div id="gameover" style="position:absolute;width:100%;height:100%;display:none;">
 		<img src="graphics/gameover/gameoverimg.png" style="position:absolute;width:100%;height:100%;" />
 		<img src="graphics/gameover/gameover.png" style="position:absolute;z-index:210;right:1%;bottom:1%;" />
@@ -33,9 +39,9 @@
 		<video id="mainmenustaticimg" style="position:absolute;opacity:0.3;z-index:-5;zoom:2.0;" src="graphics/camera/static_test5.webm" autoplay loop hidecontrols preload></video>
 	</div>
 	<div id="body" style="display:none;">
-	<img id="camerafeedanimation" style="width:100%;height:100%;position:fixed;z-index:200;display:none;" src="graphics/camera/camerafeedanimation/0.png"></img>
+	<img id="camerafeedanimation" style="width:100%;height:100%;position:fixed;z-index:200;display:none;" src="graphics/camera/camerafeedanimation/0.webp"></img>
 	<div id="camerafeed" class="main" style="display:none;">
-		<img id="room" style="width:129%;height:129%;position: fixed;top:-16%;" class="roomtest" src="graphics/rooms/1a/0.png"></img>
+		<img id="room" style="width:129%;height:129%;position: fixed;top:-16%;" class="roomtest" src="graphics/rooms/1a/0.webp"></img>
 		<img id="record" src="graphics/camera/record.png" style="position:absolute;left:70px;top:45px;z-index:210" />
 		<div id="static" class="static"><video id="staticimg" src="graphics/camera/static_test5.webm" autoplay loop hidecontrols preload ></video></div>
 		<div id="camera" class="camera"></div>
@@ -58,23 +64,23 @@
 		</div>
 	</div>
 	<div id="office" style="position:fixed;width:122%;height:100%;">
-		<div id="officemain" src="" style="position:absolute;width:100%;height:100%;background-image:url('graphics/rooms/office/0.png');background-size: 100% 100%;">
-			<div id="doorbuttonsleft" style="position: absolute;left: 0%; top: 40%;background-image:url('graphics/rooms/office/buttons/buttonleft_1.png');background-size: 100% 100%;z-index:200;width:5%;height:30%;">
-				<img id="doorbuttonsleft_door" src="graphics/rooms/office/cameraposition.png" style="position:absolute;left:30%;top:21%;width:47%;height:58px;z-index:201;">
-				<img id="doorbuttonsleft_light" src="graphics/rooms/office/cameraposition.png" style="position:absolute;left:30%;top:53%;width:47%;height:58px;z-index:201;">
+		<div id="officemain" src="" style="position:absolute;width:100%;height:100%;background-image:url('graphics/rooms/office/0.webp');background-size: 100% 100%;">
+			<div id="doorbuttonsleft" style="position: absolute;left: 0%; top: 40%;background-image:url('graphics/rooms/office/buttons/buttonleft_1.webp');background-size: 100% 100%;z-index:200;width:5%;height:30%;">
+				<img id="doorbuttonsleft_door" src="graphics/rooms/office/cameraposition.webp" style="position:absolute;left:30%;top:21%;width:47%;height:58px;z-index:201;">
+				<img id="doorbuttonsleft_light" src="graphics/rooms/office/cameraposition.webp" style="position:absolute;left:30%;top:53%;width:47%;height:58px;z-index:201;">
 			</div>
-			<div id="doorbuttonsright" style="position: absolute;right: 1.1%; top: 40%;background-image:url('graphics/rooms/office/buttons/buttonright_1.png');background-size: 100% 100%;z-index:200;width:5%;height:30%;">
-				<img id="doorbuttonsright_door" src="graphics/rooms/office/cameraposition.png" style="position:absolute;right:30%;top:21%;width:47%;height:58px;z-index:201;" />
-				<img id="doorbuttonsright_light" src="graphics/rooms/office/cameraposition.png" style="position:absolute;right:30%;top:53%;width:47%;height:58px;z-index:201;" />
+			<div id="doorbuttonsright" style="position: absolute;right: 1.1%; top: 40%;background-image:url('graphics/rooms/office/buttons/buttonright_1.webp');background-size: 100% 100%;z-index:200;width:5%;height:30%;">
+				<img id="doorbuttonsright_door" src="graphics/rooms/office/cameraposition.webp" style="position:absolute;right:30%;top:21%;width:47%;height:58px;z-index:201;" />
+				<img id="doorbuttonsright_light" src="graphics/rooms/office/cameraposition.webp" style="position:absolute;right:30%;top:53%;width:47%;height:58px;z-index:201;" />
 			</div>
 			</div>
-			<img id="fan" src="graphics/rooms/office/fan_1.png" style="position: absolute; width: 8.7%; height: 27%; left: 48.7%; top: 42.35%;"/>
-			<img id="doorleft" src="graphics/rooms/office/doors/left/0.png" style="position: absolute; left: 4.5%; top: 0%;z-index:100;width:15%;height:100%;"/>
-			<img id="doorright" src="graphics/rooms/office/doors/right/0.png" style="position: absolute; right: 4.5%; top: 0%;z-index:180;width:15%;height:100%;"/>
+			<img id="fan" src="graphics/rooms/office/fan_1.webp" style="position: absolute; width: 8.7%; height: 27%; left: 48.7%; top: 42.35%;"/>
+			<img id="doorleft" src="graphics/rooms/office/doors/left/0.webp" style="position: absolute; left: 4.5%; top: 0%;z-index:100;width:15%;height:100%;"/>
+			<img id="doorright" src="graphics/rooms/office/doors/right/0.webp" style="position: absolute; right: 4.5%; top: 0%;z-index:180;width:15%;height:100%;"/>
 		</div>
 	</div>
-		<img id="officecameraright" src="graphics/rooms/office/cameraposition.png" style="position:absolute;width:10%;height:100%;right:0px" />
-		<img id="officecameraleft" src="graphics/rooms/office/cameraposition.png" style="position:absolute;width:10%;height:100%;left:0px" />
+		<img id="officecameraright" src="graphics/rooms/office/cameraposition.webp" style="position:absolute;width:10%;height:100%;right:0px" />
+		<img id="officecameraleft" src="graphics/rooms/office/cameraposition.webp" style="position:absolute;width:10%;height:100%;left:0px" />
 	<img id="openclosecamera" src="graphics/camera/openclosecamera.png" style="position:absolute;bottom:35px;right:10%;z-index:106;display:none;width:31.25%;height:6.55%;" />
 	<div id="timekeeper" style="position:absolute;right:70px;top:45px;display:none;">
 		<img id="timehour" src="graphics/camera/ui/time1.png" style="position:absolute;top:1px;right:100px" />
@@ -93,9 +99,12 @@
 	<div id="debuginfo" style="position:absolute;top:5%;left:5%;display:block;z-index:5000;color:#FFFFFF;" ></div>
 	
   <script src="script/variables.js" type="text/javascript"></script>
+  <script src="script/debug.js" type="text/javascript"></script>
   <script src="script/loading.js" type="text/javascript"></script>
   <script src="script/jquery.timer.js" type="text/javascript"></script>
   <script src="script/ui.js" type="text/javascript"></script>
+  <script src="script/sound.js" type="text/javascript"></script>
+  <script src="script/ai.js" type="text/javascript"></script>
   <script src="script/main.js" type="text/javascript"></script>
 </body>
 </html>
