@@ -1,9 +1,14 @@
 {
   "name": "FNAF-JS",
-  "main": "feed.html",
+  "title": "Five Night's at Freddy's JavaScript",
+  "main": "index.html",
   "window": {
-    "toolbar": false,
-    "width": 1920,
-    "height": 1080
+    "toolbar": true,
+    "width": 1000,
+    "height": 580,
+    "min_width": 960,
+    "min_height": 540,
+	"icon": "icon.png",
+    "fullscreen": false
   }
 }
