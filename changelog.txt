@@ -1,0 +1,22 @@
+***********************
+** FNAF-JS Changelog **
+** 	   By Slynch	 **
+***********************
+
+Twentieth Commit:
+	- Added a changelog
+	- Fixed "feedopen=true" bug, caused camerafeed to not open when foxxy appeared.
+	- Added difficulty settings for nights 1-6
+	- Updated sound engine:
+		- Sounds are all preloaded for faster playback
+		- Individual sounds can only be played one at a time (so no two of the same sound at the same time)
+		- Hopefully this fixes sounds not playing back when game is run server-side.
+		- Needs work on the functions; pauseSound() for example, to make it future-proof.
+	- Added intro picture
+	- Fixed highlighting bug.
+	- Fixed new game not resetting to night 1.
+	- Not an addition but a note; use %s, %i, %f inside console.log to show string, integer and float, respectively.
+		- Example: flopper = "hello"; console.log("%s, my name is Sam",flopper);
+		- Output is "hello, my name is Sam" in console.
+		- Not sure if this is quicker  than console.log(flopper + ", my name is Sam") though.
+	- Some other additions I might have forgotten. 

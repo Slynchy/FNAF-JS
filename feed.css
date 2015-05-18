@@ -7,7 +7,17 @@ body {
   margin-right:auto; 
   overflow:hidden;
 }
+::-moz-selection{
+background-color:Transparent;
+color:#000;
+}
 
+::selection {
+background-color:Transparent;
+color:#000;
+}
+body::-moz-selection,
+body::selection { ... }
 #camerafeed {
 	z-index:1;
 }

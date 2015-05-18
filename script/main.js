@@ -6,9 +6,11 @@
 //
 // Ported by Sam 'Slynch' Lynch
 //
-// Last updated - 10/04/2015 @ 01:53am 
-
-var DEBUG_MODE = true;
+// For legality's sake, it is necessary to say that you may not monetize this code
+// without my express permission. This also works the other way around; I cannot 
+// monetize this port without the original developer's permission.
+//
+// Last updated - 11/05/2015 @ 23:20
 
 assertButtons();
 var cachedbody = document.getElementById("alldahtml").innerHTML;
@@ -44,22 +46,48 @@ function newgame() {
 	bunnydifficulty = 9;
 	chicadifficulty = 5;
 	stopSound();
-	loadroomImages();
-	loadEverythingElse();
+	localStorage["fnaf-js-savegame.night"]="1";
+	document.getElementById("newgamebg").style.display="block";
+	document.getElementById("newgamebg").style.opacity="0";
+	$("#newgamebg").animate({
+		opacity: "1"
+	},1000,function(){
+		eval('setTimeout(function(){loadroomImages();loadEverythingElse();},5000)');
+	});
 };
 
 function loadgame() {
 	night = localStorage["fnaf-js-savegame.night"];
 	switch(night){
 		case "1":
-			foxydifficulty = 9;
+			foxydifficulty = 8;
 			bunnydifficulty = 9;
-			chicadifficulty = 5;
+			chicadifficulty = 6;
 		break;
 		case "2":
-			foxydifficulty = 13;
-			bunnydifficulty = 13;
-			chicadifficulty = 8;
+			foxydifficulty = 10;
+			bunnydifficulty = 12;
+			chicadifficulty = 9;
+		break;
+		case "3":
+			foxydifficulty = 12;
+			bunnydifficulty = 15;
+			chicadifficulty = 12;
+		break;
+		case "4":
+			foxydifficulty = 14;
+			bunnydifficulty = 18;
+			chicadifficulty = 15;
+		break;
+		case "5":
+			foxydifficulty = 16;
+			bunnydifficulty = 20;
+			chicadifficulty = 18;
+		break;
+		case "6":
+			foxydifficulty = 20;
+			bunnydifficulty = 20;
+			chicadifficulty = 20;
 		break;
 	};
 	stopSound();
@@ -428,7 +456,7 @@ function setDivImgFan(){
 function playfoxxyofficeanimation(){
 	if(feedopen==true) {
 		OpenCloseFeed();
-	};
+	}; 
 	document.getElementById("officecameraleft").style.display="none";
 	document.getElementById("officecameraright").style.display="none";
 	document.getElementById("openclosecamera").style.display="none";
@@ -473,6 +501,15 @@ function playfreddygameoveranimation(animatronic){
 			setTimeout(function(){gameoverstatic();},275);
 			break;
 		default:
+		case "chica":
+			document.getElementById("fan").style.display="none";
+			document.getElementById("doorright").style.display="none";
+			document.getElementById("doorleft").style.display="none";
+			for(x=0;x<16;x++){
+				eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+chicaanimationgameover['+x+'].src+")";},(45*'+x+'));');
+			};
+			setTimeout(function(){gameoverstatic();},275);
+			break;
 	};
 	clearInterval(mainThreadID);
 };
@@ -480,6 +517,7 @@ function playfreddygameoveranimation(animatronic){
 function gameoverstatic(){
 	setTimeout(function(){
 		stopSound();
+		stopAmbientSound();
 		document.getElementById("gameoverstaticimg").style.display="block";
 		document.getElementById("gameoverstaticimg").play();
 		gameover();

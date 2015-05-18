@@ -2,13 +2,11 @@
 // variables.js
 // The JS for setting all variables prior to launch
 //
-// Last updated - 10/04/2015 @ 01:53am 
+// Last updated - 11/04/2015 @ 23:16
 
 var mainmenuanimInterval1;
 var mainmenuanimInterval2;
 var timer;
-
-var sounds=[];
 
 // this array defines how close each room is to the office
 // lower = closer
@@ -32,6 +30,7 @@ var bunnytimer = 0;
 var chicatimer = 0;
 var freddyanimationgameover = [];
 var bonnyanimationgameover = [];
+var chicaanimationgameover = [];
 var currentBunnyRoomArray = 4;
 
 var baseFoxyTime = 6;
@@ -235,7 +234,9 @@ setVariables = function(){
 	foxxyrunning = false;
 	foxxytimer=0;
 	bunnytimer = 0;
+	chicatimer = 0;
 	playedfoxxyrunninganimation=false;
+	animatronicStates[3].state=0;
 	animatronicStates[1].currentRoomArray=6;
 	animatronicStates[0].currentRoomArray=6;
 	animatronicStates[1].currentRoom="1a";

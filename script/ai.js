@@ -247,7 +247,7 @@ function updateFoxxyAI() {
 			if(foxxytimer>=foxydifficultyarray[foxydifficulty]){
 				updateAIState(3,2);
 				playSound("pirate_song2.wav",0.01);
-			}
+			};
 			break;
 		case 2: 
 			foxxytimer++;
@@ -258,8 +258,8 @@ function updateFoxxyAI() {
 			break;
 		case 3: 
 			foxxytimer++;
-			if(foxxytimer>=5 && leftdooropen==false){
-				if(feedopen=false){
+			if(foxxytimer>=6 && leftdooropen==false){
+				if(feedopen==true){
 					OpenCloseFeed();
 				};
 				playfoxxyofficeanimation();

@@ -21,10 +21,12 @@ function updateselectedmenuitem(obj) {
 }
 
 function OpenCloseFeed() {
+	console.log(feedopen);
 	if(feedopen==false){
+		console.log("Opening feed...");
 		setTimeout(function(){camerafeeddiv.toggle();officemaindiv.toggle();playSound("CAMERA_VIDEO_LOA_60105303.wav");},360);
-	}
-	else {
+	} else {
+		console.log("Closing feed...");
 		camerafeeddiv.toggle();
 		officemaindiv.toggle();
 		playSound("put_down.wav");
@@ -36,8 +38,7 @@ function OpenCloseFeed() {
     	feedopen=true;
         currentPowerUsage++;
         updatePowerUsage();
-    }
-    else {
+    } else {
     	staticimgdiv.pause();
     	feedopen=false;
         currentPowerUsage--;
