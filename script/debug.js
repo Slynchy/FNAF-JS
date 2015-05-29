@@ -22,6 +22,11 @@ if (DEBUG_MODE==true){
 		   };
 		});
 	});
+	$(window).on("error",function(msg,url,linenumber) {
+		playSound("error.wav");
+		alert("Error! "+msg+"\nURL: "+url+"\nAt line "+linenumber);
+		return true;
+	});
 };
 
 function printSave(){

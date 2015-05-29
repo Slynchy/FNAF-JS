@@ -3,6 +3,14 @@
 ** 	   By Slynch	 **
 ***********************
 
+Twenty-first Commit:
+	- Added room names to map
+	- Added sound for light switch not working
+	- Added JS error alert catcher for testers to report errors without needing console up
+	- Tweaked night 1 difficulty
+	- Added WebP converter to /bin/
+	- Added SeamlessLoop.js for fixing the ambient track loops
+
 Twentieth Commit:
 	- Added a changelog
 	- Fixed "feedopen=true" bug, caused camerafeed to not open when foxxy appeared.

@@ -20,14 +20,15 @@ var sounds=[
 {name: "windowscare.wav",file: new Audio()},
 {name: "XSCREAM.wav",file: new Audio()},
 {name: "XSCREAM2.wav",file: new Audio()},
-{name: "freddy/poweroutmusic.ogg",file: new Audio()}
-];
+{name: "freddy/poweroutmusic.ogg",file: new Audio()},
+{name: "error.wav",file: new Audio()}
+]; 
 
-for(x=0;x<sounds.length;x++){
+ for(x=0;x<sounds.length;x++){
 	console.log("Loading "+sounds[x].name+" ...");
 	sounds[x].file.src = "sounds/"+sounds[x].name;
 	console.log("Loaded "+sounds[x].file.src+" ...");
-};
+}; 
 
 loadroomImages = function(){
 	for(x=0;x<roomImagesIndex.length;x++){
@@ -49,6 +50,10 @@ function loadEverythingElse(){
 	for(x=0;x<1;x++){
 		officestates[x] = new Image();
 		officestates[x].src = "graphics/rooms/office/"+x+".webp";
+	};
+	for(x=0;x<rooms.length;x++){
+		roomnameimages[x] = new Image();
+		roomnameimages[x].src = "graphics/camera/roomnames/"+rooms[x].name+".webp";
 	};
 	for(x=0;x<(3);x++){
 		for(y=0;y<2;y++){
@@ -129,10 +134,10 @@ function loadEverythingElse(){
 		mainThreadID = setInterval('mainThread()', 1000);
 		var recordanimId = setInterval('recordTick()', 1000);
 		if(!DEBUG_MODE){
-			audiochannelambient.src=("sounds/Buzz_Fan_Florescent2.wav");
-			audiochannelambient.volume=0.1;
-			audiochannelambient2.src=("sounds/ambience2.wav");
-			audiochannelambient2.volume=0.3;
+			ambiance1.start("ambiancetrack1");
+			ambiance2.start("ambiancetrack2");
+			ambiance1.volume(0.3);
+			ambiance2.volume(0.3);
 		};
 		timer = $.timer(function() {
 		   setDivImgFan()

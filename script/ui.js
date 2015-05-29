@@ -328,6 +328,7 @@ assertButtons = function(){
 		if(leftlighton==false && rightlighton==false) {
 			if(animatronicStates[1].currentRoom=="office"){
 				officemaindiv.css("background-image","url("+officelightstates[1][0].src+")");
+				playSound("windowscare.wav");
 			} else {
 				officemaindiv.css("background-image", "url('"+officelightstates[0][1].src+"')");
 			};
@@ -350,6 +351,8 @@ assertButtons = function(){
 			leftlighton=false;
 			currentPowerUsage--;
 			updatePowerUsage();
+		} else {
+			playSound("error.wav");
 		};
 	});
 
@@ -415,6 +418,7 @@ assertButtons = function(){
 		if(leftlighton==false && rightlighton==false) {
 			if(animatronicStates[0].currentRoom=="office"){
 				officemaindiv.css("background-image","url("+officelightstates[2][0].src+")");
+				playSound("windowscare.wav");
 			} else {
 				officemaindiv.css("background-image", "url('"+officelightstates[0][0].src+"')");
 			};
@@ -437,6 +441,8 @@ assertButtons = function(){
 			rightlighton=false;
 			currentPowerUsage--;
 			updatePowerUsage();
+		} else {
+			playSound("error.wav");
 		};
 	});
 };

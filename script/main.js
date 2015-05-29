@@ -42,7 +42,7 @@ function loadgame2() {
 };
 
 function newgame() {
-	foxydifficulty = 6;
+	foxydifficulty = 3;
 	bunnydifficulty = 9;
 	chicadifficulty = 5;
 	stopSound();
@@ -294,6 +294,7 @@ function updatecurrentRoom(roomparameter) {
 	currentroomstatetoset = 0
 	currentroomstatetoset = searchForState(roomparameter);
 	currentroomstatetoset2 = searchForRoomID(roomparameter);
+	document.getElementById("roomname").src=roomnameimages[currentroomstatetoset2].src
 	if(currentroomstatetoset== -1) return console.log("updatecurrentRoom() error - Invalid parameter given");
 	currentRoomID=searchForRoomID(roomparameter)
 	if(roomparameter!="6"){

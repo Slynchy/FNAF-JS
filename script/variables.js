@@ -136,6 +136,7 @@ var room2afoxxyanim = [];
 var mainmenufazbear = [];
 var foxxyofficeanim = [];
 var foxxyofficeanimtimeout = [];
+var roomnameimages = [];
 
 var officelightstates = [];
 var officestates = [];
