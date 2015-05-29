@@ -10,3 +10,5 @@ Includes used:
   - NW.js
   - Greenworks
   - JQuery timer
+  - WebP converter
+  - SeamlessLoop.js
