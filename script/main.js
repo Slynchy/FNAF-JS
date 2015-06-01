@@ -103,10 +103,10 @@ for(x=1;x<7;x++){
 
 function updateAIPosition(AIID,AIstate,newroom,roomstate,oldroomstate){
 	if(!AIID){
-		console.log("updateAIPosition(AI ID, AI new state, AI new room, new room state, old room state");
+		debuglog("updateAIPosition(AI ID, AI new state, AI new room, new room state, old room state");
 		return;
 	};
-	if(DEBUG_MODE) console.log("updateRoomState("+animatronicStates[AIID].currentRoom+","+oldroomstate+")");
+	if(DEBUG_MODE) debuglog("updateRoomState("+animatronicStates[AIID].currentRoom+","+oldroomstate+")");
     updateRoomState(animatronicStates[AIID].currentRoom,oldroomstate,1); //old room
 	updateAIState(AIID,AIstate,newroom);
     updateRoomState(newroom,roomstate); //new room
@@ -130,12 +130,12 @@ function searchForRoomID(roomname){
 
 function updateAIState(AIID,state,updatetimer,newroom,roomID){
 	if((typeof AIID)=="undefined"){
-		console.log("updateAIState:\nAIID - ID of the AI to update\nstate - What state to set it to\nnewroom - What room to change to\nroomID - I don't fucking know, the ID of the room but I don't know what it is used for.");
+		debuglog("updateAIState:\nAIID - ID of the AI to update\nstate - What state to set it to\nnewroom - What room to change to\nroomID - I don't fucking know, the ID of the room but I don't know what it is used for.");
 		return;
 	};
 	if(state=="") state = 0;//parseInt(state);
 	if((typeof updatetimer)=="undefined") updatetimer = true;
-    if(newroom=="") console.log("No new room specified, expect errors if unintended");
+    if(newroom=="") debuglog("No new room specified, expect errors if unintended");
 	
 	switch(AIID) {
 		case 0:// chica
@@ -173,13 +173,13 @@ function updateAIState(AIID,state,updatetimer,newroom,roomID){
 			alert("Invalid or no room name given!");
 	}
 	
-	if(DEBUG_MODE) console.log("AI "+animatronicStates[AIID].name+" state updated to "+state);
+	debuglog("AI "+animatronicStates[AIID].name+" state updated to "+state);
 	return; 
 };
 
 var updateRoomState = function(roomname,state){
 	if(state=="") state = 0//parseInt(state);
-	if((typeof roomname) != "string") return console.log("Room name not a string!");
+	if((typeof roomname) != "string") return debuglog("Room name not a string!");
 	
 	switch(roomname) {
 		case "1a":
@@ -264,11 +264,11 @@ var updateRoomState = function(roomname,state){
 			currRoomStates[7].roomstate=state;
 			break;
 		default:
-			console.log("Invalid or no room name given!");
+			debuglog("Invalid or no room name given!");
 			return;
 	}
 	
-	console.log("Camera "+roomname+" updated to state "+state);
+	debuglog("Camera "+roomname+" updated to state "+state);
 	return ;
 };
 
@@ -278,7 +278,7 @@ var staticanim=[];
 var randomcheck=1
 
 function updatecurrentRoom(roomparameter) {
-	if(roomparameter=="") return console.log("updatecurrentRoom() error - No parameter given");
+	if(roomparameter=="") return debuglog("updatecurrentRoom() error - No parameter given");
 	
 	// COMMENCE HACKY FIX FOR ROOM ANIMATION LEAKING TO NEXT ROOM, WILL NEED TO REUSE LATER
 	if(play2aanimation==true){
@@ -295,7 +295,7 @@ function updatecurrentRoom(roomparameter) {
 	currentroomstatetoset = searchForState(roomparameter);
 	currentroomstatetoset2 = searchForRoomID(roomparameter);
 	document.getElementById("roomname").src=roomnameimages[currentroomstatetoset2].src
-	if(currentroomstatetoset== -1) return console.log("updatecurrentRoom() error - Invalid parameter given");
+	if(currentroomstatetoset== -1) return debuglog("updatecurrentRoom() error - Invalid parameter given");
 	currentRoomID=searchForRoomID(roomparameter)
 	if(roomparameter!="6"){
 		updateRoomStateStatic(175);
@@ -402,26 +402,26 @@ function endnight() {
 	document.getElementById("power").style.display="none";
 	document.getElementById("body").style.display="none";
 	document.getElementById("nightover").style.display="block";
-	document.getElementById("nightover5").style.top="-60px";
-	document.getElementById("nightover6").style.top="0px";
+	document.getElementById("nightoveram").style.top="80px";
+	document.getElementById("nightover5").style.top="80px";
+	document.getElementById("nightover6").style.top="20px";
 	
     // Update savegame-------------------------------------------------
 	parsednight = parseInt(localStorage["fnaf-js-savegame.night"]); // To int so I can add 1
 	parsednight+=1;													// Add 1
 	parsednight = parsednight.toString();							// Back to a string (not actually needed but meh)
 	localStorage["fnaf-js-savegame.night"]=parsednight;				// Set savegame
-	console.log("Night won! Set night in saved game to: "+localStorage["fnaf-js-savegame.night"]);
+	debuglog("Night won! Set night in saved game to: "+localStorage["fnaf-js-savegame.night"]);
     // Update savegame-------------------------------------------------
     
 	playSound("chimes 2.wav");
+	stopAmbientSound();
 	
 	setTimeout(function(){
-		nightover5div.animate({top: "0px"}, 6000, "linear",function() {
+		nightover5div.animate({top: "140px"}, 6000, "linear",function() {
 		// Animation complete.
 		});
-		nightover6div.animate({top: "60px"}, 6000, "linear",function() {
-			playSound("CROWD_SMALL_CHIL_EC049202.wav");
-		});
+		nightover6div.animate({top: "80px"}, 6000, "linear",playSound("CROWD_SMALL_CHIL_EC049202.wav"));
 	},1500);
 	setTimeout(function(){
 		document.getElementById("nightover").style.display="none";
@@ -496,6 +496,7 @@ function playfreddygameoveranimation(animatronic){
 			document.getElementById("fan").style.display="none";
 			document.getElementById("doorright").style.display="none";
 			document.getElementById("doorleft").style.display="none";
+			playSound("XSCREAM.wav",0.05);
 			for(x=0;x<22;x++){
 				eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+bonnyanimationgameover['+x+'].src+")";},(45*'+x+'));');
 			};
@@ -506,6 +507,7 @@ function playfreddygameoveranimation(animatronic){
 			document.getElementById("fan").style.display="none";
 			document.getElementById("doorright").style.display="none";
 			document.getElementById("doorleft").style.display="none";
+			playSound("XSCREAM.wav",0.05);
 			for(x=0;x<16;x++){
 				eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+chicaanimationgameover['+x+'].src+")";},(45*'+x+'));');
 			};
@@ -550,7 +552,7 @@ function playFoxxyRunningAnimation(){
 
 function mainmenu(){
 	document.getElementById("amduatlogo").style.display="none";
-    debugdiv.style.display="none";
+    //debugdiv.style.display="none";
 	document.getElementById("mainmenu").style.display="block";
 	if(localStorage["fnaf-js-savegame.night"]!="1") document.getElementById("continuebutton").style.display="block";
 	playSound("static2.wav",0.3,true);
@@ -602,7 +604,7 @@ function gameoverPowerFailure(){
 	part2 = '].src+")"},(450*';
 	part3 = '))';
 	duration = ((Math.random()*100)*0.66);
-	delay = (Math.random()*13);
+	delay = (duration*0.2);
 	console.log(duration);
 	setTimeout(function(){
         playSound("freddy/poweroutmusic.ogg");
@@ -612,6 +614,7 @@ function gameoverPowerFailure(){
     },1000*delay);
 	setTimeout(function(){
 		stopSound();
+		stopSound("freddy/poweroutmusic.ogg");
 		playfreddygameoveranimation();
 	},470*duration);
 };

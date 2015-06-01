@@ -24,10 +24,10 @@ var sounds=[
 {name: "error.wav",file: new Audio()}
 ]; 
 
- for(x=0;x<sounds.length;x++){
-	console.log("Loading "+sounds[x].name+" ...");
+for(x=0;x<sounds.length;x++){
+	debuglog("Loading "+sounds[x].name+" ...");
 	sounds[x].file.src = "sounds/"+sounds[x].name;
-	console.log("Loaded "+sounds[x].file.src+" ...");
+	debuglog("Loaded "+sounds[x].file.src+" ...");
 }; 
 
 loadroomImages = function(){
@@ -38,6 +38,7 @@ loadroomImages = function(){
 		for(y=0;y<roomImagesIndex[x].amountofImages;y++){
 			roomImages[x][y] = new Image();
 			roomImages[x][y].src = "graphics/rooms/"+roomImagesIndex[x].name+"/"+y+".webp"
+			debuglog("Loaded %s",roomImages[x][y].src);
 		}
 	}
 }
@@ -46,6 +47,7 @@ function loadEverythingElse(){
 		document.getElementById("newgamebg").style.display="none";
 		document.getElementById("mainmenustaticimg").style.display="none";
 		document.getElementById("mainmenu").style.display="none";
+		document.getElementById("loadingicon").src=("graphics/loading/loading"+localStorage["fnaf-js-savegame.night"]+".png");
 		document.getElementById("loadingicon").style.display="block";
 	for(x=0;x<1;x++){
 		officestates[x] = new Image();

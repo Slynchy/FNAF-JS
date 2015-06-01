@@ -3,6 +3,15 @@
 ** 	   By Slynch	 **
 ***********************
 
+Twenty-second Commit:
+	- Fixed endnight() function
+		- Not completely; children cheering doesn't work.
+	- Added day to loading screen
+	- Fixed stopAmbientSound() not working/crashing the game on debug mode
+	- Added debuglog()
+	- Fixed gameover by power outage.
+	- Probably some other stuff I forgot.
+
 Twenty-first Commit:
 	- Added room names to map
 	- Added sound for light switch not working

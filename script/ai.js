@@ -9,7 +9,7 @@ function updateBunnyAI() {
 		case 0:  // unseen
 		//	if(animatronicStates[1].currentRoom=="1b") return;
 			bunnytimer++;
-			console.log("bunnytimer = "+bunnytimer);
+			debuglog("bunnytimer = "+bunnytimer);
 			if(animatronicStates[1].currentRoomArray==0) {
 				if(leftlighton==true) {
 					updateAIState(1,1,false);
@@ -36,7 +36,7 @@ function updateBunnyAI() {
 			};
 			break;
 		case 2:  // moving
-			console.log("bunnytimer = "+bunnytimer);
+			debuglog("bunnytimer = "+bunnytimer);
 			if((animatronicStates[0].currentRoomArray)==5) return;
 			if(animatronicStates[1].currentRoomArray==0) {
 				updateAIState(1,3);
@@ -45,7 +45,7 @@ function updateBunnyAI() {
 //			if((Math.random()*100)<=bunnyChanceToMoveCloser[bunnydifficulty]){
 			if(1==1){
 				animatronicStates[1].currentRoomArray-=1
-				console.log(roomClosenessBunny[animatronicStates[1].currentRoomArray].name);
+				debuglog(roomClosenessBunny[animatronicStates[1].currentRoomArray].name);
 				if((animatronicStates[1].currentRoomArray + 1)==6) {
                     if((animatronicStates[0].currentRoomArray)!=6){
 						updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,1);
@@ -65,7 +65,7 @@ function updateBunnyAI() {
 					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
 				};
 				animatronicStates[1].currentRoom=roomClosenessBunny[animatronicStates[1].currentRoomArray].name
-				console.log("closer!");
+				debuglog("closer!");
 				if(currentRoom!=animatronicStates[1].currentRoom || feedopen == false) {
 					updateAIState(1,0);
 				} else {
@@ -75,7 +75,7 @@ function updateBunnyAI() {
 			} else {
 		//		updateAIPosition(1,1,roomClosenessBunny[currentBunnyRoomArray-1].name,1,0)
 		//		updateRoomState(roomClosenessBunny[4].name,0);
-				console.log("further!");
+				debuglog("further!");
 				if((animatronicStates[1].currentRoomArray)==6 || (animatronicStates[1].currentRoomArray)==5) {
 				//	updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,2);
 				} else {
@@ -89,7 +89,7 @@ function updateBunnyAI() {
 			break;
 		case 3:  // at office door
 			bunnytimer++;
-			console.log("bunnytimer = "+bunnytimer);
+			debuglog("bunnytimer = "+bunnytimer);
 			if(bunnytimer<=9 && leftlighton==true){
 				updateAIState(1,1,false);
 			};
@@ -98,12 +98,21 @@ function updateBunnyAI() {
 			} else if(bunnytimer>=9 && leftdooropen==false){
 				updateAIState(1,4);
 			} else if(bunnytimer>=10 && leftdooropen==true){
-				updateAIState(1,0);
-				updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
-				animatronicStates[1].currentRoomArray=4
-				updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
-				animatronicStates[1].currentRoom=roomClosenessBunny[animatronicStates[1].currentRoomArray].name
-				console.log("returning to room 1b");
+				if(animatronicStates[0].currentRoomArray!=5){
+					updateAIState(1,0);
+					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
+					animatronicStates[1].currentRoomArray=5;
+					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
+					animatronicStates[1].currentRoom=roomClosenessBunny[animatronicStates[1].currentRoomArray].name;
+					debuglog("returning to room 1b");
+				} else {
+					updateAIState(1,0);
+					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
+					animatronicStates[1].currentRoomArray=4;
+					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
+					animatronicStates[1].currentRoom=roomClosenessBunny[animatronicStates[1].currentRoomArray].name;
+					debuglog("returning to room 1b");
+				};
 			};
 			break;
 		case 4:  // dead
@@ -119,7 +128,7 @@ function updateChicaAI() {
 		case 0:  // unseen
 		//	if(animatronicStates[1].currentRoom=="1b") return;
 			chicatimer++;
-			console.log("chicatimer = "+chicatimer);
+			debuglog("chicatimer = "+chicatimer);
 			if(animatronicStates[0].currentRoomArray==0) {
 				if(leftlighton==true) {
 					updateAIState(0,1,false);
@@ -146,7 +155,7 @@ function updateChicaAI() {
 			};
 			break;
 		case 2:  // moving
-			console.log("chicatimer = "+chicatimer);
+			debuglog("chicatimer = "+chicatimer);
 		//	if((animatronicStates[1].currentRoomArray)==5) return;
 			if(animatronicStates[0].currentRoomArray==0) {
 				updateAIState(0,3);
@@ -156,7 +165,7 @@ function updateChicaAI() {
 			if(1==1){
 		//		updateAIPosition(1,1,roomClosenessBunny[3].name,1,0)
 				animatronicStates[0].currentRoomArray-=1
-				console.log(roomClosenessChica[animatronicStates[0].currentRoomArray].name);
+				debuglog(roomClosenessChica[animatronicStates[0].currentRoomArray].name);
 				if((animatronicStates[0].currentRoomArray + 1)==6) {
                     if((animatronicStates[1].currentRoomArray)!=5){
 						updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray+1].name,1);
@@ -184,7 +193,7 @@ function updateChicaAI() {
 					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
 				};
 				animatronicStates[0].currentRoom=roomClosenessChica[animatronicStates[0].currentRoomArray].name
-				console.log("closer!");
+				debuglog("closer!");
 				if(currentRoom!=animatronicStates[0].currentRoom || feedopen == false) {
 					updateAIState(0,0);
 				} else {
@@ -194,7 +203,7 @@ function updateChicaAI() {
 			} else {
 		//		updateAIPosition(1,1,roomClosenessBunny[currentBunnyRoomArray-1].name,1,0)
 		//		updateRoomState(roomClosenessBunny[4].name,0);
-				console.log("further!");
+				debuglog("further!");
 				if((animatronicStates[0].currentRoomArray)==6 || (animatronicStates[0].currentRoomArray)==5) {
 				//	updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,2);
 				} else {
@@ -208,7 +217,7 @@ function updateChicaAI() {
 			break;
 		case 3:  // at office door
 			chicatimer++;
-			console.log("chicatimer = "+chicatimer);
+			debuglog("chicatimer = "+chicatimer);
 			if(chicatimer<=9 && leftlighton==true){
 				updateAIState(1,1,false);
 			};
@@ -217,16 +226,25 @@ function updateChicaAI() {
 			} else if(chicatimer>=9 && rightdooropen==false){
 				updateAIState(0,4);
 			} else if(chicatimer>=10 && rightdooropen==true){
-				updateAIState(0,0);
-				updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
-				animatronicStates[0].currentRoomArray=4
-				updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
-				animatronicStates[0].currentRoom=roomClosenessChica[animatronicStates[0].currentRoomArray].name
-				console.log("returning to room 1b");
+				if(animatronicStates[1].currentRoomArray!=5){
+					updateAIState(0,0);
+					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
+					animatronicStates[0].currentRoomArray=4;
+					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
+					animatronicStates[0].currentRoom=roomClosenessChica[animatronicStates[0].currentRoomArray].name;
+					debuglog("returning to room 1b");
+				} else {
+					updateAIState(0,0);
+					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
+					animatronicStates[0].currentRoomArray=3;
+					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
+					animatronicStates[0].currentRoom=roomClosenessChica[animatronicStates[0].currentRoomArray].name;
+					debuglog("returning to room 7");
+				};
 			};
 			break;
 		case 4:  // dead
-			playfreddygameoveranimation("bonny");
+			playfreddygameoveranimation("chica");
 			updateAIState(0,1);
 			break;
 		default:

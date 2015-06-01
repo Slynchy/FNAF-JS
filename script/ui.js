@@ -21,12 +21,12 @@ function updateselectedmenuitem(obj) {
 }
 
 function OpenCloseFeed() {
-	console.log(feedopen);
+	debuglog(feedopen);
 	if(feedopen==false){
-		console.log("Opening feed...");
+		debuglog("Opening feed...");
 		setTimeout(function(){camerafeeddiv.toggle();officemaindiv.toggle();playSound("CAMERA_VIDEO_LOA_60105303.wav");},360);
 	} else {
-		console.log("Closing feed...");
+		debuglog("Closing feed...");
 		camerafeeddiv.toggle();
 		officemaindiv.toggle();
 		playSound("put_down.wav");

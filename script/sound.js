@@ -43,7 +43,7 @@ function playSound(src, volume, loop) {
 }; */
 
 function playSound(src, volume, loop) {
-    if (DEBUG_MODE) return console.log("Suppressing playSound() due to debug mode");
+    if (DEBUG_MODE) return debuglog("Suppressing playSound() due to debug mode");
     if ((typeof loop) == "undefined" || loop == false) {
         loop = false;
     };
@@ -51,7 +51,7 @@ function playSound(src, volume, loop) {
         volume = DEFAULT_VOLUME;
     };
     if ((typeof src) == "undefined") {
-        return console.log("playSound() error - no sound specified");
+        return debuglog("playSound() error - no sound specified");
     };
     for (x = 0; x < sounds.length; x++) {
         if (sounds[x].name == src) {
@@ -66,10 +66,10 @@ function playSound(src, volume, loop) {
                 sounds[x].file.addEventListener('ended', loopSound, false);
             };
             sounds[x].file.play();
-            return console.log("Sound " + sounds[x].name + " now playing at " + (volume * 100) + "% volume.");
+            return debuglog("Sound " + sounds[x].name + " now playing at " + (volume * 100) + "% volume.");
         };
     };
-    return console.log("Sound " + src + " not found, is it under sounds[]?");
+    return debuglog("Sound " + src + " not found, is it under sounds[]?");
 };
 
 function loopSound(){this.currentTime = 0;this.play();};
@@ -82,6 +82,8 @@ ambiance1.addUri("sounds/Buzz_Fan_Florescent2.wav", 9600, "ambiancetrack1");
 ambiance2.addUri("sounds/ambience2.wav", 60000, "ambiancetrack2");
 
 function stopAmbientSound(){
-	document.getElementById("channelambient").pause();
-	document.getElementById("channelambient2").pause();
+	if(DEBUG_MODE==false){
+		ambiance1.stop();
+		ambiance2.stop();
+	};
 };

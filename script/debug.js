@@ -18,7 +18,7 @@ if (DEBUG_MODE==true){
 	$(document).ready(function() {
 		$(document).bind('keydown',function(e){
 		   if(e.keyCode == 88) {
-		   //    playfreddygameoveranimation("chica");
+		       playfreddygameoveranimation("chica");
 		   };
 		});
 	});
@@ -27,6 +27,19 @@ if (DEBUG_MODE==true){
 		alert("Error! "+msg+"\nURL: "+url+"\nAt line "+linenumber);
 		return true;
 	});
+};
+
+function debuglog(string,additional,additional2){
+	if((typeof string) == "undefined"){
+		return;
+	};
+	if(DEBUG_MODE==false) return;
+	if((typeof additional)=="undefined"){
+		return console.log(string);
+	} else if(((typeof additional2)=="undefined") && additional){
+		return console.log(string,additional);
+	};
+	console.log(string,additional,additional);
 };
 
 function printSave(){
