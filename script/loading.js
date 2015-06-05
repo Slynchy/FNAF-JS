@@ -5,6 +5,11 @@
 //
 // Last updated - 11/05/2015 @ 23:16 
 
+for(x=0;x<8;x++){
+	transitionimages[x] = new Image();
+	transitionimages[x].src = "graphics/transition/"+x+".png";
+};
+
 var sounds=[
 {name: "chimes 2.wav",file: new Audio()},
 {name: "blip3.wav",file: new Audio()},
@@ -44,6 +49,7 @@ loadroomImages = function(){
 }
 
 function loadEverythingElse(){
+		playtransitiononanimation();
 		document.getElementById("newgamebg").style.display="none";
 		document.getElementById("mainmenustaticimg").style.display="none";
 		document.getElementById("mainmenu").style.display="none";

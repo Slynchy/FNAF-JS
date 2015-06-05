@@ -11,4 +11,4 @@
 
 /* The fuck even is this... */ var SAVED_GAME_NIGHT = localStorage["fnaf-js-savegame.night"];
 
-console.log(SAVED_GAME_NIGHT);
+debuglog("Saved game loaded successfully! Night is #"+SAVED_GAME_NIGHT);

@@ -105,7 +105,8 @@ window.onresize = function(event) {
     windowwidth = $( document ).width();
 };
 
-//var officeroomdiv = $("#officeroom");
+var transitionimages = [];
+
 var fandiv = $("#fan");
 var officecamerarightdiv = $("#officecameraright");
 var officecameraleftdiv = $("#officecameraleft");
@@ -116,6 +117,7 @@ var timehourdiv = $("#timehour");
 var timehourextradiv = $("#timehourextra");
 var powerusagediv = $("#powerusage");
 var camerafeedanimationdiv = $("#camerafeedanimation");
+var transitiondiv = document.getElementById("transistionanimation");
 var officeX=0
 var officeXInterval;
 var officeXOtherInterval;

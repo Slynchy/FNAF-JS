@@ -3,6 +3,13 @@
 ** 	   By Slynch	 **
 ***********************
 
+Twenty-third Commit:
+	- Fixed save.js not being loaded
+	- Added animation.js for any animation code.
+	- Added transitional animation. Only used on night start at the moment.
+	- Commented console messages from SeamlessLoop to prevent clutter. 
+	- Again, probably more stuff I forgot.
+
 Twenty-second Commit:
 	- Fixed endnight() function
 		- Not completely; children cheering doesn't work.
