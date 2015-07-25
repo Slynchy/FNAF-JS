@@ -5,6 +5,8 @@
 //
 // Last updated - 11/05/2015 @ 23:16 
 
+debuglog("Initializing loading.js...");
+
 for(x=0;x<8;x++){
 	transitionimages[x] = new Image();
 	transitionimages[x].src = "graphics/transition/"+x+".png";
@@ -123,6 +125,10 @@ function loadEverythingElse(){
 	for(x=0;x<20;x++){
 		freddyanimationgameover[x] = new Image();
 		freddyanimationgameover[x].src = "graphics/gameover/freddy/"+x+".webp";
+	};
+	for(x=0;x<31;x++){
+		freddyofficeanimationgameover[x] = new Image();
+		freddyofficeanimationgameover[x].src = "graphics/gameover/freddyoffice/"+x+".webp";
 	};
 	for(x=0;x<22;x++){
 		bonnyanimationgameover[x] = new Image();

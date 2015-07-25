@@ -4,6 +4,8 @@
 //
 // Last updated - 06/05/2015
 
+debuglog("Initializing ai.js...");
+
 function updateBunnyAI() {
 	switch(animatronicStates[1].state) {
 		case 0:  // unseen
@@ -141,7 +143,7 @@ function updateChicaAI() {
 			//	updateRoomState(roomname,state,timeout);
 			//	animatronicStates[1].state=2;
 				updateAIState(0,2);
-			}
+			};
 			break;
 		case 1:  // seen
 			if(currentRoom!=animatronicStates[0].currentRoom || feedopen == false) {
@@ -257,21 +259,21 @@ function updateFoxxyAI() {
 			foxxytimer++;
 			if(foxxytimer>=foxydifficultyarray[foxydifficulty]){
 				updateAIState(3,1);
-				playSound("pirate_song2.wav",0.01);
+				sound.playSound("pirate_song2.wav",0.01);
 			}
 			break;
 		case 1: 
 			foxxytimer++;
 			if(foxxytimer>=foxydifficultyarray[foxydifficulty]){
 				updateAIState(3,2);
-				playSound("pirate_song2.wav",0.01);
+				sound.playSound("pirate_song2.wav",0.01);
 			};
 			break;
 		case 2: 
 			foxxytimer++;
 			if(foxxytimer>=foxydifficultyarray[foxydifficulty]){
 				updateAIState(3,3);
-				playSound("pirate_song2.wav",0.01);
+				sound.playSound("pirate_song2.wav",0.01);
 			}
 			break;
 		case 3: 
@@ -293,6 +295,135 @@ function updateFoxxyAI() {
 				playfoxxyofficeanimation();
 			} else if(foxxytimer>=10 && leftdooropen==true){
 				updateAIState(3,0);
+			};
+			break;
+		default:
+	}
+};
+
+function updateFreddyAI() {
+	switch(animatronicStates[2].state) {
+		case 0:  // unseen
+			freddytimer++;
+			debuglog("freddytimer = "+freddytimer);
+			if(animatronicStates[2].currentRoomArray==0) {
+				debuglog("FREDDY HAS REACHED THE OFFICE");
+			};
+			if(freddytimer>=freddydifficultyarray[freddydifficulty]){
+			//	updateRoomState(roomname,state,timeout);
+			//	animatronicStates[1].state=2;
+				updateAIState(2,2);
+			};
+			break;
+		case 1:  // seen
+			if(currentRoom!=animatronicStates[2].currentRoom || feedopen == false) {
+				//if(animatronicStates[2].currentRoomArray==0 && rightlighton==true) {
+					updateAIState(2,0,false);
+					//return;
+				} else {
+					updateAIState(2,1,false);
+				//	return;
+				};
+			break;
+		case 2:  // moving
+			debuglog("freddytimer = "+freddytimer);
+			if(animatronicStates[2].currentRoomArray==1) {
+				updateAIState(2,3);
+				debuglog("FREDDY HAS REACHED THE OFFICE");
+				return;
+			};
+			if(1==1){
+				animatronicStates[2].currentRoomArray-=1
+				debuglog(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name);
+				if((animatronicStates[2].currentRoomArray + 1)==6) {
+					debuglog("FREDDY HAS LEFT THE STAGE");
+					updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray+1].name,5);
+				} else {
+					updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray+1].name,0);
+				};
+				if(animatronicStates[2].currentRoomArray==5){
+					if(animatronicStates[0].currentRoomArray==5){
+						animatronicStates[2].currentRoomArray-=1;
+						updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,5);
+					} else {
+						updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,5);
+					};
+				} else if(animatronicStates[2].currentRoomArray==4){
+					updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,3);
+                } else {
+					updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,3);
+				};
+				if(animatronicStates[0].currentRoomArray==animatronicStates[2].currentRoomArray){
+					updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,1);
+					animatronicStates[2].currentRoomArray-=1;
+					updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,3);
+				};
+				animatronicStates[2].currentRoom=roomClosenessFreddy[animatronicStates[2].currentRoomArray].name
+				debuglog("closer!");
+				if(currentRoom!=animatronicStates[2].currentRoom || feedopen == false) {
+					updateAIState(2,0);
+				} else {
+					updateAIState(2,1);
+				};
+				if(animatronicStates[2].currentRoom=="4b") updateAIState(2,3);
+			} else {
+				debuglog("further!");
+				if((animatronicStates[0].currentRoomArray)==6 || (animatronicStates[0].currentRoomArray)==5) {
+				//	updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,2);
+				} else {
+					animatronicStates[0].currentRoomArray+=1
+					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray-1].name,0);
+					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
+					animatronicStates[0].currentRoom=roomClosenessChica[animatronicStates[0].currentRoomArray].name
+				};
+				updateAIState(1,0);
+			};
+			break;
+		case 3:  // at door outside office
+			freddytimer++;
+			debuglog("freddytimer = "+freddytimer);
+		//	if(freddytimer<=9 && leftlighton==true){
+		//		updateAIState(1,1,false);
+		//	};
+			if(freddytimer<=4 && rightdooropen==true){
+				//keep the door closed for 4 seconds lest you get fucked
+			} else if(freddytimer>=4 && rightdooropen==false){
+				//door was not closed. Shame.
+				updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,0);
+				animatronicStates[2].currentRoomArray=0;
+				updateAIState(2,4);
+			} else if(freddytimer>=8 && rightdooropen==true){
+				//the door was shut for 8 seconds so he flees.
+				if(animatronicStates[1].currentRoomArray!=5 && animatronicStates[0].currentRoomArray!=5){
+					updateAIState(2,0);
+					updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,0);
+					animatronicStates[2].currentRoomArray=5;
+					updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,5);
+					animatronicStates[2].currentRoom=roomClosenessFreddy[animatronicStates[2].currentRoomArray].name;
+					debuglog("Returning Freddy to room 1b");
+				} else if(animatronicStates[0].currentRoomArray!=4){
+					updateAIState(2,0);
+					updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,0);
+					animatronicStates[2].currentRoomArray=4;
+					updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,3);
+					animatronicStates[2].currentRoom=roomClosenessFreddy[animatronicStates[2].currentRoomArray].name;
+					debuglog("Returning Freddy to room 7");
+				} else {
+					updateAIState(2,0);
+					updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,0);
+					animatronicStates[2].currentRoomArray=3;
+					updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,2);
+					animatronicStates[2].currentRoom=roomClosenessFreddy[animatronicStates[2].currentRoomArray].name;
+					debuglog("Returning Freddy to room 6");
+				};
+			};
+			break;
+		case 4:  // inside office/dead
+			freddytimer++;
+			debuglog("freddytimer = "+freddytimer);
+			if(freddytimer>=14){
+				//dead
+				playfreddygameoveranimation("freddyoffice")
 			};
 			break;
 		default:

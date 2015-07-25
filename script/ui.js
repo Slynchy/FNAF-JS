@@ -4,6 +4,8 @@
 //
 // Last updated - 10/04/2015 @ 01:53am 
 
+debuglog("Initializing ui.js...");
+
 function staticTick() {
   randomcheck++
   if(randomcheck>8) randomcheck=1;
@@ -24,12 +26,12 @@ function OpenCloseFeed() {
 	debuglog(feedopen);
 	if(feedopen==false){
 		debuglog("Opening feed...");
-		setTimeout(function(){camerafeeddiv.toggle();officemaindiv.toggle();playSound("CAMERA_VIDEO_LOA_60105303.wav");},360);
+		setTimeout(function(){camerafeeddiv.toggle();officemaindiv.toggle();sound.playSound("CAMERA_VIDEO_LOA_60105303.wav");},360);
 	} else {
 		debuglog("Closing feed...");
 		camerafeeddiv.toggle();
 		officemaindiv.toggle();
-		playSound("put_down.wav");
+		sound.playSound("put_down.wav");
 	};
 	playcamerafeedanimation(feedopen);
 	fandiv.toggle();
@@ -49,6 +51,9 @@ function OpenCloseFeed() {
 	};
 	if(currentRoom==animatronicStates[0].currentRoom) {
 		updateAIState(0,1,false);
+	};
+	if(currentRoom==animatronicStates[2].currentRoom) {
+		updateAIState(2,1,false);
 	};
 }
 
@@ -328,7 +333,7 @@ assertButtons = function(){
 		if(leftlighton==false && rightlighton==false) {
 			if(animatronicStates[1].currentRoom=="office"){
 				officemaindiv.css("background-image","url("+officelightstates[1][0].src+")");
-				playSound("windowscare.wav");
+				sound.playSound("windowscare.wav");
 			} else {
 				officemaindiv.css("background-image", "url('"+officelightstates[0][1].src+"')");
 			};
@@ -352,14 +357,14 @@ assertButtons = function(){
 			currentPowerUsage--;
 			updatePowerUsage();
 		} else {
-			playSound("error.wav");
+			sound.playSound("error.wav");
 		};
 	});
 
 	doorbuttonsleft_doordiv.click(function(){
 		if(leftdooropen==false) {
 			playdooranimationleft(0);
-			playSound("SFXBible_12478.wav",0.2);
+			sound.playSound("SFXBible_12478.wav",0.2);
 			leftdooropen=true;
 			if(leftlighton) {
 				doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[4].src+"')");
@@ -372,7 +377,7 @@ assertButtons = function(){
 		}
 		else {
 			playdooranimationleft(1);
-			playSound("SFXBible_12478.wav",0.2);
+			sound.playSound("SFXBible_12478.wav",0.2);
 			leftdooropen=false;
 			if(leftlighton) {
 				doorbuttonsleftdiv.css("background-image", "url('"+buttonleftstates[2].src+"')");
@@ -388,7 +393,7 @@ assertButtons = function(){
 	doorbuttonsright_doordiv.click(function(){
 		if(rightdooropen==false) {
 			playdooranimationright(0);
-			playSound("SFXBible_12478.wav",0.2);
+			sound.playSound("SFXBible_12478.wav",0.2);
 			rightdooropen=true;
 			if(rightlighton) {
 				doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[4].src+"')");
@@ -401,7 +406,7 @@ assertButtons = function(){
 		}
 		else {
 			playdooranimationright(1);
-			playSound("SFXBible_12478.wav",0.2);
+			sound.playSound("SFXBible_12478.wav",0.2);
 			rightdooropen=false;
 			if(rightlighton) {
 				doorbuttonsrightdiv.css("background-image", "url('"+buttonrightstates[2].src+"')");
@@ -418,7 +423,7 @@ assertButtons = function(){
 		if(leftlighton==false && rightlighton==false) {
 			if(animatronicStates[0].currentRoom=="office"){
 				officemaindiv.css("background-image","url("+officelightstates[2][0].src+")");
-				playSound("windowscare.wav");
+				sound.playSound("windowscare.wav");
 			} else {
 				officemaindiv.css("background-image", "url('"+officelightstates[0][0].src+"')");
 			};
@@ -442,76 +447,10 @@ assertButtons = function(){
 			currentPowerUsage--;
 			updatePowerUsage();
 		} else {
-			playSound("error.wav");
+			sound.playSound("error.wav");
 		};
 	});
 };
-// ==============================================END OF BUTTON EVENTS=======================================
-function playdooranimationright(inReverse){
-	if(inReverse==0) {
-		for(x=0;x<(14);x++){
-			eval('setTimeout(function(){doorrightdiv.attr("src",doorrightanim['+x+'].src);},(30*('+x+'+1)));')
-		}
-	}
-	else if(inReverse==1) {
-		for(x=13;x>=(0);x--){
-			eval('setTimeout(function(){doorrightdiv.attr("src",doorrightanim['+x+'].src);},(20*(Math.abs('+x+'-13))));')
-		}
-	}
-}
-
-function playcamerafeedanimation(inReverse){
-	if(inReverse==0) {
-		camerafeedanimationdiv.css("display","block");
-		for(x=0;x<(10);x++){
-			eval('setTimeout(function(){camerafeedanimationdiv.attr("src",camerafeedanimationimage['+x+'].src);},(30*('+x+'+1)));')
-			eval('setTimeout(function(){camerafeedanimationdiv.css("display","none");},(330));')
-		}
-	}
-	else if(inReverse==1) {
-		camerafeedanimationdiv.css("display","block");
-		for(x=9;x>=(0);x--){
-			eval('setTimeout(function(){camerafeedanimationdiv.attr("src",camerafeedanimationimage['+x+'].src);},(20*(Math.abs('+x+'-9))));')
-			eval('setTimeout(function(){camerafeedanimationdiv.css("display","none");},(200));')
-		}
-	};
-}
-
-function playroomanimation(room,randomnumber){
-	switch(room) {
-		case "2a":
-			for(x=0;x<(9);x++){
-				if(randomnumber>0.5) {
-					eval('setTimeout(function(){roomdiv.attr("src",room2aimage['+(x & 1)+'].src);},(45*(Math.abs('+x+'+1))));');
-				}
-				else {
-					eval('setTimeout(function(){roomdiv.attr("src",room2aimage['+(x & 1)+'].src);},(15*(Math.abs('+x+'+1))));');
-				}
-			}
-            break;
-		default:
-			alert("Invalid or no room name given!");
-	}
-};
-
-function playdooranimationleft(inReverse){
-	if(inReverse==0) {
-		for(x=0;x<(14);x++){
-			/*setTimeout(function(){
-				doorleftdiv.attr("src",doorleftanim[x].src);
-			},(500*(x+1)));*/
-			eval('setTimeout(function(){doorleftdiv.attr("src",doorleftanim['+x+'].src);},(30*('+x+'+1)));')
-		}
-	}
-	else if(inReverse==1) {
-		for(x=13;x>=(0);x--){
-			/*setTimeout(function(){
-				doorleftdiv.attr("src",doorleftanim[x].src);
-			},(500*(x+1)));*/
-			eval('setTimeout(function(){doorleftdiv.attr("src",doorleftanim['+x+'].src);},(20*(Math.abs('+x+'-13))));')
-		}
-	}
-}
 
 function resetCameraButtons(current){
 	for(x=0;x<rooms.length;x++){
@@ -520,3 +459,4 @@ function resetCameraButtons(current){
 		}
 	}
 }
+// ==============================================END OF BUTTON EVENTS=======================================

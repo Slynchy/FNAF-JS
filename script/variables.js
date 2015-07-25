@@ -2,11 +2,16 @@
 // variables.js
 // The JS for setting all variables prior to launch
 //
-// Last updated - 11/04/2015 @ 23:16
+// Last updated - 25/07/2015 @ 01:36
+
+debuglog("Initializing variables.js...");
+
+var VERSION = 24;
 
 var mainmenuanimInterval1;
 var mainmenuanimInterval2;
 var timer;
+var night;
 
 // this array defines how close each room is to the office
 // lower = closer
@@ -26,9 +31,19 @@ var roomClosenessChica=[{name:"office"},
 					{name:"1b"},
 					{name:"1a"}
 					];
+var roomClosenessFreddy=[{name:"office"},
+                    {name:"4b"},
+                    {name:"4a"},
+					{name:"6"},
+					{name:"7"},
+					{name:"1b"},
+					{name:"1a"}
+					];
 var bunnytimer = 0;
 var chicatimer = 0;
+var freddytimer = 0;
 var freddyanimationgameover = [];
+var freddyofficeanimationgameover = [];
 var bonnyanimationgameover = [];
 var chicaanimationgameover = [];
 var currentBunnyRoomArray = 4;
@@ -36,19 +51,25 @@ var currentBunnyRoomArray = 4;
 var baseFoxyTime = 6;
 var baseBonnyTime = 5;
 var baseChicaTime = 5;
+var baseFreddyTime = 5;
 var foxydifficulty;
 var bunnydifficulty;
 var chicadifficulty;
+var freddydifficulty;
 var foxydifficultyarray = [];
 var bunnydifficultyarray = [];
 var chicadifficultyarray = [];
+var freddydifficultyarray = [];
 
 var bunnyChanceToMoveCloser = [];
 var baseBunnyChanceToMoveCloser = 10;
 var chicaChanceToMoveCloser = [];
 var baseChicaChanceToMoveCloser = 10;
+var freddyChanceToMoveCloser = [];
+var baseFreddyChanceToMoveCloser = 10;
 bunnyChanceToMoveCloser[1] = baseBunnyChanceToMoveCloser;
 chicaChanceToMoveCloser[1] = baseChicaChanceToMoveCloser;
+freddyChanceToMoveCloser[1] = baseFreddyChanceToMoveCloser;
 
 for(x=20;x>=1;x--){
 	foxydifficultyarray[x] = (baseFoxyTime += 2)
@@ -58,6 +79,9 @@ for(x=20;x>=1;x--){
 };
 for(x=20;x>=1;x--){
 	chicadifficultyarray[x] = (baseChicaTime += 4)
+};
+for(x=20;x>=1;x--){
+	freddydifficultyarray[x] = (baseFreddyTime += 4)
 };
 for(x=2;x<=20;x++){
 	bunnyChanceToMoveCloser[x] = (baseBunnyChanceToMoveCloser += 4.5)
@@ -72,7 +96,7 @@ var storedselectedroom;
 
 var animatronicStates = [{name:"Chica",currentRoom:"1a",state:0,currentRoomArray:6},
                          {name:"Bonnie",currentRoom:"1a",state:0,currentRoomArray:6},
-                         {name:"Freddy",currentRoom:"1a",state:0,currentRoomArray:0},
+                         {name:"Freddy",currentRoom:"1a",state:0,currentRoomArray:6},
                          {name:"Foxxy",currentRoom:"1c",state:0,currentRoomArray:2}
 						];
 
@@ -121,8 +145,8 @@ var transitiondiv = document.getElementById("transistionanimation");
 var officeX=0
 var officeXInterval;
 var officeXOtherInterval;
-var leftdooropen=false;
-var rightdooropen=false;
+var leftdooropen=false; // These two variables are actually "false = open"
+var rightdooropen=false; // and "true = closed/locked"
 var leftlighton=false;
 var rightlighton=false;
 var yArray = ["left","right"];
@@ -209,15 +233,15 @@ var rooms=[{name:"1a",movingcamera:true,leftadjustment:0},
 // amountofimages is the amount of images, but the highest number will be 1 less than that number.
 // so image 4 in an array will be amountofimages-1
 var roomImagesIndex = [{name: "1a",amountofImages: 7},
-{name: "1b",amountofImages: 5},
+{name: "1b",amountofImages: 6},
 {name: "1c",amountofImages: 4},
 {name: "2a",amountofImages: 3},
 {name: "2b",amountofImages: 3},
 {name: "5",amountofImages: 3},
-{name: "7",amountofImages: 3},
+{name: "7",amountofImages: 4},
 {name: "3",amountofImages: 3},
-{name: "4a",amountofImages: 3},
-{name: "4b",amountofImages: 4}]
+{name: "4a",amountofImages: 4},
+{name: "4b",amountofImages: 5}]
 
 setVariables = function(){
 	for(x=0;x<currRoomStates.length;x++){
@@ -238,10 +262,13 @@ setVariables = function(){
 	foxxytimer=0;
 	bunnytimer = 0;
 	chicatimer = 0;
+	freddytimer = 0;
 	playedfoxxyrunninganimation=false;
 	animatronicStates[3].state=0;
+	animatronicStates[2].currentRoomArray=6;
 	animatronicStates[1].currentRoomArray=6;
 	animatronicStates[0].currentRoomArray=6;
+	animatronicStates[2].currentRoom="1a";
 	animatronicStates[1].currentRoom="1a";
 	animatronicStates[0].currentRoom="1a";
 	

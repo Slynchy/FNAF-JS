@@ -5,12 +5,22 @@
 // Original game by Scott Cawthon
 //
 // Ported by Sam 'Slynch' Lynch
+// Tested by Lewis 'Earwig' M.
 //
 // For legality's sake, it is necessary to say that you may not monetize this code
 // without my express permission. This also works the other way around; I cannot 
 // monetize this port without the original developer's permission.
+// I also can't release it without authentication or DRM that checks if 
+// the user owns the normal version, otherwise I'm basically releasing the
+// game for free.
+// Planned methods of auth: Steamworks or the files have to be obtained legitimately 
+// by the user.
 //
-// Last updated - 11/05/2015 @ 23:20
+// Last updated - 24/07/2015 @ 01:44
+
+debuglog("Initializing main.js...");
+
+document.title += VERSION;
 
 assertButtons();
 var cachedbody = document.getElementById("alldahtml").innerHTML;
@@ -24,9 +34,10 @@ function mainThread() {
 	if(currentRoom=="1c" && feedopen == true && animatronicStates[3].state<3) {
 		foxxytimer=0;
 	};
-	updateBunnyAI();
-	updateChicaAI();
-	updateFoxxyAI();
+	//updateBunnyAI();
+	//updateChicaAI();
+	//updateFoxxyAI();
+	/*if(night=="3" || night=="4" || night=="5") */updateFreddyAI();
 	if(DEBUG_MODE==true) debugInfo();
 	if(currentRoom=="2a" && animatronicStates[3].state!==3 && play2aanimation==false && animatronicStates[1].currentRoom!="2a") {
 		play2aanimation=true;
@@ -43,9 +54,10 @@ function loadgame2() {
 
 function newgame() {
 	foxydifficulty = 3;
-	bunnydifficulty = 9;
-	chicadifficulty = 5;
-	stopSound();
+	bunnydifficulty = 20;
+	chicadifficulty = 19;
+	freddydifficulty = 20;
+	sound.stopSound();
 	localStorage["fnaf-js-savegame.night"]="1";
 	document.getElementById("newgamebg").style.display="block";
 	document.getElementById("newgamebg").style.opacity="0";
@@ -90,7 +102,7 @@ function loadgame() {
 			chicadifficulty = 20;
 		break;
 	};
-	stopSound();
+	sound.stopSound();
 	loadroomImages();
 	loadEverythingElse();
 	if(DEBUG_MODE==true) debugdiv.style.display="block";
@@ -146,6 +158,10 @@ function updateAIState(AIID,state,updatetimer,newroom,roomID){
 			animatronicStates[AIID].state=state;
 			if(updatetimer==true) bunnytimer=0;
             break;
+		case 2: //Freddy
+			animatronicStates[AIID].state=state;
+			if(updatetimer==true) freddytimer=0;
+            break;
 		case 3: //Foxy
             switch(state) {
                 case 0: // hiding
@@ -170,7 +186,7 @@ function updateAIState(AIID,state,updatetimer,newroom,roomID){
 			foxxytimer=0;
 			break;
 		default:
-			alert("Invalid or no room name given!");
+			alert("updateAIState() error - Invalid or no room name given!");
 	}
 	
 	debuglog("AI "+animatronicStates[AIID].name+" state updated to "+state);
@@ -289,7 +305,7 @@ function updatecurrentRoom(roomparameter) {
 	};
 	// END 
 	
-	playSound("blip3.wav",0.5);
+	sound.playSound("blip3.wav",0.5);
 	currentRoom=roomparameter;
 	currentroomstatetoset = 0
 	currentroomstatetoset = searchForState(roomparameter);
@@ -325,6 +341,9 @@ function updatecurrentRoom(roomparameter) {
 	};
 	if(currentRoom==animatronicStates[1].currentRoom && feedopen == true) {
 		updateAIState(1,1,false);
+	};
+	if(currentRoom==animatronicStates[2].currentRoom && feedopen == true) {
+		updateAIState(2,1,false);
 	};
 	if(currentRoom==animatronicStates[0].currentRoom && feedopen == true) {
 		if(animatronicStates[0].state==2){
@@ -414,14 +433,14 @@ function endnight() {
 	debuglog("Night won! Set night in saved game to: "+localStorage["fnaf-js-savegame.night"]);
     // Update savegame-------------------------------------------------
     
-	playSound("chimes 2.wav");
-	stopAmbientSound();
+	sound.playSound("chimes 2.wav");
+	sound.stopAmbientSound();
 	
 	setTimeout(function(){
 		nightover5div.animate({top: "140px"}, 6000, "linear",function() {
 		// Animation complete.
 		});
-		nightover6div.animate({top: "80px"}, 6000, "linear",playSound("CROWD_SMALL_CHIL_EC049202.wav"));
+		nightover6div.animate({top: "80px"}, 6000, "linear",sound.playSound("CROWD_SMALL_CHIL_EC049202.wav"));
 	},1500);
 	setTimeout(function(){
 		document.getElementById("nightover").style.display="none";
@@ -431,14 +450,15 @@ function endnight() {
 	},10000);
 };
 
-function gameoverstatic(){
+function gameoverstatic(timeout){
+	if(typeof(timeout)=="undefined") timeout=900;
 	setTimeout(function(){
-		stopSound();
-		stopAmbientSound();
+		sound.stopSound();
+		sound.stopAmbientSound();
 		document.getElementById("gameoverstaticimg").style.display="block";
 		document.getElementById("gameoverstaticimg").play();
 		gameover();
-	},900);
+	},timeout);
 };
 
 function mainmenu(){
@@ -446,7 +466,7 @@ function mainmenu(){
     //debugdiv.style.display="none";
 	document.getElementById("mainmenu").style.display="block";
 	if(localStorage["fnaf-js-savegame.night"]!="1") document.getElementById("continuebutton").style.display="block";
-	playSound("static2.wav",0.3,true);
+	sound.playSound("static2.wav",0.3,true);
 	clearInterval(mainmenuanimInterval1);
 	mainmenuanimInterval1 = setInterval(function(){
 		rand=Math.random();
@@ -471,8 +491,8 @@ function mainmenu(){
 
 function gameoverPowerFailure(){
 	clearInterval(mainThreadID);
-	playSound("powerdown.wav");
-    stopAmbientSound();
+	sound.playSound("powerdown.wav");
+    sound.stopAmbientSound();
 	if(feedopen==true) {
 		OpenCloseFeed();
 	};
@@ -498,14 +518,14 @@ function gameoverPowerFailure(){
 	delay = (duration*0.2);
 	console.log(duration);
 	setTimeout(function(){
-        playSound("freddy/poweroutmusic.ogg");
+        sound.playSound("freddy/poweroutmusic.ogg");
 		for(x=1;x<duration;x++){ // The most stupid solution to a simple issue.
 			eval(part1+(x & 1)+part2+x+part3); 
 		};						 // Sadly the only one that worked.
     },1000*delay);
 	setTimeout(function(){
-		stopSound();
-		stopSound("freddy/poweroutmusic.ogg");
+		sound.stopSound();
+		sound.stopSound("freddy/poweroutmusic.ogg");
 		playfreddygameoveranimation();
 	},470*duration);
 };
