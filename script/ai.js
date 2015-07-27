@@ -74,19 +74,6 @@ function updateBunnyAI() {
 					updateAIState(1,1);
 				};
 				if(animatronicStates[1].currentRoom=="office") updateAIState(1,3);
-			} else {
-		//		updateAIPosition(1,1,roomClosenessBunny[currentBunnyRoomArray-1].name,1,0)
-		//		updateRoomState(roomClosenessBunny[4].name,0);
-				debuglog("further!");
-				if((animatronicStates[1].currentRoomArray)==6 || (animatronicStates[1].currentRoomArray)==5) {
-				//	updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,2);
-				} else {
-					animatronicStates[1].currentRoomArray+=1
-					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray-1].name,0);
-					updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray].name,2);
-					animatronicStates[1].currentRoom=roomClosenessBunny[animatronicStates[1].currentRoomArray].name
-				};
-				updateAIState(1,0);
 			};
 			break;
 		case 3:  // at office door
@@ -202,19 +189,7 @@ function updateChicaAI() {
 					updateAIState(0,1);
 				};
 				if(animatronicStates[0].currentRoom=="office") updateAIState(0,3);
-			} else {
-		//		updateAIPosition(1,1,roomClosenessBunny[currentBunnyRoomArray-1].name,1,0)
-		//		updateRoomState(roomClosenessBunny[4].name,0);
-				debuglog("further!");
-				if((animatronicStates[0].currentRoomArray)==6 || (animatronicStates[0].currentRoomArray)==5) {
-				//	updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,2);
-				} else {
-					animatronicStates[0].currentRoomArray+=1
-					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray-1].name,0);
-					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
-					animatronicStates[0].currentRoom=roomClosenessChica[animatronicStates[0].currentRoomArray].name
-				};
-				updateAIState(1,0);
+				if(animatronicStates[0].currentRoom=="6"){sound.playSound("kitchen"+(randomIntFromInterval(1,4))+".wav",0.6);}
 			};
 			break;
 		case 3:  // at office door
@@ -350,6 +325,8 @@ function updateFreddyAI() {
 					};
 				} else if(animatronicStates[2].currentRoomArray==4){
 					updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,3);
+                } else if(animatronicStates[2].currentRoomArray==1){
+					updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,4);
                 } else {
 					updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,3);
 				};
@@ -365,29 +342,37 @@ function updateFreddyAI() {
 				} else {
 					updateAIState(2,1);
 				};
-				if(animatronicStates[2].currentRoom=="4b") updateAIState(2,3);
-			} else {
-				debuglog("further!");
-				if((animatronicStates[0].currentRoomArray)==6 || (animatronicStates[0].currentRoomArray)==5) {
-				//	updateRoomState(roomClosenessBunny[animatronicStates[1].currentRoomArray+1].name,2);
-				} else {
-					animatronicStates[0].currentRoomArray+=1
-					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray-1].name,0);
-					updateRoomState(roomClosenessChica[animatronicStates[0].currentRoomArray].name,2);
-					animatronicStates[0].currentRoom=roomClosenessChica[animatronicStates[0].currentRoomArray].name
+				if(animatronicStates[2].currentRoom=="4b"){
+					updateAIState(2,3);
+				} else if(animatronicStates[2].currentRoom=="6"){
+					sound.playSound("kitchen"+(randomIntFromInterval(1,4))+".wav",0.6);
 				};
-				updateAIState(1,0);
+				if(Math.random()<0.84){ 
+					// play a sound
+					whatsound = randomIntFromInterval(1,4);
+					switch(whatsound){
+						case 1:
+							sound.playSound("Laugh_Giggle_Girl_8d.wav",0.5);
+						break;
+						case 2:
+							sound.playSound("Laugh_Giggle_Girl_2d.wav",0.5);
+						break;
+						case 3:
+							sound.playSound("Laugh_Giggle_Girl_1d.wav",0.5);
+						break;
+						case 4:
+							sound.playSound("deep steps.wav",0.5);
+						break;
+					};
+				};
 			};
 			break;
 		case 3:  // at door outside office
 			freddytimer++;
 			debuglog("freddytimer = "+freddytimer);
-		//	if(freddytimer<=9 && leftlighton==true){
-		//		updateAIState(1,1,false);
-		//	};
-			if(freddytimer<=4 && rightdooropen==true){
+			if(freddytimer<=7 && rightdooropen==true){
 				//keep the door closed for 4 seconds lest you get fucked
-			} else if(freddytimer>=4 && rightdooropen==false){
+			} else if(freddytimer>=7 && rightdooropen==false){
 				//door was not closed. Shame.
 				updateRoomState(roomClosenessFreddy[animatronicStates[2].currentRoomArray].name,0);
 				animatronicStates[2].currentRoomArray=0;
@@ -419,6 +404,10 @@ function updateFreddyAI() {
 			};
 			break;
 		case 4:  // inside office/dead
+			if(freddytimer==0){
+				animatronicStates[2].currentRoomArray = 0;
+				animatronicStates[2].currentRoom=roomClosenessFreddy[animatronicStates[2].currentRoomArray].name;
+			};
 			freddytimer++;
 			debuglog("freddytimer = "+freddytimer);
 			if(freddytimer>=14){

@@ -6,7 +6,7 @@
 
 debuglog("Initializing variables.js...");
 
-var VERSION = 24;
+var VERSION = 25;
 
 var mainmenuanimInterval1;
 var mainmenuanimInterval2;

@@ -13,22 +13,30 @@ for(x=0;x<8;x++){
 };
 
 var sounds=[
-{name: "chimes 2.wav",file: new Audio()},
-{name: "blip3.wav",file: new Audio()},
-{name: "CAMERA_VIDEO_LOA_60105303.wav",file: new Audio()},
-{name: "DOOR_POUNDING_ME_D0291401.wav",file: new Audio()},
-{name: "knock2.wav",file: new Audio()},
-{name: "pirate_song2.wav",file: new Audio()},
-{name: "powerdown.wav",file: new Audio()},
-{name: "put_down.wav",file: new Audio()},
-{name: "run.wav",file: new Audio()},
-{name: "SFXBible_12478.wav",file: new Audio()},
-{name: "static2.wav",file: new Audio()},
-{name: "windowscare.wav",file: new Audio()},
+{name: "chimes 2.wav",file: new Audio()}, 					// 0
+{name: "blip3.wav",file: new Audio()}, 						// 1
+{name: "CAMERA_VIDEO_LOA_60105303.wav",file: new Audio()},	// 2
+{name: "DOOR_POUNDING_ME_D0291401.wav",file: new Audio()},	// 3
+{name: "knock2.wav",file: new Audio()}, 					// 4
+{name: "pirate_song2.wav",file: new Audio()},				// 5
+{name: "powerdown.wav",file: new Audio()},					// 6
+{name: "put_down.wav",file: new Audio()},					// 7
+{name: "run.wav",file: new Audio()},						// 8
+{name: "SFXBible_12478.wav",file: new Audio()},				// 9
+{name: "static2.wav",file: new Audio()},					// 10
+{name: "windowscare.wav",file: new Audio()},				// 11
 {name: "XSCREAM.wav",file: new Audio()},
 {name: "XSCREAM2.wav",file: new Audio()},
 {name: "freddy/poweroutmusic.ogg",file: new Audio()},
-{name: "error.wav",file: new Audio()}
+{name: "error.wav",file: new Audio()},
+{name: "kitchen1.wav",file: new Audio()},
+{name: "kitchen2.wav",file: new Audio()},
+{name: "kitchen3.wav",file: new Audio()},
+{name: "kitchen4.wav",file: new Audio()},
+{name: "Laugh_Giggle_Girl_1d.wav",file: new Audio()},
+{name: "Laugh_Giggle_Girl_2d.wav",file: new Audio()},
+{name: "Laugh_Giggle_Girl_8d.wav",file: new Audio()},
+{name: "deep steps.wav",file: new Audio()}
 ]; 
 
 for(x=0;x<sounds.length;x++){

@@ -3,6 +3,20 @@
 ** 	   By Slynch	 **
 ***********************
 
+Twenty-fifth Commit:
+	- Finished Fazbear
+	- Added sounds for Chica in kitchen
+	- Added random int from range function at bottom of main.js
+	- Removed code that ran when 1!=1
+	- Added a notice for when running in debug mode.
+	- Tweaked debuginfo
+	- Fixed gameover animation not lowering camera feed.
+	- Added sounds for Fazbear moving around.
+	
+Twenty-fourth Commit:
+	- Added draft version of Freddy Fazbear!
+	- I forgot the rest; check commits description
+
 Twenty-third Commit:
 	- Fixed save.js not being loaded
 	- Added animation.js for any animation code.

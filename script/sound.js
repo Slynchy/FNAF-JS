@@ -23,7 +23,7 @@ ambiance2.addUri("sounds/ambience2.wav", 60000, "ambiancetrack2");
 var sound=new function(){
 	
 	this.playSound=function(src, volume, loop) {
-		if (DEBUG_MODE) return debuglog("Suppressing playSound() due to debug mode");
+		if (DEBUG_MODE) return debuglog("Suppressing "+src+" due to debug mode");
 		if ((typeof loop) == "undefined" || loop == false) {
 			loop = false;
 		};
@@ -31,7 +31,7 @@ var sound=new function(){
 			volume = DEFAULT_VOLUME;
 		};
 		if ((typeof src) == "undefined") {
-			return debuglog("playSound() error - no sound specified");
+			return debuglog("playSound(src string, volume float, loop bool) error - no sound specified");
 		};
 		for (x = 0; x < sounds.length; x++) {
 			if (sounds[x].name == src) {

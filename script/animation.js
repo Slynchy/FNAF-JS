@@ -43,6 +43,7 @@ function playtransitiononanimation(){
 
 function playfreddygameoveranimation(animatronic){
 	if((typeof animatronic)=="undefined") animatronic="freddy";
+	if(feedopen == true) OpenCloseFeed();
 	switch(animatronic) {
 		case "freddyoffice":
 			document.getElementById("fan").style.display="none";
