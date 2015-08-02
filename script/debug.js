@@ -8,19 +8,41 @@ var debugCSS = "background: #ADE1FF; color: #8E3504; border-radius: 5px;padding:
 
 var DEBUG_MODE = false;
 
+// OPTIONS = "HTML", "NW.JS"
+var BUILD_TARGET = "NW.JS";
+
+var greenworks;
+
+if(BUILD_TARGET == "NW.JS"){
+	debuglog("Initializing Greenworks...");
+	greenworks = require('./greenworks');
+	if(greenworks.initAPI()){
+		debuglog('Steam API has been initalized.');
+	} else {
+		debuglog('Error on initializing Steam API.');
+		Window.close();
+	};
+} else {
+	debuglog('Skipping Steam auth...');
+};
+
+
 debuglog("Initializing debug.js...");
 
 var debugdiv = document.getElementById("debuginfo");
 
 function debugInfo(){
-	debugdiv.innerHTML += "Chica location: CAM-"+roomClosenessChica[animatronicStates[0].currentRoomArray].name+"<br>";
-	debugdiv.innerHTML = "Bonnie location: CAM-"+roomClosenessBunny[animatronicStates[1].currentRoomArray].name+"<br>";
+	debugdiv.innerHTML = "Chica location: CAM-"+roomClosenessChica[animatronicStates[0].currentRoomArray].name+"<br>";
+	debugdiv.innerHTML += "Bonnie location: CAM-"+roomClosenessBunny[animatronicStates[1].currentRoomArray].name+"<br>";
 	debugdiv.innerHTML += "Freddy location: CAM-"+roomClosenessFreddy[animatronicStates[2].currentRoomArray].name+"<br>";
-	debugdiv.innerHTML += "Foxxy state: "+animatronicStates[3].state;
+	debugdiv.innerHTML += "Foxxy state: "+animatronicStates[3].state+"<br><br>";
+	debugdiv.innerHTML += "Chica timer: "+chicatimer+" out of "+chicadifficultyarray[chicadifficulty]+"<br>";
+	debugdiv.innerHTML += "Bonnie timer: "+bunnytimer+" out of "+bunnydifficultyarray[bunnydifficulty]+"<br>";
+	debugdiv.innerHTML += "Chica timer: "+freddytimer+" out of "+freddydifficultyarray[freddydifficulty]+"";
 };
 
 if (DEBUG_MODE==true){
-	document.getElementById("debuginfo").innerHTML = "DEBUG MODE";
+	document.getElementById("debugmode").innerHTML = "DEBUG MODE";
 	$(document).ready(function() {
 		$(document).bind('keydown',function(e){
 		   if(e.keyCode == 88) {

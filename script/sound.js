@@ -31,7 +31,7 @@ var sound=new function(){
 			volume = DEFAULT_VOLUME;
 		};
 		if ((typeof src) == "undefined") {
-			return debuglog("playSound(src string, volume float, loop bool) error - no sound specified");
+			return debuglog("playSound(src [string], volume [float], loop? [bool]) error - no sound specified");
 		};
 		for (x = 0; x < sounds.length; x++) {
 			if (sounds[x].name == src) {

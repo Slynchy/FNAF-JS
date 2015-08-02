@@ -8,7 +8,7 @@
   <audio id="channelambient" volume="0.1" loop autoplay></audio>
   <audio id="channelambient2" volume="0.1" loop autoplay></audio>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Five Nights at Freddy's JS - v0.</title>
+  <title>Five Nights at Freddy's JS - v</title>
   <script src="jquery.min.js" type="text/javascript"></script>
   <link rel="stylesheet" type="text/css" href="feed.css" />
   <link rel="stylesheet" type="text/css" media="screen and (max-device-width: 1920px)" href="1080.css" />
@@ -36,8 +36,10 @@
 		<img src="graphics/fnaflogo.png" style="position:absolute;left:10%;top:10%;width:19.5%;height:31%;image-rendering: pixelated;" />
 		<img src="graphics/copyright.png" style="position:absolute;right:40px;bottom:10px;" />
 		<!--<img src="graphics/mainmenu/continue.png" style="position:absolute;left:10%;top:45%;" />-->
-		<img id="newbutton" src="graphics/mainmenu/newgame.png" onclick="newgame()" onmouseover="updateselectedmenuitem(this)" style="position:absolute;left:10%;top:55%;width:12.572916%;height:4.5%;" />
-		<img id="continuebutton" src="graphics/mainmenu/continue.png" onmouseover="updateselectedmenuitem(this)" onclick="loadgame2()" style="position:absolute;left:10%;top:65%;width:12.572916%;height:4.5%;display:none;" />
+		<img id="newbutton" src="graphics/mainmenu/newgame.png" onclick="newgame()" onmouseover="updateselectedmenuitem(this)" style="position:absolute;left:10%;top:55%;width:12.572916%;height:4.5%;image-rendering: pixelated;" />
+		<img id="continuebutton" src="graphics/mainmenu/continue.png" onmouseover="updateselectedmenuitem(this)" onclick="loadgame2()" style="position:absolute;left:10%;top:65%;width:12.572916%;height:4.5%;display:none;image-rendering: pixelated;" />
+		<img id="continuebuttonnight" src="graphics/mainmenu/littletext/night.png" onmouseover="" onclick="" style="position: absolute; left: 17%; top: 71%; width: 4%; height: 2%; display: none;image-rendering: pixelated;">
+		<img id="continuebuttonnightnumber" src="graphics/mainmenu/littletext/2.png" onmouseover="" onclick="" style="position: absolute; left: 21.5%; top: 70.5%; width: 1%; height: 2.9%; display: none;image-rendering: pixelated;">
 		<img id="selectedarrows" src="graphics/mainmenu/selected.png" style="position:absolute;left:6%;top:55.5%;width:3.24%;height:3.407%;image-rendering: pixelated;" />
 		<img id="mainmenufazbearanim" src="graphics/mainmenu/0.png" style="position:absolute;width:100%;height:100%;width:100%;height:100%;z-index:-5;" />
 		<video id="mainmenustaticimg" style="position:absolute;opacity:0.3;z-index:-5;zoom:2.0;" src="graphics/camera/static_test5.webm" autoplay loop hidecontrols preload></video>
@@ -103,6 +105,7 @@
 	<img id="loadingicon" src="graphics/loadingicon.png" style="position:absolute;z-index:210;left:44.08%;bottom:50%;display:none;height:8.98%;width:11.82%;" ></img>
 	<div id="debuginfo" style="position:absolute;top:5%;left:5%;display:block;z-index:6000;color:#FFFFFF;" ></div>
 	
+  <div id="debugmode" style="position:absolute;top:0%;left:0%;display:block;z-index:6000;color:#FFFFFF;font-family: 'Courier New', Courier, monospace;" > </div>
   <script src="script/SeamlessLoop.js" type="text/javascript"></script>
   <script src="script/debug.js" type="text/javascript"></script>
   <script src="script/variables.js" type="text/javascript"></script>
@@ -115,7 +118,6 @@
   <script src="script/animation.js" type="text/javascript"></script>
   <script src="script/main.js" type="text/javascript"></script>
 </body>
-<div id="debugmode" style="position:absolute;top:0%;left:0%;display:block;z-index:6000;color:#FFFFFF;font-family: 'Courier New', Courier, monospace;" >  </div>
 </html>
 
 <!-- onmouseenter="mapbuttonMouseover();" onmouseleave="mapbuttonMouseout();" 

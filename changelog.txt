@@ -3,6 +3,11 @@
 ** 	   By Slynch	 **
 ***********************
 
+Twenty-sixth Commit:
+	- Re-enabled other AI
+	- Improved debug display
+	- Added Greenworks
+
 Twenty-fifth Commit:
 	- Finished Fazbear
 	- Added sounds for Chica in kitchen

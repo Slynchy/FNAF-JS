@@ -34,10 +34,10 @@ function mainThread() {
 	if(currentRoom=="1c" && feedopen == true && animatronicStates[3].state<3) {
 		foxxytimer=0;
 	};
-	//updateBunnyAI();
-	//updateChicaAI();
-	//updateFoxxyAI();
-	/*if(night=="3" || night=="4" || night=="5") */updateFreddyAI();
+	updateBunnyAI();
+	updateChicaAI();
+	updateFoxxyAI();
+	if(night=="3" || night=="4" || night=="5" || night=="6") updateFreddyAI();
 	if(DEBUG_MODE==true) debugInfo();
 	if(currentRoom=="2a" && animatronicStates[3].state!==3 && play2aanimation==false && animatronicStates[1].currentRoom!="2a") {
 		play2aanimation=true;
@@ -56,7 +56,7 @@ function newgame() {
 	foxydifficulty = 3;
 	bunnydifficulty = 20;
 	chicadifficulty = 19;
-	freddydifficulty = 20;
+	freddydifficulty = 18;
 	sound.stopSound();
 	localStorage["fnaf-js-savegame.night"]="1";
 	document.getElementById("newgamebg").style.display="block";
@@ -75,31 +75,37 @@ function loadgame() {
 			foxydifficulty = 8;
 			bunnydifficulty = 9;
 			chicadifficulty = 6;
+			freddydifficulty = 1;
 		break;
 		case "2":
 			foxydifficulty = 10;
 			bunnydifficulty = 12;
 			chicadifficulty = 9;
+			freddydifficulty = 1;
 		break;
 		case "3":
 			foxydifficulty = 12;
 			bunnydifficulty = 15;
 			chicadifficulty = 12;
+			freddydifficulty = 10;
 		break;
 		case "4":
 			foxydifficulty = 14;
 			bunnydifficulty = 18;
 			chicadifficulty = 15;
+			freddydifficulty = 13;
 		break;
 		case "5":
 			foxydifficulty = 16;
-			bunnydifficulty = 20;
-			chicadifficulty = 18;
+			bunnydifficulty = 19;
+			chicadifficulty = 17;
+			freddydifficulty = 16;
 		break;
 		case "6":
 			foxydifficulty = 20;
 			bunnydifficulty = 20;
-			chicadifficulty = 20;
+			chicadifficulty = 19;
+			freddydifficulty = 18;
 		break;
 	};
 	sound.stopSound();
@@ -463,9 +469,13 @@ function gameoverstatic(timeout){
 
 function mainmenu(){
 	document.getElementById("amduatlogo").style.display="none";
-    //debugdiv.style.display="none";
 	document.getElementById("mainmenu").style.display="block";
-	if(localStorage["fnaf-js-savegame.night"]!="1") document.getElementById("continuebutton").style.display="block";
+	if(localStorage["fnaf-js-savegame.night"]!="1") {
+		document.getElementById("continuebutton").style.display="block";
+		document.getElementById("continuebuttonnight").style.display="block";
+		document.getElementById("continuebuttonnightnumber").style.display="block";
+		document.getElementById("continuebuttonnightnumber").src="graphics/mainmenu/littletext/"+localStorage["fnaf-js-savegame.night"]+".png";
+	};
 	sound.playSound("static2.wav",0.3,true);
 	clearInterval(mainmenuanimInterval1);
 	mainmenuanimInterval1 = setInterval(function(){
