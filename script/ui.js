@@ -19,6 +19,10 @@ function updateselectedmenuitem(obj) {
 		document.getElementById("selectedarrows").style.top="55.5%"
 	} else if(obj.id=="continuebutton") {
 		document.getElementById("selectedarrows").style.top="65.5%"
+	} else if(obj.id=="6thnight") {
+		document.getElementById("selectedarrows").style.top="75.5%"
+	} else if(obj.id=="customnight") {
+		document.getElementById("selectedarrows").style.top="85.5%"
 	};
 }
 

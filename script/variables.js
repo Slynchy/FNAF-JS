@@ -2,11 +2,11 @@
 // variables.js
 // The JS for setting all variables prior to launch
 //
-// Last updated - 25/07/2015 @ 01:36
+// Last updated - 04/08/2015 @ 23:28
 
 debuglog("Initializing variables.js...");
 
-var VERSION = 26;
+var VERSION = 27;
 
 var mainmenuanimInterval1;
 var mainmenuanimInterval2;

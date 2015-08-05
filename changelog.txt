@@ -3,6 +3,18 @@
 ** 	   By Slynch	 **
 ***********************
 
+Twenty-seventh Commit:
+	- Added a script loader for HTML builds
+	- Added sixth night and customise night (not yet implemented)
+	- Fixed typo in debug display
+	- Turned off JS error alert if running debug mode (console would be up anyway)
+	- Added night 7 loading screen but can't find night 6? Will have to find that or make one.
+	- Need to:
+		- Add sine fading on static
+		- Finish custom night implementation (should be easy enough)
+		- Main menu stars on achievements
+	- Note: using this video for reference https://www.youtube.com/watch?v=bnBS9Sxw1T8 since I don't actually play this game.
+
 Twenty-sixth Commit:
 	- Re-enabled other AI
 	- Improved debug display

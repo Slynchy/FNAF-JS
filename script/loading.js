@@ -3,7 +3,7 @@
 // The JS for loading the game (purely to reduce clutter)
 // Like seriously, I doubt this improves perf or anything.
 //
-// Last updated - 11/05/2015 @ 23:16 
+// Last updated - 04/08/2015 @ 23:28
 
 debuglog("Initializing loading.js...");
 
@@ -63,7 +63,11 @@ function loadEverythingElse(){
 		document.getElementById("newgamebg").style.display="none";
 		document.getElementById("mainmenustaticimg").style.display="none";
 		document.getElementById("mainmenu").style.display="none";
-		document.getElementById("loadingicon").src=("graphics/loading/loading"+localStorage["fnaf-js-savegame.night"]+".png");
+		//if(localStorage["fnaf-js-savegame.night"]!="5" || localStorage["fnaf-js-savegame.night"]!="6" || localStorage["fnaf-js-savegame.night"]!="7"){ 
+			document.getElementById("loadingicon").src=("graphics/loading/loading"+localStorage["fnaf-js-savegame.night"]+".png");
+		//} else {
+		//	document.getElementById("loadingicon").src=("graphics/loading/loading"+localStorage["fnaf-js-savegame.night"]+".png");
+		//};
 		document.getElementById("loadingicon").style.display="block";
 	for(x=0;x<1;x++){
 		officestates[x] = new Image();

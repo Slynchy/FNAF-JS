@@ -16,7 +16,7 @@
 // Planned methods of auth: Steamworks or the files have to be obtained legitimately 
 // by the user.
 //
-// Last updated - 24/07/2015 @ 01:44
+// Last updated - 04/08/2015 @ 23:28
 
 debuglog("Initializing main.js...");
 
@@ -37,7 +37,7 @@ function mainThread() {
 	updateBunnyAI();
 	updateChicaAI();
 	updateFoxxyAI();
-	if(night=="3" || night=="4" || night=="5" || night=="6") updateFreddyAI();
+	if(night=="3" || night=="4" || night=="5" || night=="6" || night=="7") updateFreddyAI();
 	if(DEBUG_MODE==true) debugInfo();
 	if(currentRoom=="2a" && animatronicStates[3].state!==3 && play2aanimation==false && animatronicStates[1].currentRoom!="2a") {
 		play2aanimation=true;
@@ -68,45 +68,61 @@ function newgame() {
 	});
 };
 
-function loadgame() {
-	night = localStorage["fnaf-js-savegame.night"];
-	switch(night){
-		case "1":
-			foxydifficulty = 8;
-			bunnydifficulty = 9;
-			chicadifficulty = 6;
-			freddydifficulty = 1;
-		break;
-		case "2":
-			foxydifficulty = 10;
-			bunnydifficulty = 12;
-			chicadifficulty = 9;
-			freddydifficulty = 1;
-		break;
-		case "3":
-			foxydifficulty = 12;
-			bunnydifficulty = 15;
-			chicadifficulty = 12;
-			freddydifficulty = 10;
-		break;
-		case "4":
-			foxydifficulty = 14;
-			bunnydifficulty = 18;
-			chicadifficulty = 15;
-			freddydifficulty = 13;
-		break;
-		case "5":
-			foxydifficulty = 16;
-			bunnydifficulty = 19;
-			chicadifficulty = 17;
-			freddydifficulty = 16;
-		break;
-		case "6":
-			foxydifficulty = 20;
-			bunnydifficulty = 20;
-			chicadifficulty = 19;
-			freddydifficulty = 18;
-		break;
+function loadgame(nightmare) {
+	if(typeof(nightmare)=="undefined" || nightmare == false){
+		night = localStorage["fnaf-js-savegame.night"];
+		if(night == "6" || night == "7") night = 5;
+		switch(night){
+			case "1":
+				foxydifficulty = 8;
+				bunnydifficulty = 9;
+				chicadifficulty = 6;
+				freddydifficulty = 1;
+			break;
+			case "2":
+				foxydifficulty = 10;
+				bunnydifficulty = 12;
+				chicadifficulty = 9;
+				freddydifficulty = 1;
+			break;
+			case "3":
+				foxydifficulty = 12;
+				bunnydifficulty = 15;
+				chicadifficulty = 12;
+				freddydifficulty = 10;
+			break;
+			case "4":
+				foxydifficulty = 14;
+				bunnydifficulty = 18;
+				chicadifficulty = 15;
+				freddydifficulty = 13;
+			break;
+			case "5":
+				foxydifficulty = 16;
+				bunnydifficulty = 19;
+				chicadifficulty = 17;
+				freddydifficulty = 16;
+			break;
+			case "6":
+				foxydifficulty = 20;
+				bunnydifficulty = 20;
+				chicadifficulty = 19;
+				freddydifficulty = 18;
+			break;
+			case "7":
+				foxydifficulty = 16;
+				bunnydifficulty = 19;
+				chicadifficulty = 17;
+				freddydifficulty = 16;
+			break;
+		};
+	} else {
+		console.log("nightmare mode!");
+		night = 6;
+		foxydifficulty = 20;
+		bunnydifficulty = 20;
+		chicadifficulty = 19;
+		freddydifficulty = 18;
 	};
 	sound.stopSound();
 	loadroomImages();
@@ -433,10 +449,12 @@ function endnight() {
 	
     // Update savegame-------------------------------------------------
 	parsednight = parseInt(localStorage["fnaf-js-savegame.night"]); // To int so I can add 1
-	parsednight+=1;													// Add 1
-	parsednight = parsednight.toString();							// Back to a string (not actually needed but meh)
-	localStorage["fnaf-js-savegame.night"]=parsednight;				// Set savegame
-	debuglog("Night won! Set night in saved game to: "+localStorage["fnaf-js-savegame.night"]);
+	if(parsednight!=7){
+		parsednight+=1;													// Add 1
+		parsednight = parsednight.toString();							// Back to a string (not actually needed but meh)
+		localStorage["fnaf-js-savegame.night"]=parsednight;				// Set savegame
+		debuglog("Night won! Set night in saved game to: "+localStorage["fnaf-js-savegame.night"]);
+	};
     // Update savegame-------------------------------------------------
     
 	sound.playSound("chimes 2.wav");
@@ -474,7 +492,13 @@ function mainmenu(){
 		document.getElementById("continuebutton").style.display="block";
 		document.getElementById("continuebuttonnight").style.display="block";
 		document.getElementById("continuebuttonnightnumber").style.display="block";
-		document.getElementById("continuebuttonnightnumber").src="graphics/mainmenu/littletext/"+localStorage["fnaf-js-savegame.night"]+".png";
+		if(parseInt(localStorage["fnaf-js-savegame.night"])<5) {
+			document.getElementById("continuebuttonnightnumber").src="graphics/mainmenu/littletext/"+localStorage["fnaf-js-savegame.night"]+".png";
+		} else {
+			document.getElementById("continuebuttonnightnumber").src="graphics/mainmenu/littletext/5.png";
+			document.getElementById("6thnight").style.display="block";
+			if(localStorage["fnaf-js-savegame.night"]=="7") document.getElementById("customnight").style.display="block";
+		};
 	};
 	sound.playSound("static2.wav",0.3,true);
 	clearInterval(mainmenuanimInterval1);

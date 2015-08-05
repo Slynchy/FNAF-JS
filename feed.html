@@ -38,8 +38,10 @@
 		<!--<img src="graphics/mainmenu/continue.png" style="position:absolute;left:10%;top:45%;" />-->
 		<img id="newbutton" src="graphics/mainmenu/newgame.png" onclick="newgame()" onmouseover="updateselectedmenuitem(this)" style="position:absolute;left:10%;top:55%;width:12.572916%;height:4.5%;image-rendering: pixelated;" />
 		<img id="continuebutton" src="graphics/mainmenu/continue.png" onmouseover="updateselectedmenuitem(this)" onclick="loadgame2()" style="position:absolute;left:10%;top:65%;width:12.572916%;height:4.5%;display:none;image-rendering: pixelated;" />
-		<img id="continuebuttonnight" src="graphics/mainmenu/littletext/night.png" onmouseover="" onclick="" style="position: absolute; left: 17%; top: 71%; width: 4%; height: 2%; display: none;image-rendering: pixelated;">
-		<img id="continuebuttonnightnumber" src="graphics/mainmenu/littletext/2.png" onmouseover="" onclick="" style="position: absolute; left: 21.5%; top: 70.5%; width: 1%; height: 2.9%; display: none;image-rendering: pixelated;">
+		<img id="continuebuttonnight" src="graphics/mainmenu/littletext/night.png" onmouseover="" onclick="" style="position: absolute; left: 10%; top: 71%; width: 4%; height: 2%; display: none;image-rendering: pixelated;">
+		<img id="6thnight" src="graphics/mainmenu/6thnight.png" onmouseover="updateselectedmenuitem(this)" onclick="loadgame(true)" style="position: absolute; left: 10%; top: 75%; width: 12.572916%; height: 5.5%; display: none; image-rendering: pixelated;">
+		<img id="customnight" src="graphics/mainmenu/customnight.png" onmouseover="updateselectedmenuitem(this)" onclick="" style="position: absolute; left: 10%; top: 85%; width: 13.572916%; height: 5.5%; display: none; image-rendering: pixelated;">
+		<img id="continuebuttonnightnumber" src="graphics/mainmenu/littletext/2.png" onmouseover="" onclick="" style="position: absolute; left: 14.5%; top: 70.5%; width: 1%; height: 2.9%; display: none;image-rendering: pixelated;">
 		<img id="selectedarrows" src="graphics/mainmenu/selected.png" style="position:absolute;left:6%;top:55.5%;width:3.24%;height:3.407%;image-rendering: pixelated;" />
 		<img id="mainmenufazbearanim" src="graphics/mainmenu/0.png" style="position:absolute;width:100%;height:100%;width:100%;height:100%;z-index:-5;" />
 		<video id="mainmenustaticimg" style="position:absolute;opacity:0.3;z-index:-5;zoom:2.0;" src="graphics/camera/static_test5.webm" autoplay loop hidecontrols preload></video>
@@ -107,17 +109,8 @@
 	
 	<div id="debugmode" style="position:absolute;top:0%;left:0%;display:block;z-index:6000;color:#FFFFFF;font-family: 'Courier New', Courier, monospace;" > </div>
 	<script src="script/debug.js" type="text/javascript"></script>
-	<script src='script/SeamlessLoop.js' type='text/javascript'></script>
-	<!-- UNCOMMENT THIS TO USE ON HTML
-	<script src="script/variables.js" type="text/javascript"></script>
-	<script src="script/loading.js" type="text/javascript"></script>
-	<script src="script/jquery.timer.js" type="text/javascript"></script>
-	<script src="script/ui.js" type="text/javascript"></script>
-	<script src="script/sound.js" type="text/javascript"></script>
-	<script src="script/ai.js" type="text/javascript"></script>
-	<script src="script/save.js" type="text/javascript"></script>
-	<script src="script/animation.js" type="text/javascript"></script>
-	<script src="script/main.js" type="text/javascript"></script>-->
+	<script src="script/SeamlessLoop.js" type="text/javascript"></script> <!-- Loaded separately so sound.js operates normally -->
+	<script src="script/ScriptLoader.js" type="text/javascript"></script>
 	<script> 
 	if(BUILD_TARGET == "NW.JS"){
 		require('nw.gui').Window.get().evalNWBin(null, 'script/SeamlessLoop.js.bin');
@@ -130,8 +123,17 @@
 		require('nw.gui').Window.get().evalNWBin(null, 'script/save.js.bin');
 		require('nw.gui').Window.get().evalNWBin(null, 'script/animation.js.bin');
 		require('nw.gui').Window.get().evalNWBin(null, 'script/main.js.bin');
-	} else {
-		console.log("Uncomment the above HTML to use HTML mode");
+	} else if(BUILD_TARGET == "HTML") {
+		// Timeout is a hack to ensure they are loaded in that order. Sometimes they would load arbitrarily, causing issues.
+		setTimeout(function(){Loader.load('script/variables.js');},50);
+		setTimeout(function(){Loader.load('script/loading.js');},100);
+		setTimeout(function(){Loader.load('script/jquery.timer.js');},150);
+		setTimeout(function(){Loader.load('script/ui.js');},200);
+		setTimeout(function(){Loader.load('script/sound.js');},250);
+		setTimeout(function(){Loader.load('script/ai.js');},300);
+		setTimeout(function(){Loader.load('script/save.js');},350);
+		setTimeout(function(){Loader.load('script/animation.js');},400);
+		setTimeout(function(){Loader.load('script/main.js');},450);
 	};
 	</script>
 </body>

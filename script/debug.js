@@ -2,14 +2,14 @@
 // debug.js
 // The JS for debug stuff
 //
-// Last updated - 11/05/2015
+// Last updated - 04/08/2015 @ 23:28
 
 var debugCSS = "background: #ADE1FF; color: #8E3504; border-radius: 5px;padding: 4px 4px;font-family: 'Courier New', Courier, monospace;font-weight: bold;";
 
 var DEBUG_MODE = false;
 
 // OPTIONS = "HTML", "NW.JS"
-var BUILD_TARGET = "NW.JS";
+var BUILD_TARGET = "HTML";
 
 var greenworks;
 
@@ -38,7 +38,8 @@ function debugInfo(){
 	debugdiv.innerHTML += "Foxxy state: "+animatronicStates[3].state+"<br><br>";
 	debugdiv.innerHTML += "Chica timer: "+chicatimer+" out of "+chicadifficultyarray[chicadifficulty]+"<br>";
 	debugdiv.innerHTML += "Bonnie timer: "+bunnytimer+" out of "+bunnydifficultyarray[bunnydifficulty]+"<br>";
-	debugdiv.innerHTML += "Chica timer: "+freddytimer+" out of "+freddydifficultyarray[freddydifficulty]+"";
+	debugdiv.innerHTML += "Freddy timer: "+freddytimer+" out of "+freddydifficultyarray[freddydifficulty]+"<br>";
+	debugdiv.innerHTML += "Foxxy timer: "+foxxytimer+" out of "+foxydifficultyarray[foxydifficulty]+"<br>";
 };
 
 if (DEBUG_MODE==true){
@@ -50,9 +51,11 @@ if (DEBUG_MODE==true){
 		   };
 		});
 	});
+} else {
 	$(window).on("error",function(msg,url,linenumber) {
 		sound.playSound("error.wav");
 		alert("Error! "+msg+"\nURL: "+url+"\nAt line "+linenumber);
+		console.log(msg);
 		console.log(msg);
 		return true;
 	});
