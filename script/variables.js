@@ -12,6 +12,7 @@ var mainmenuanimInterval1;
 var mainmenuanimInterval2;
 var timer;
 var night;
+var difficulty20202020 = false;
 
 // this array defines how close each room is to the office
 // lower = closer

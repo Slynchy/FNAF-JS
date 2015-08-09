@@ -59,10 +59,12 @@ loadroomImages = function(){
 }
 
 function loadEverythingElse(){
+		if(foxydifficulty==20 && freddydifficulty==20 && chicadifficulty==20 && bunnydifficulty==20) difficulty20202020=true;
 		playtransitiononanimation();
 		document.getElementById("newgamebg").style.display="none";
 		document.getElementById("mainmenustaticimg").style.display="none";
 		document.getElementById("mainmenu").style.display="none";
+		document.getElementById("night7interface").style.display="none"
 		//if(localStorage["fnaf-js-savegame.night"]!="5" || localStorage["fnaf-js-savegame.night"]!="6" || localStorage["fnaf-js-savegame.night"]!="7"){ 
 			document.getElementById("loadingicon").src=("graphics/loading/loading"+localStorage["fnaf-js-savegame.night"]+".png");
 		//} else {

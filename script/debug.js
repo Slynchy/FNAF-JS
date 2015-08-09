@@ -51,6 +51,11 @@ if (DEBUG_MODE==true){
 		   };
 		});
 	});
+	$(window).on("error",function(msg,url,linenumber) {
+		sound.playSound("error.wav",1.0);
+		document.getElementById("debugmode").innerHTML+="<br><a style='color: red;font-weight: bold;'>ERROR - SEE CONSOLE</a>"
+		return true;
+	});
 } else {
 	$(window).on("error",function(msg,url,linenumber) {
 		sound.playSound("error.wav");

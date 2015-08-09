@@ -12,7 +12,7 @@ function universalAnimation(targetdiv,frames){
 	targetdivhandle = document.getElementById(targetdiv);
 	
 	targetdivhandle.style.display="block";
-	for(x=0;x<(frames+1);x++){
+	for(x=0;x<=(frames);x++){
 		eval('setTimeout(function(){document.getElementById("'+targetdiv+'").src=""+transitionimages['+x+'].src+"";},(65*'+x+'));');
 	};
 	setTimeout(function(){

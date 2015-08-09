@@ -6,6 +6,7 @@ body {
   margin-left:auto;
   margin-right:auto; 
   overflow:hidden;
+/*  image-rendering: pixelated; */
 }
 ::-moz-selection{
 background-color:Transparent;
@@ -20,6 +21,30 @@ body::-moz-selection,
 body::selection { ... }
 #camerafeed {
 	z-index:1;
+}
+
+#achievement1, #achievement2, #achievement3{
+	content:url(graphics/mainmenu/star.png);
+	position:absolute;
+	top:44%;
+	width:3.7%;
+	height:7.09%;
+	image-rendering: pixelated;
+	display: none;
+}
+
+#arrowleft{
+	height:4.81%;
+	width:1.77%;
+	position:absolute;
+	content:url(graphics/mainmenu/customnight/arrowleft.png);
+}
+
+#arrowright{
+	height:4.81%;
+	width:1.77%;
+	position:absolute;
+	content:url(graphics/mainmenu/customnight/arrowright.png);
 }
 
 #power {

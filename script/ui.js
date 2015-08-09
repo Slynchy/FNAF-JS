@@ -22,7 +22,7 @@ function updateselectedmenuitem(obj) {
 	} else if(obj.id=="6thnight") {
 		document.getElementById("selectedarrows").style.top="75.5%"
 	} else if(obj.id=="customnight") {
-		document.getElementById("selectedarrows").style.top="85.5%"
+		document.getElementById("selectedarrows").style.top="83.5%"
 	};
 }
 

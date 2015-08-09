@@ -3,6 +3,16 @@
 ** 	   By Slynch	 **
 ***********************
 
+Twenty-eighth Commit:
+	- Finished custom night
+	- Added main menu stars
+	- Added error notifier in corner (for unnoticed errors) when in debug mode
+	- Added check in main loop that if the difficulty of an AI is 0, don't update (for freddy on night 1/2 and custom nights)
+	- Need to:
+		- Add sine fading on static
+		- Convert UI to WebP (and convert some back to PNG due to quality loss)
+		- I want to finish this by 30th commit.
+
 Twenty-seventh Commit:
 	- Added a script loader for HTML builds
 	- Added sixth night and customise night (not yet implemented)
