@@ -26,11 +26,11 @@
 		<img id="nightoveram" src="graphics/camera/ui/timeAM.png" style="position:absolute;right:5%;top:60px;" />
 	</div>
 	<div id="gameover" style="position:absolute;width:100%;height:100%;display:none;">
-		<img src="graphics/gameover/gameoverimg.png" style="position:absolute;width:100%;height:100%;" />
+		<img src="graphics/gameover/gameoverimg.webp" style="position:absolute;width:100%;height:100%;" />
 		<img src="graphics/gameover/gameover.png" style="position:absolute;z-index:210;right:1%;bottom:1%;" />
 	</div>
 	<div id="newgamebg" style="position:absolute;width:100%;height:100%;z-index:99999;display:none;">
-		<img src="graphics/newgame.png" style="position:absolute;width:100%;height:100%;" />
+		<img src="graphics/newgame.webp" style="position:absolute;width:100%;height:100%;" />
 	</div>
 	<div id="mainmenu" style="position:absolute;width:100%;height:100%;display:none;">
 		<img id="achievement1" style="left:10%;" />
@@ -39,15 +39,16 @@
 		<img src="graphics/fnaflogo.png" style="position:absolute;left:10%;top:10%;width:19.5%;height:31%;image-rendering: pixelated;" />
 		<img src="graphics/copyright.png" style="position:absolute;right:40px;bottom:10px;" />
 		<!--<img src="graphics/mainmenu/continue.png" style="position:absolute;left:10%;top:45%;" />-->
-		<img id="newbutton" src="graphics/mainmenu/newgame.png" onclick="newgame()" onmouseover="updateselectedmenuitem(this)" style="position:absolute;left:10%;top:55%;width:12.572916%;height:4.5%;image-rendering: pixelated;" />
+		<!--<img id="graphics" src="graphics/mainmenu/graphics.png" onclick="" onmouseover="" style="position:absolute;right:4%;top:4%;" />-->
+		<img id="newbutton" src="graphics/mainmenu/newgame.png" onclick="newgame()" onmouseover="updateselectedmenuitem(this)" style="position:absolute;left:10%;top:57%;width:12.572916%;height:4.5%;image-rendering: pixelated;" />
 		<img id="continuebutton" src="graphics/mainmenu/continue.png" onmouseover="updateselectedmenuitem(this)" onclick="loadgame2()" style="position:absolute;left:10%;top:65%;width:12.572916%;height:4.5%;display:none;image-rendering: pixelated;" />
 		<img id="continuebuttonnight" src="graphics/mainmenu/littletext/night.png" onmouseover="" onclick="" style="position: absolute; left: 10%; top: 71%; width: 4%; height: 2%; display: none;image-rendering: pixelated;">
 		<img id="6thnight" src="graphics/mainmenu/6thnight.png" onmouseover="updateselectedmenuitem(this)" onclick="loadgame(true)" style="position: absolute; left: 10%; top: 75%; width: 12.572916%; height: 5.5%; display: none; image-rendering: pixelated;">
 		<img id="customnight" src="graphics/mainmenu/customnight.png" onmouseover="updateselectedmenuitem(this)" onclick="customizenight()" style="position: absolute; left: 10%; top: 83%; width: 13.572916%; height: 5.5%; display: none; image-rendering: pixelated;">
 		<img id="continuebuttonnightnumber" src="graphics/mainmenu/littletext/2.png" onmouseover="" onclick="" style="position: absolute; left: 14.5%; top: 70.5%; width: 1%; height: 2.9%; display: none;image-rendering: pixelated;">
-		<img id="selectedarrows" src="graphics/mainmenu/selected.png" style="position:absolute;left:6%;top:55.5%;width:3.24%;height:3.407%;image-rendering: pixelated;" />
-		<img id="mainmenufazbearanim" src="graphics/mainmenu/0.png" style="position:absolute;width:100%;height:100%;width:100%;height:100%;z-index:-5;" />
-		<video id="mainmenustaticimg" style="position:absolute;opacity:0.3;z-index:-5;zoom:2.0;" src="graphics/camera/static_test5.webm" autoplay loop hidecontrols preload></video>
+		<img id="selectedarrows" src="graphics/mainmenu/selected.png" style="position:absolute;left:6%;top:57.5%;width:3.24%;height:3.407%;image-rendering: pixelated;" />
+		<img id="mainmenufazbearanim" src="graphics/mainmenu/0.webp" style="position:absolute;width:100%;height:100%;width:100%;height:100%;z-index:-5;" />
+		<video id="mainmenustaticimg" style="position:absolute;opacity:0.3;z-index:-5;zoom:2.0;image-rendering: pixelated;" src="graphics/camera/static_test5.webm" autoplay loop hidecontrols preload></video>
 	</div>
 	<div id="night7interface" style="position:absolute;width:100%;height:100%;display:none;">
 		<img id="title" src="graphics/mainmenu/customnight/text/title.png" style="position:absolute;left:40%;top:4%;width:20%;height:4.07%"></img>
@@ -58,7 +59,7 @@
 		<img id="arrowright" onclick="updatedifficulty('freddy',true)" style="position:absolute;left:18.5%;top:57%"></img>
 		<img id="freddydifficulty0" src="graphics/mainmenu/customnight/text/2.png" style="position:absolute;left:13%;top:56%;width:1.82%;height:6.94%"></img>
 		<img id="freddydifficulty1" src="graphics/mainmenu/customnight/text/0.png" style="position:absolute;left:15%;top:56%;width:1.82%;height:6.94%"></img>
-		
+		<img id="ailevel" src="graphics/mainmenu/customnight/ailevel.png" style="position:absolute;left:10.2%;top:50.5%;width:9.76%;height:4.5%"></img>
 		
 		<img id="arrowleft" onclick="updatedifficulty('bunny',false)" style="position:absolute;left:32.5%;top:57%"></img>
 			<img id="bunnyname" src="graphics/mainmenu/customnight/text/bonnie.png" style="position:absolute;left:33.9%;top:25%;width:7.76%;height:4.07%"></img>
@@ -66,6 +67,7 @@
 		<img id="arrowright" onclick="updatedifficulty('bunny',true)" style="position:absolute;left:41.5%;top:57%"></img>
 		<img id="bunnydifficulty0" src="graphics/mainmenu/customnight/text/2.png" style="position:absolute;left:36%;top:56%;width:1.82%;height:6.94%"></img>
 		<img id="bunnydifficulty1" src="graphics/mainmenu/customnight/text/0.png" style="position:absolute;left:38%;top:56%;width:1.82%;height:6.94%"></img>
+		<img id="ailevel" src="graphics/mainmenu/customnight/ailevel.png" style="position:absolute;left:33%;top:50.5%;width:9.76%;height:4.5%"></img>
 		
 		<img id="arrowleft" src="graphics/mainmenu/customnight/arrowleft.png" onclick="updatedifficulty('chica',false)" style="position:absolute;left:55%;top:57%"></img>
 			<img id="chicaname" src="graphics/mainmenu/customnight/text/chica.png" style="position:absolute;left:56.3%;top:25%;width:7.76%;height:4.07%"></img>
@@ -73,6 +75,7 @@
 		<img id="arrowright" src="graphics/mainmenu/customnight/arrowright.png" onclick="updatedifficulty('chica',true)" style="position:absolute;left:63.5%;top:57%"></img>
 		<img id="chicadifficulty0" src="graphics/mainmenu/customnight/text/2.png" style="position:absolute;left:58.3%;top:56%;width:1.82%;height:6.94%"></img>
 		<img id="chicadifficulty1" src="graphics/mainmenu/customnight/text/0.png" style="position:absolute;left:60.3%;top:56%;width:1.82%;height:6.94%"></img>
+		<img id="ailevel" src="graphics/mainmenu/customnight/ailevel.png" style="position:absolute;left:55.35%;top:50.5%;width:9.76%;height:4.5%"></img>
 		
 		<img id="arrowleft" onclick="updatedifficulty('foxxy',false)" style="position:absolute;left:77.5%;top:57%;"></img>
 			<img id="foxxyname" src="graphics/mainmenu/customnight/text/foxy.png" style="position:absolute;left:78.7%;top:25%;width:7.76%;height:4.07%"></img>
@@ -80,6 +83,7 @@
 		<img id="arrowright" onclick="updatedifficulty('foxxy',true)" style="position:absolute;left:86.2%;top:57%"></img>
 		<img id="foxxydifficulty0" src="graphics/mainmenu/customnight/text/2.png" style="position:absolute;left:81%;top:56%;width:1.82%;height:6.94%"></img>
 		<img id="foxxydifficulty1" src="graphics/mainmenu/customnight/text/0.png" style="position:absolute;left:83%;top:56%;width:1.82%;height:6.94%"></img>
+		<img id="ailevel" src="graphics/mainmenu/customnight/ailevel.png" style="position:absolute;left:77.8%;top:50.5%;width:9.76%;height:4.5%"></img>
 		
 		<img id="ready" src="graphics/mainmenu/customnight/text/ready.png" onclick="loadroomImages();loadEverythingElse();" style="position:absolute;right:15%;bottom:5%;"></img>
 		<img id="difficultyhelp" src="graphics/mainmenu/customnight/text/difficulty.png" style="position:absolute;left:7.2%;bottom:5%;width:47.81%;height:4.69%"></img>

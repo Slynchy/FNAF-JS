@@ -16,7 +16,7 @@ function staticTick() {
 
 function updateselectedmenuitem(obj) {
 	if(obj.id=="newbutton"){
-		document.getElementById("selectedarrows").style.top="55.5%"
+		document.getElementById("selectedarrows").style.top="57.5%"
 	} else if(obj.id=="continuebutton") {
 		document.getElementById("selectedarrows").style.top="65.5%"
 	} else if(obj.id=="6thnight") {

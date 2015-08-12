@@ -15,7 +15,4 @@ debuglog("Initializing save.js...");
 if((typeof localStorage["fnaf-js-savegame.night"])=="undefined") localStorage["fnaf-js-savegame.night"]="1";
 if((typeof localStorage["fnaf-js-savegame.stars"])=="undefined") localStorage["fnaf-js-savegame.stars"]="0";
 
-/* The fuck even is this...
-I figured it out! It is an unused constant <3 */ var SAVED_GAME_NIGHT = localStorage["fnaf-js-savegame.night"];
-
-debuglog("Saved game loaded successfully! Night is #"+SAVED_GAME_NIGHT);
+console.log("Saved game loaded! Night is #"+localStorage["fnaf-js-savegame.night"]+" and has "+localStorage["fnaf-js-savegame.stars"]+" achievements");

@@ -3,13 +3,13 @@
 // The JS for loading the game (purely to reduce clutter)
 // Like seriously, I doubt this improves perf or anything.
 //
-// Last updated - 04/08/2015 @ 23:28
+// Last updated - 12/08/2015
 
 debuglog("Initializing loading.js...");
 
 for(x=0;x<8;x++){
 	transitionimages[x] = new Image();
-	transitionimages[x].src = "graphics/transition/"+x+".png";
+	transitionimages[x].src = "graphics/transition/"+x+".webp";
 };
 
 var sounds=[
@@ -66,7 +66,7 @@ function loadEverythingElse(){
 		document.getElementById("mainmenu").style.display="none";
 		document.getElementById("night7interface").style.display="none"
 		//if(localStorage["fnaf-js-savegame.night"]!="5" || localStorage["fnaf-js-savegame.night"]!="6" || localStorage["fnaf-js-savegame.night"]!="7"){ 
-			document.getElementById("loadingicon").src=("graphics/loading/loading"+localStorage["fnaf-js-savegame.night"]+".png");
+			document.getElementById("loadingicon").src=("graphics/loading/loading"+night+".png");
 		//} else {
 		//	document.getElementById("loadingicon").src=("graphics/loading/loading"+localStorage["fnaf-js-savegame.night"]+".png");
 		//};
@@ -150,7 +150,7 @@ function loadEverythingElse(){
 	};
 	for(x=0;x<16;x++){
 		chicaanimationgameover[x] = new Image();
-		chicaanimationgameover[x].src = "graphics/gameover/chica/"+x+".png";
+		chicaanimationgameover[x].src = "graphics/gameover/chica/"+x+".webp";
 	};
 	setTimeout(function(){
 		clearInterval(mainmenuanimInterval1);
@@ -174,5 +174,5 @@ function loadEverythingElse(){
 };
 for(x=0;x<4;x++){
 	mainmenufazbear[x] = new Image();
-	mainmenufazbear[x].src = "graphics/mainmenu/"+x+".png";
+	mainmenufazbear[x].src = "graphics/mainmenu/"+x+".webp";
 };

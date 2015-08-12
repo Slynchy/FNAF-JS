@@ -2,12 +2,13 @@
 // variables.js
 // The JS for setting all variables prior to launch
 //
-// Last updated - 04/08/2015 @ 23:28
+// Last updated - 12/08/2015
 
 debuglog("Initializing variables.js...");
 
 var VERSION = 27;
 
+var sineanimationtest;
 var mainmenuanimInterval1;
 var mainmenuanimInterval2;
 var timer;
@@ -76,13 +77,13 @@ for(x=20;x>=1;x--){
 	foxydifficultyarray[x] = (baseFoxyTime += 2)
 };
 for(x=20;x>=1;x--){
-	bunnydifficultyarray[x] = (baseBonnyTime += 3)
+	bunnydifficultyarray[x] = (baseBonnyTime += 2) //formerly 3 
 };
 for(x=20;x>=1;x--){
-	chicadifficultyarray[x] = (baseChicaTime += 4)
+	chicadifficultyarray[x] = (baseChicaTime += 2) //formerly 4 
 };
 for(x=20;x>=1;x--){
-	freddydifficultyarray[x] = (baseFreddyTime += 4)
+	freddydifficultyarray[x] = (baseFreddyTime += 2) //formerly 4
 };
 for(x=2;x<=20;x++){
 	bunnyChanceToMoveCloser[x] = (baseBunnyChanceToMoveCloser += 4.5)

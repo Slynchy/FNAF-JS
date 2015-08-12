@@ -6,6 +6,7 @@
 //
 // Ported by Sam 'Slynch' Lynch
 // Tested by Lewis 'Earwig' M.
+// ^as well as just generally helping^
 //
 // For legality's sake, it is necessary to say that you may not monetize this code
 // without my express permission. This also works the other way around; I cannot 
@@ -13,10 +14,12 @@
 // I also can't release it without authentication or DRM that checks if 
 // the user owns the normal version, otherwise I'm basically releasing the
 // game for free.
-// Planned methods of auth: Steamworks or the files have to be obtained legitimately 
-// by the user.
 //
-// Last updated - 04/08/2015 @ 23:28
+// Planned methods of auth: 
+//  - Greenworks for executables 
+//  - Steam Web API login for HTML.
+//
+// Last updated - 12/08/2015
 
 debuglog("Initializing main.js...");
 
@@ -31,9 +34,9 @@ function mainThread() {
 		updatePowerUsage();
 	}
     updateTime();
-	if(currentRoom=="1c" && feedopen == true && animatronicStates[3].state<3) {
-		foxxytimer=0;
-	};
+	//if(currentRoom=="1c" && feedopen == true && animatronicStates[3].state<3) {
+	//	if(foxxytimer>0)foxxytimer--;
+	//};
 	if(bunnydifficulty!=0) updateBunnyAI();
 	if(chicadifficulty!=0) updateChicaAI();
 	if(foxydifficulty!=0) updateFoxxyAI();
@@ -53,10 +56,10 @@ function loadgame2() {
 };
 
 function newgame() {
-	foxydifficulty = 3;
-	bunnydifficulty = 20;
-	chicadifficulty = 19;
-	freddydifficulty = 18;
+	foxydifficulty = 8;
+	bunnydifficulty = 9;
+	chicadifficulty = 6;
+	freddydifficulty = 0;
 	sound.stopSound();
 	localStorage["fnaf-js-savegame.night"]="1";
 	document.getElementById("newgamebg").style.display="block";
@@ -71,7 +74,7 @@ function newgame() {
 function loadgame(nightmare) {
 	if(typeof(nightmare)=="undefined" || nightmare == false){
 		night = localStorage["fnaf-js-savegame.night"];
-		if(night == "6" || night == "7") night = 5;
+		if(night == "6" || night == "7") night = "5";
 		switch(night){
 			case "1":
 				foxydifficulty = 8;
@@ -117,7 +120,7 @@ function loadgame(nightmare) {
 			break;
 		};
 	} else {
-		console.log("nightmare mode!");
+		alert("nightmare mode!");
 		night = 6;
 		foxydifficulty = 17;
 		bunnydifficulty = 19;
@@ -322,7 +325,7 @@ function updatecurrentRoom(roomparameter) {
 	if(play2aanimation==true){
 		setTimeout(function(){
 			eval("button"+roomparameter+"div.click();");
-			},450);
+		},450);
 		return;
 	};
 	// END 
@@ -361,6 +364,12 @@ function updatecurrentRoom(roomparameter) {
 	else if(foxxyrunning==true && currentRoom=="2a"){
 		setTimeout(playFoxxyRunningAnimation,600);
 	};
+	
+	if(currentRoom=="1c" && animatronicStates[3].state<3) {
+		if(foxxytimer>1) foxxytimer-=2;
+		if(foxxytimer<0) foxxytimer=0;
+	};
+	
 	if(currentRoom==animatronicStates[1].currentRoom && feedopen == true) {
 		updateAIState(1,1,false);
 	};
@@ -593,25 +602,45 @@ function mainmenu(){
 	};
 	sound.playSound("static2.wav",0.3,true);
 	clearInterval(mainmenuanimInterval1);
+	sineStatic1();
 	mainmenuanimInterval1 = setInterval(function(){
 		rand=Math.random();
 		if(rand>0.8) {
 			for(x=0;x<(6);x++){
-				eval('setTimeout(function(){mainmenufazbearanimdiv.attr("src",mainmenufazbear['+(x & 3)+'].src);},(65*(Math.abs('+x+'+1))));');
+				//eval('setTimeout(function(){mainmenufazbearanimdiv.attr("src",mainmenufazbear['+(x & 3)+'].src);},(65*(Math.abs('+x+'+1))));');
+				setTimeout(function(number){mainmenufazbearanimdiv.attr("src",mainmenufazbear[(number & 3)].src);},(65*( Math.abs(x+1))),x);
 			};
 		}
 		else if(rand<0.8 && rand>0.6) {
 			for(x=0;x<(7);x++){
-				eval('setTimeout(function(){mainmenufazbearanimdiv.attr("src",mainmenufazbear['+(x & 2)+'].src);},(45*(Math.abs('+x+'+1))));');
+				//eval('setTimeout(function(){mainmenufazbearanimdiv.attr("src",mainmenufazbear['+(x & 2)+'].src);},(45*(Math.abs('+x+'+1))));');
+				setTimeout(function(number){mainmenufazbearanimdiv.attr("src",mainmenufazbear[(number & 2)].src);},(45*(Math.abs(x+1))));
 			};
 		} else if(rand<0.6 && rand>0.4) {
 			for(x=0;x<(7);x++){
-				eval('setTimeout(function(){mainmenufazbearanimdiv.attr("src",mainmenufazbear['+(x & 1)+'].src);},(25*(Math.abs('+x+'+1))));');
+				//eval('setTimeout(function(){mainmenufazbearanimdiv.attr("src",mainmenufazbear['+(x & 1)+'].src);},(25*(Math.abs('+x+'+1))));');
+				setTimeout(function(number){mainmenufazbearanimdiv.attr("src",mainmenufazbear[(number & 1)].src);},(25*(Math.abs(x+1))));
 			};
 		} else {
 			mainmenufazbearanimdiv.attr("src",mainmenufazbear[0].src)
 		};
 	},1000);
+};
+
+function sineStatic1(){
+	temprandom = Math.random();
+	console.log(temprandom);
+	sineanimationtest = $('#mainmenustaticimg').animate({
+		opacity: 0.6
+	},80*(temprandom*100),sineStatic2);
+};
+
+function sineStatic2(){
+	temprandom = Math.random();
+	console.log(temprandom);
+	sineanimationtest = $('#mainmenustaticimg').animate({
+		opacity: 0.3
+	},80*(temprandom*100),sineStatic1);
 };
 
 function gameoverPowerFailure(){

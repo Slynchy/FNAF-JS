@@ -2,11 +2,13 @@
 // debug.js
 // The JS for debug stuff
 //
-// Last updated - 04/08/2015 @ 23:28
+// Last updated - 12/08/2015
 
 var debugCSS = "background: #ADE1FF; color: #8E3504; border-radius: 5px;padding: 4px 4px;font-family: 'Courier New', Courier, monospace;font-weight: bold;";
 
 var DEBUG_MODE = false;
+
+var cssString = "%c";
 
 // OPTIONS = "HTML", "NW.JS"
 var BUILD_TARGET = "HTML";
@@ -14,16 +16,16 @@ var BUILD_TARGET = "HTML";
 var greenworks;
 
 if(BUILD_TARGET == "NW.JS"){
-	debuglog("Initializing Greenworks...");
+	console.log("Initializing Greenworks...");
 	greenworks = require('./greenworks');
 	if(greenworks.initAPI()){
-		debuglog('Steam API has been initalized.');
+		console.log('Steam API has been initalized.');
 	} else {
-		debuglog('Error on initializing Steam API.');
+		console.log('Error on initializing Steam API.');
 		Window.close();
 	};
 } else {
-	debuglog('Skipping Steam auth...');
+	console.log('Skipping Steam auth...');
 };
 
 
@@ -58,10 +60,8 @@ if (DEBUG_MODE==true){
 	});
 } else {
 	$(window).on("error",function(msg,url,linenumber) {
-		sound.playSound("error.wav");
-		alert("Error! "+msg+"\nURL: "+url+"\nAt line "+linenumber);
-		console.log(msg);
-		console.log(msg);
+		sound.playSound("error.wav",1.0);
+		document.getElementById("debugmode").innerHTML+="<a style='color: red;font-weight: bold;'>ERROR - SEE CONSOLE - "+msg+"</a><br>"
 		return true;
 	});
 };
@@ -71,7 +71,6 @@ function debuglog(string,additional,additional2){
 	if((typeof string) == "undefined"){
 		return;
 	};
-	cssString = "%c";
 	if((typeof additional)=="undefined"){
 		string = cssString.concat(string);
 		return console.log(string,debugCSS);

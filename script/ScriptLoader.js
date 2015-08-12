@@ -1,7 +1,7 @@
 //
 // SpriptLoader.js
 // The JS for loading JS
-// by chry5ls on Github
+// by chrysls on Github
 //
 // Last updated - 04/08/2015
 

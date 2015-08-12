@@ -2,7 +2,7 @@
 // animation.js
 // The JS for animation functions
 //
-// Last updated - 05/06/2015
+// Last updated - 12/08/2015
 
 debuglog("Initializing animation.js...");
 
@@ -13,7 +13,10 @@ function universalAnimation(targetdiv,frames){
 	
 	targetdivhandle.style.display="block";
 	for(x=0;x<=(frames);x++){
-		eval('setTimeout(function(){document.getElementById("'+targetdiv+'").src=""+transitionimages['+x+'].src+"";},(65*'+x+'));');
+		//eval('setTimeout(function(){document.getElementById("'+targetdiv+'").src=""+transitionimages['+x+'].src+"";},(65*'+x+'));');
+		setTimeout(function(number,div){
+			document.getElementById(div).src=""+transitionimages[number].src;
+		},(65*x),x,targetdiv);
 	};
 	setTimeout(function(){
 		targetdivhandle.style.display="none";
@@ -27,6 +30,8 @@ function introduction(){
 	},200,function(){
 		setTimeout(function(){
 			eval('playtransitiononanimation();$("#amduatlogo").animate({opacity: 0},200,function(){setTimeout(mainmenu,2000);});')
+			//playtransitiononanimation();
+			//$("#amduatlogo").animate({opacity: 0},200,function(){setTimeout(mainmenu,2000);});
 		}, 5500);
 	});
 };
@@ -34,7 +39,10 @@ function introduction(){
 function playtransitiononanimation(){
 	transitiondiv.style.display="block";
 	for(x=0;x<8;x++){
-		eval('setTimeout(function(){document.getElementById("transistionanimation").src=""+transitionimages['+x+'].src+"";},(65*'+x+'));');
+		//eval('setTimeout(function(){document.getElementById("transistionanimation").src=""+transitionimages['+x+'].src+"";},(65*'+x+'));');
+		setTimeout(function(number){
+			document.getElementById("transistionanimation").src=transitionimages[number].src;
+		},(65*+x),x);
 	};
 	setTimeout(function(){
 		transitiondiv.style.display="none";
@@ -57,7 +65,10 @@ function playfreddygameoveranimation(animatronic){
 			document.getElementById("openclosecamera").style.display="none";
 			sound.playSound("XSCREAM.wav",0.05);
 			for(x=0;x<31;x++){
-				eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+freddyofficeanimationgameover['+x+'].src+")";},(55*'+x+'));');
+				//eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+freddyofficeanimationgameover['+x+'].src+")";},(55*'+x+'));');
+				setTimeout(function(number){
+					document.getElementById("officemain").style.backgroundImage="url("+freddyofficeanimationgameover[number].src+")";
+				},(55*x),x);
 			};
 			gameoverstatic(1700);
 			break;
@@ -72,7 +83,10 @@ function playfreddygameoveranimation(animatronic){
 			document.getElementById("openclosecamera").style.display="none";
 			sound.playSound("XSCREAM.wav",0.05);
 			for(x=0;x<20;x++){
-				eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+freddyanimationgameover['+x+'].src+")";},(45*'+x+'));');
+				//eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+freddyanimationgameover['+x+'].src+")";},(45*'+x+'));');
+				setTimeout(function(number){
+					document.getElementById("officemain").style.backgroundImage="url("+freddyanimationgameover[number].src+")";
+				},(45*x),x);
 			};
 			gameoverstatic();
 			break;
@@ -82,7 +96,10 @@ function playfreddygameoveranimation(animatronic){
 			document.getElementById("doorleft").style.display="none";
 			sound.playSound("XSCREAM.wav",0.05);
 			for(x=0;x<22;x++){
-				eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+bonnyanimationgameover['+x+'].src+")";},(45*'+x+'));');
+				//eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+bonnyanimationgameover['+x+'].src+")";},(45*'+x+'));');
+				setTimeout(function(number){
+					document.getElementById("officemain").style.backgroundImage="url("+bonnyanimationgameover[number].src+")";
+				},(45*x),x);
 			};
 			setTimeout(function(){gameoverstatic();},275);
 			break;
@@ -93,7 +110,10 @@ function playfreddygameoveranimation(animatronic){
 			document.getElementById("doorleft").style.display="none";
 			sound.playSound("XSCREAM.wav",0.05);
 			for(x=0;x<16;x++){
-				eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+chicaanimationgameover['+x+'].src+")";},(45*'+x+'));');
+				//eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+chicaanimationgameover['+x+'].src+")";},(45*'+x+'));');
+				setTimeout(function(number){
+					document.getElementById("officemain").style.backgroundImage="url("+chicaanimationgameover[number].src+")";
+				},(45*x),x);
 			};
 			setTimeout(function(){gameoverstatic();},275);
 			break;
@@ -111,9 +131,11 @@ function playfoxxyofficeanimation(){
 	document.getElementById("doorleft").style.display="none";
 	sound.playSound("XSCREAM.wav",0.05);
 	for(x=0;x<21;x++){
-	//	eval('foxxyofficeanimtimeout[x] = setTimeout(function(){officemaindiv.css("background-image",foxxyofficeanim['+x+'].src);},(35*'+x+'));');
-		eval('foxxyofficeanimtimeout[x] = setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+foxxyofficeanim['+x+'].src+")";},(35*'+x+'));');
-		
+	//	eval('foxxyofficeanimtimeout[x] = setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+foxxyofficeanim['+x+'].src+")";},(35*'+x+'));');
+		foxxyofficeanimtimeout[x] = setTimeout(function(number){
+			document.getElementById("officemain").style.backgroundImage="url("+foxxyofficeanim[number].src+")";
+			},(35*x),x
+		);
 	};
 	clearInterval(mainThreadID);
 	setTimeout(function(){
@@ -122,7 +144,7 @@ function playfoxxyofficeanimation(){
 };
 
 function recordTick() {
-		recorddiv.toggle();
+	recorddiv.toggle();
 	if(showrecord==true) {
 		showrecord=false;
 	}
@@ -149,8 +171,11 @@ function playpoweroutageanimation(duration){
 	document.getElementById("openclosecamera").style.display="none";
 	document.getElementById("fan").style.display="none";
 	document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[0].src+")";
-	for(x=0;x<60;x++){
-		eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg['+(x & 1)+'].src+")";},(105*'+x+'));');
+	for(x=0;x<duration;x++){
+		//eval('setTimeout(function(){document.getElementById("officemain").style.backgroundImage="url("+poweroutimg['+(x & 1)+'].src+")";},(105*'+x+'));');
+		setTimeout(function(number){
+			document.getElementById("officemain").style.backgroundImage="url("+poweroutimg[(number & 1)].src+")";
+		},(105*x),x);
 	};
 	clearInterval(mainThreadID);
 };
@@ -158,11 +183,14 @@ function playpoweroutageanimation(duration){
 function playFoxxyRunningAnimation(){
 	sound.playSound("run.wav");
 	for(x=0;x<31;x++){
-		eval('foxxyrunninganimationtimeout[x] = setTimeout(function(){roomdiv.attr("src",room2afoxxyanim['+x+'].src);},(35*'+x+'));');
+		//eval('foxxyrunninganimationtimeout[x] = setTimeout(function(){roomdiv.attr("src",room2afoxxyanim['+x+'].src);},(35*'+x+'));');
+		foxxyrunninganimationtimeout[x] = setTimeout(function(number){
+		roomdiv.attr("src",room2afoxxyanim[number].src);
+		},(35*x),x);
 	};
 	setTimeout(function(){
 		foxxyrunning=false;
-		if(leftdooropen==true) playSound("knock2.wav",1);
+		if(leftdooropen==true) sound.playSound("knock2.wav",1);
 			animatronicStates[3].state=4;
 		},(3350));
 };
@@ -171,12 +199,14 @@ function playFoxxyRunningAnimation(){
 function playdooranimationright(inReverse){
 	if(inReverse==0) {
 		for(x=0;x<(14);x++){
-			eval('setTimeout(function(){doorrightdiv.attr("src",doorrightanim['+x+'].src);},(30*('+x+'+1)));')
+			//eval('setTimeout(function(){doorrightdiv.attr("src",doorrightanim['+x+'].src);},(30*('+x+'+1)));')
+			setTimeout(function(number){doorrightdiv.attr("src",doorrightanim[number].src);},(30*(x+1)),x);
 		}
 	}
 	else if(inReverse==1) {
 		for(x=13;x>=(0);x--){
-			eval('setTimeout(function(){doorrightdiv.attr("src",doorrightanim['+x+'].src);},(20*(Math.abs('+x+'-13))));')
+			//eval('setTimeout(function(){doorrightdiv.attr("src",doorrightanim['+x+'].src);},(20*(Math.abs('+x+'-13))));')
+			setTimeout(function(number){doorrightdiv.attr("src",doorrightanim[number].src);},(20*(Math.abs(x-13))),x);
 		}
 	}
 }
@@ -185,28 +215,35 @@ function playcamerafeedanimation(inReverse){
 	if(inReverse==0) {
 		camerafeedanimationdiv.css("display","block");
 		for(x=0;x<(10);x++){
-			eval('setTimeout(function(){camerafeedanimationdiv.attr("src",camerafeedanimationimage['+x+'].src);},(30*('+x+'+1)));')
-			eval('setTimeout(function(){camerafeedanimationdiv.css("display","none");},(330));')
+			//eval('setTimeout(function(){camerafeedanimationdiv.attr("src",camerafeedanimationimage['+x+'].src);},(30*('+x+'+1)));')
+			setTimeout(function(number){camerafeedanimationdiv.attr("src",camerafeedanimationimage[number].src);},(30*(x+1)),x);
+			//eval('setTimeout(function(){camerafeedanimationdiv.css("display","none");},(330));')
+			setTimeout(function(){camerafeedanimationdiv.css("display","none");},(330));
 		}
 	}
 	else if(inReverse==1) {
 		camerafeedanimationdiv.css("display","block");
 		for(x=9;x>=(0);x--){
-			eval('setTimeout(function(){camerafeedanimationdiv.attr("src",camerafeedanimationimage['+x+'].src);},(20*(Math.abs('+x+'-9))));')
-			eval('setTimeout(function(){camerafeedanimationdiv.css("display","none");},(200));')
+			//eval('setTimeout(function(){camerafeedanimationdiv.attr("src",camerafeedanimationimage['+x+'].src);},(20*(Math.abs('+x+'-9))));')
+			setTimeout(function(number){camerafeedanimationdiv.attr("src",camerafeedanimationimage[number].src);},(20*(Math.abs(x-9))),x);
+			//eval('setTimeout(function(){camerafeedanimationdiv.css("display","none");},(200));')
+			setTimeout(function(){camerafeedanimationdiv.css("display","none");},(200));
 		}
 	};
 }
 
+// lol this is only used for one bloody room...
 function playroomanimation(room,randomnumber){
 	switch(room) {
 		case "2a":
 			for(x=0;x<(9);x++){
 				if(randomnumber>0.5) {
-					eval('setTimeout(function(){roomdiv.attr("src",room2aimage['+(x & 1)+'].src);},(45*(Math.abs('+x+'+1))));');
+					//eval('setTimeout(function(){roomdiv.attr("src",room2aimage['+(x & 1)+'].src);},(45*(Math.abs('+x+'+1))));');
+					setTimeout(function(number){roomdiv.attr("src",room2aimage[(number & 1)].src);},(45*(Math.abs(x+1))),x);
 				}
 				else {
-					eval('setTimeout(function(){roomdiv.attr("src",room2aimage['+(x & 1)+'].src);},(15*(Math.abs('+x+'+1))));');
+					//eval('setTimeout(function(){roomdiv.attr("src",room2aimage['+(x & 1)+'].src);},(15*(Math.abs('+x+'+1))));');
+					setTimeout(function(number){roomdiv.attr("src",room2aimage[(number & 1)].src);},(15*(Math.abs(x+1))),x);
 				}
 			}
             break;
@@ -218,18 +255,14 @@ function playroomanimation(room,randomnumber){
 function playdooranimationleft(inReverse){
 	if(inReverse==0) {
 		for(x=0;x<(14);x++){
-			/*setTimeout(function(){
-				doorleftdiv.attr("src",doorleftanim[x].src);
-			},(500*(x+1)));*/
-			eval('setTimeout(function(){doorleftdiv.attr("src",doorleftanim['+x+'].src);},(30*('+x+'+1)));')
+			//eval('setTimeout(function(){doorleftdiv.attr("src",doorleftanim['+x+'].src);},(30*('+x+'+1)));')
+			setTimeout(function(number){doorleftdiv.attr("src",doorleftanim[number].src);},(30*(x+1)),x);
 		}
 	}
 	else if(inReverse==1) {
 		for(x=13;x>=(0);x--){
-			/*setTimeout(function(){
-				doorleftdiv.attr("src",doorleftanim[x].src);
-			},(500*(x+1)));*/
-			eval('setTimeout(function(){doorleftdiv.attr("src",doorleftanim['+x+'].src);},(20*(Math.abs('+x+'-13))));')
+			//eval('setTimeout(function(){doorleftdiv.attr("src",doorleftanim['+x+'].src);},(20*(Math.abs('+x+'-13))));')
+			setTimeout(function(number){doorleftdiv.attr("src",doorleftanim[number].src);},(20*(Math.abs('+x+'-13))),x);
 		}
 	}
 }

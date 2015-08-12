@@ -3,6 +3,26 @@
 ** 	   By Slynch	 **
 ***********************
 
+Twenty-ninth Commit:
+	- Fixed evals on most animations (courtesy of a tip from chrysls)
+	- Fixed mistake on playpoweroutageanimation where it would always last 6~ seconds
+	- Fixed misnamed soundPlay call in an animation
+	- Fixed bug when "continuing" night 5 when you've beaten the game
+	- Added error message for when not in debug mode
+	- Made cssString a global variable so it isn't constantly remade every time debuglog is called
+	- Tweaked difficulty slightly. May need further work
+	- Adjusted main menu alignments
+	- Removed pointless constant in save.js
+	- Foxy's timer is now reduced by 1 whenever the player looks back to room 1C
+		- Also moved from main thread to updatecurrentroom
+	- Converted many things to WebP to lower filesize (30MB!!)
+	- Added a graphics button on the main menu. Not sure whether to use it yet
+	- Added randomised fading on main menu static
+		- Need to implement this for camera static; could use same function?
+		
+	- Thirtieth commit will mark beta testing phase, in which all the kinks will be worked out.
+		- After the bugs are fixed and the port is released, any additions will be quality-of-life ones or optimizations.
+
 Twenty-eighth Commit:
 	- Finished custom night
 	- Added main menu stars
