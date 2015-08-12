@@ -9,25 +9,12 @@ var debugCSS = "background: #ADE1FF; color: #8E3504; border-radius: 5px;padding:
 var DEBUG_MODE = false;
 
 var cssString = "%c";
+var NWGUI;
 
 // OPTIONS = "HTML", "NW.JS"
 var BUILD_TARGET = "HTML";
 
 var greenworks;
-
-if(BUILD_TARGET == "NW.JS"){
-	console.log("Initializing Greenworks...");
-	greenworks = require('./greenworks');
-	if(greenworks.initAPI()){
-		console.log('Steam API has been initalized.');
-	} else {
-		console.log('Error on initializing Steam API.');
-		Window.close();
-	};
-} else {
-	console.log('Skipping Steam auth...');
-};
-
 
 debuglog("Initializing debug.js...");
 

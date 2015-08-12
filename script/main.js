@@ -23,7 +23,21 @@
 
 debuglog("Initializing main.js...");
 
-document.title += VERSION;
+if(BUILD_TARGET == "NW.JS"){
+	NWGUI = require('nw.gui');
+	debuglog("Initializing Greenworks...");
+	greenworks = require('./greenworks');
+	if(greenworks.initAPI()){
+		debuglog('Steam API has been initalized.');
+	} else {
+		alert('Error on initializing Steam API.');
+		gui.App.quit();
+	};
+} else {
+	debuglog('Skipping Steam auth...');
+};
+
+document.getElementById("title").innerHTML += VERSION;
 
 assertButtons();
 var cachedbody = document.getElementById("alldahtml").innerHTML;
@@ -56,6 +70,7 @@ function loadgame2() {
 };
 
 function newgame() {
+	night = 1;
 	foxydifficulty = 8;
 	bunnydifficulty = 9;
 	chicadifficulty = 6;
@@ -629,7 +644,6 @@ function mainmenu(){
 
 function sineStatic1(){
 	temprandom = Math.random();
-	console.log(temprandom);
 	sineanimationtest = $('#mainmenustaticimg').animate({
 		opacity: 0.6
 	},80*(temprandom*100),sineStatic2);
@@ -637,7 +651,6 @@ function sineStatic1(){
 
 function sineStatic2(){
 	temprandom = Math.random();
-	console.log(temprandom);
 	sineanimationtest = $('#mainmenustaticimg').animate({
 		opacity: 0.3
 	},80*(temprandom*100),sineStatic1);

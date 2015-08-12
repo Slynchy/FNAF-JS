@@ -54,7 +54,7 @@ var sound=new function(){
 
 	this.loopSound=function(){this.currentTime = 0;this.play();};
 
-	this.stopSound=function(src){if((typeof src)=="undefined") {console.log("stopSound() error - no sound specified");console.log("Proceeding to stop all sound..."); for(x=0;x<sounds.length;x++){ if(sounds[x].file.paused==false){ sounds[x].file.pause(); return console.log("Channel "+x+" is paused/stopped"); }; }; return; } else { for(x=0;x<sounds.length;x++){ if(sounds[x].name==src){ sounds[x].file.pause(); return; }; }; return console.log("stopSound() error - invalid sound specified."); }; };
+	this.stopSound=function(src){if((typeof src)=="undefined") {console.log("stopSound() error - no sound specified\nProceeding to stop all sound..."); for(x=0;x<sounds.length;x++){ if(sounds[x].file.paused==false){ sounds[x].file.pause(); return console.log(""+sounds[x].name+" is paused/stopped"); }; }; return; } else { for(x=0;x<sounds.length;x++){ if(sounds[x].name==src){ sounds[x].file.pause(); return; }; }; return console.log("stopSound() error - invalid sound specified."); }; };
 
 	this.stopAmbientSound=function(){
 		if(DEBUG_MODE==false){

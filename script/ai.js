@@ -2,7 +2,7 @@
 // ai.js
 // The JS for ai
 //
-// Last updated - 04/08/2015 @ 23:28
+// Last updated - 12/08/2015
 
 debuglog("Initializing ai.js...");
 

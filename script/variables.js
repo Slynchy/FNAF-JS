@@ -6,7 +6,7 @@
 
 debuglog("Initializing variables.js...");
 
-var VERSION = 27;
+var VERSION = 29;
 
 var sineanimationtest;
 var mainmenuanimInterval1;
