@@ -1,9 +1,9 @@
 # FNAF-JS
 The first FNAF game in JavaScript/HTML
 
-Quite far along, but still in development.
+Pretty much finished, just needs method of auth.
 
-Full version will use NW.js for distribution as executable for Windows, Mac and Linux, as well as Greenworks for DRM to verify the user owns FNAF on Steam.
+Will use NW.js for distribution as executable for Windows, Mac and Linux, as well as Greenworks for DRM to verify the user owns FNAF on Steam. Alternatively, a PHP script.
 
 Includes used:
   - JQuery
@@ -12,3 +12,4 @@ Includes used:
   - JQuery timer
   - WebP converter
   - SeamlessLoop.js
+  - Script loader by chrysls
