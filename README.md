@@ -1,5 +1,7 @@
 # FNAF-JS
-The first FNAF game in JavaScript/HTML
+The first FNAF game in JavaScript/HTML.
+
+Ported without reverse engineering of the MMF code; port was done entirely by "reflection"
 
 Pretty much finished, just needs method of auth.
 
