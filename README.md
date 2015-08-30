@@ -13,3 +13,9 @@ Includes used:
   - WebP converter
   - SeamlessLoop.js
   - Script loader by chrysls
+
+# How to run
+
+  1) Click "Download Zip" on the right hand side
+  2) Extract the zip file somewhere.
+  3) Open feed.html in Google Chrome (other browsers may work but are unsupported).
