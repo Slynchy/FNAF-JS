@@ -22,3 +22,6 @@ Includes used:
   - Click "Download Zip" on the right hand side
   - Extract the zip file somewhere.
   - Open feed.html in Google Chrome (other browsers may work but are unsupported).
+
+# Documentation
+Preliminary documentation can be found here: http://slynch.ovh/FNAF-JS-Doc/
