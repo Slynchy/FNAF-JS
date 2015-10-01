@@ -4,8 +4,18 @@
 //
 // Last updated - 12/08/2015
 
+/**
+ * @file Code for AI operations
+ * @author Sam Lynch
+ * @version 1.0.0
+ * @copyright (c) 2015 Amduat Games
+ */
+ 
 debuglog("Initializing ai.js...");
 
+/** @function updateBunnyAI 
+ * @description Updates AI of Bonnie
+*/
 function updateBunnyAI() {
 	switch(animatronicStates[1].state) {
 		case 0:  // unseen
@@ -112,6 +122,9 @@ function updateBunnyAI() {
 	}
 };
 
+/** @function updateChicaAI 
+ * @description Updates AI of Chica
+*/
 function updateChicaAI() {
 	switch(animatronicStates[0].state) {
 		case 0:  // unseen
@@ -228,6 +241,9 @@ function updateChicaAI() {
 	}
 };
 
+/** @function updateFoxxyAI 
+ * @description Updates AI of Foxxy
+*/
 function updateFoxxyAI() {
 	switch(animatronicStates[3].state) {
 		case 0: 
@@ -276,6 +292,9 @@ function updateFoxxyAI() {
 	}
 };
 
+/** @function updateFreddyAI 
+ * @description Updates AI of Freddy
+*/
 function updateFreddyAI() {
 	switch(animatronicStates[2].state) {
 		case 0:  // unseen

@@ -1,43 +1,8 @@
 /**
- * SeamlessLoop.js 2.0 - Reproduces seamless loops on HTML5/Javascript
- * https://github.com/Hivenfour/SeamlessLoop
- * 
- * Copyright (c) 2012 Main Software,
- * Written by Darío Tejedor Rico. Contact mail: hivenfour@gmail.com
- * The source code is freely distributable under the terms of LGPL license.
- * License details at http://www.gnu.org/licenses/lgpl-3.0.txt
- * 
- * USAGE:
- * - Create the Seamlessloop object
- * 		var loop = new SeamlessLoop();
- * 
- * - Add as many sounds as you will use, providing duration in miliseconds
- * (sounds must be pre-loaded if you want to update the loop without gaps)
- * 		loop.addUri(uri, length, "sound1");
- * 		loop.addUri(uri, length, "sound2");
- * ...
- * 
- * - Establish your callback function that will be called when all sounds are pre-loaded
- * 		loop.callback(soundsLoaded);
- * 
- * - Start reproducing the seamless loop:
- * 		function soundsLoaded() {
- * 			var n = 1;
- * 			loop.start("sound" + n);
- * 		};
- * 
- * - Update the looping sound, you can do this
- * synchronously (waiting the loop to finish)
- * or asynchronously (change sound immediately):
- * 		n++;
- * 		loop.update("sound" + n, false);
- * 
- * - Modify the seamless loop volume:
- * 		loop.volume(0.5);
- * 		loop.volume(loop.volume() + 0.1);
- * 
- * - Stop the seamless loop:
- * 		loop.stop();
+ * @file SeamlessLoop.js - Reproduces seamless loops on HTML5/Javascript
+ * @author https://github.com/Hivenfour/SeamlessLoop
+ * @version 2.0
+ * @copyright (c) 2012 Main Software
  */
 
 function SeamlessLoop() {

@@ -3,6 +3,10 @@
 ** 	   By Slynch	 **
 ***********************
 
+Thirtieth Commit:
+	- Started documentation process
+	- Removed Greenworks code/binaries so people have to get it themselves
+
 Twenty-ninth Commit:
 	- Fixed evals on most animations (courtesy of a tip from chrysls)
 	- Fixed mistake on playpoweroutageanimation where it would always last 6~ seconds

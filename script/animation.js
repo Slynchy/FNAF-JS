@@ -4,8 +4,21 @@
 //
 // Last updated - 12/08/2015
 
+/**
+ * @file Code for animations
+ * @author Sam Lynch
+ * @version 1.0.0
+ * @copyright (c) 2015 Amduat Games
+ */
+ 
 debuglog("Initializing animation.js...");
 
+/** @function universalAnimation 
+ * @description Applies any animation to a target div (NOT WORKING)
+ * @deprecated
+ * @param {string} targetdiv ID of target div
+ * @param {int} frames Number of frames
+*/
 function universalAnimation(targetdiv,frames){
 	if((typeof targetdiv)=="undefined" || (typeof targetdiv)!="string") return debuglog("universalAnimation() error - invalid target div!");
 		
@@ -23,6 +36,9 @@ function universalAnimation(targetdiv,frames){
 	},(500));
 };
 
+/** @function introduction 
+ * @description Plays the introduction animation and goes to the main menu.
+*/
 function introduction(){
 	playtransitiononanimation();
 	$('#amduatlogo').animate({
@@ -36,6 +52,9 @@ function introduction(){
 	});
 };
 
+/** @function playtransitiononanimation 
+ * @description Plays the transition animation to go from main menu to loading screen
+*/
 function playtransitiononanimation(){
 	transitiondiv.style.display="block";
 	for(x=0;x<8;x++){
@@ -49,6 +68,10 @@ function playtransitiononanimation(){
 	},(500));
 };
 
+/** @function playfreddygameoveranimation 
+ * @description Plays the animation of the animatronic killing the player
+ * @param {string} animatronic Name of the animatronic to update
+*/
 function playfreddygameoveranimation(animatronic){
 	if((typeof animatronic)=="undefined") animatronic="freddy";
 	if(feedopen == true) OpenCloseFeed();

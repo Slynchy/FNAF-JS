@@ -4,9 +4,19 @@
 //
 // Last updated - 12/08/2015
 
+/**
+ * @file File housing all the variables, plus the reset function
+ * @author Sam Lynch
+ * @version 1.0.0
+ * @copyright (c) 2015 Amduat Games
+ */
+ 
 debuglog("Initializing variables.js...");
 
-var VERSION = 29;
+/** @constant
+    @type {int}
+*/
+var VERSION = 30;
 
 var sineanimationtest;
 var mainmenuanimInterval1;
@@ -245,6 +255,9 @@ var roomImagesIndex = [{name: "1a",amountofImages: 7},
 {name: "4a",amountofImages: 4},
 {name: "4b",amountofImages: 5}]
 
+/** @function setVariables 
+ * @description Resets variables to their default values for loading new levels
+*/
 setVariables = function(){
 	for(x=0;x<currRoomStates.length;x++){
 		currRoomStates[x].roomstate=0;

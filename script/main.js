@@ -21,6 +21,13 @@
 //
 // Last updated - 12/08/2015
 
+/**
+ * @file Primary JavaScript file housing main loop and main menu code
+ * @author Sam Lynch
+ * @version 1.0.0
+ * @copyright (c) 2015 Amduat Games
+ */
+
 debuglog("Initializing main.js...");
 
 if(BUILD_TARGET == "NW.JS"){
@@ -164,6 +171,11 @@ function updateAIPosition(AIID,AIstate,newroom,roomstate,oldroomstate){
     updateRoomState(newroom,roomstate); //new room
 }
 
+/** @function searchForState 
+ * @description Searches for the current state of a room
+ * @param {string} room Name of the room 
+ * @returns {Number} roomstate Current state of specified room
+*/
 function searchForState(room){
     for (var i=0; i < currRoomStates.length; i++) {
         if (currRoomStates[i].name === room) {
@@ -172,6 +184,11 @@ function searchForState(room){
     };
 };
 
+/** @function searchForRoomID 
+ * @description Searches for the ID of a room using the name
+ * @param {string} room Name of the room 
+ * @returns {string} roomid ID of specified room
+*/
 function searchForRoomID(roomname){
     for (var i=0; i < currRoomStates.length; i++) {
         if (rooms[i].name === roomname) {
@@ -180,6 +197,14 @@ function searchForRoomID(roomname){
     };
 };
 
+/** @function searchForRoomID 
+ * @description Searches for the ID of a room using the name. Param 4 and 5 are deprecated.
+ * @param {int} AIID ID of AI 
+ * @param {int} state What state to set the AI to 
+ * @param {boolean} updatetimer Reset the timer to 0 or not
+ * @param {string} [newroom] Name of the room to set AI to
+ * @param {int} [roomID] ID of the room to set AI to
+*/
 function updateAIState(AIID,state,updatetimer,newroom,roomID){
 	if((typeof AIID)=="undefined"){
 		debuglog("updateAIState:\nAIID - ID of the AI to update\nstate - What state to set it to\nnewroom - What room to change to\nroomID - I don't fucking know, the ID of the room but I don't know what it is used for.");

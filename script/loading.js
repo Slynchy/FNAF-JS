@@ -5,6 +5,13 @@
 //
 // Last updated - 12/08/2015
 
+/**
+ * @file Code for loading all files into variables
+ * @author Sam Lynch
+ * @version 1.0.0
+ * @copyright (c) 2015 Amduat Games
+ */
+ 
 debuglog("Initializing loading.js...");
 
 for(x=0;x<8;x++){
@@ -12,6 +19,8 @@ for(x=0;x<8;x++){
 	transitionimages[x].src = "graphics/transition/"+x+".webp";
 };
 
+/** @name sounds
+* @description The array of sound names and Audio() objects */
 var sounds=[
 {name: "chimes 2.wav",file: new Audio()}, 					// 0
 {name: "blip3.wav",file: new Audio()}, 						// 1
@@ -45,6 +54,9 @@ for(x=0;x<sounds.length;x++){
 	debuglog("Loaded "+sounds[x].file.src+" ...");
 }; 
 
+/** @function loadroomImages 
+ * @description Loads room images specified in roomImagesIndex[]
+*/
 loadroomImages = function(){
 	for(x=0;x<roomImagesIndex.length;x++){
 		roomImages[x] = [];
@@ -58,6 +70,9 @@ loadroomImages = function(){
 	}
 }
 
+/** @function loadEverythingElse 
+ * @description Loads all images to their arrays/variables in variables.js
+*/
 function loadEverythingElse(){
 		if(foxydifficulty==20 && freddydifficulty==20 && chicadifficulty==20 && bunnydifficulty==20) difficulty20202020=true;
 		playtransitiononanimation();
